@@ -36,7 +36,7 @@ class AbstractDialog(AbstractView):
         return self.click_footer_button(self.BUTTON_CANCEL)
 
     def click_footer_button(self, name):
-        res = self.footerButton.find(name).click_and_wait()
+        res = self.footerButton.find(name=name).click_and_wait()
         self.wait_closing()
         return res
 
