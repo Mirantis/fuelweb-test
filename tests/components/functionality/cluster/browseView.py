@@ -6,6 +6,9 @@ from engine.poteen.utils.storage import Storage
 from ...generic.abstractView import AbstractView
 from ...functionality.cluster.cluster import Cluster
 from ....testdata.cluster import TD_Cluster
+from ....components.functionality.cluster.actions.view import Cluster_Actions_View
+from ....components.functionality.cluster.dialogs.deleteEnvironmentDialog import DeleteEnvironmentDialog
+from ....components.functionality.cluster.editView import Cluster_View
 
 
 class Cluster_BrowseView(AbstractView):
@@ -35,6 +38,20 @@ class Cluster_BrowseView(AbstractView):
     def click_add_new_cluster(self, key="cluster"):
         Storage.put(key, TD_Cluster())
         return self.newEnvironment.click_and_wait()
+
+    def remove(self, name):
+        return ResultList("Delete environment {name}".format(name=name)) \
+            .push(self.environment.find(name=name).click_and_wait()) \
+            .push(Cluster_View().click_actions_tab()) \
+            .push(Cluster_Actions_View().click_delete_cluster_button()) \
+            .push(DeleteEnvironmentDialog().delete())
+
+    def remove_all(self):
+        rl = ResultList("Remove all existing environments")
+        for env in self.get_clusters():
+            rl.push(self.remove(env.get_name()))
+        rl.info("All environments were removed")
+        return rl
 
     def select(self, name):
         return ResultList("Select environment [{}]".format(name)) \

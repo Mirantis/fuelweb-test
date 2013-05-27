@@ -4,11 +4,6 @@ from tests.components.generic.abstractDialog import AbstractDialog
 
 
 class EnvironmentDeploymentModeDialog(AbstractDialog):
-    DEPLOYMENT_MODE_MULTI_NODE = "Multi-node"
-    DEPLOYMENT_MODE_MULTI_NODE_WITH_HA = "Multi-node with HA"
-    DEPLOYMENT_TYPE_COMPUTE_ONLY = "Compute only"
-    DEPLOYMENT_TYPE_COMPUTE_WITH_CINDER = "Compute with Cinder"
-
     deploymentMode = Radio(
         xpath=".//div[contains(@class, 'mode-control-group')]"
               "//label[div[contains(@class, 'parameter-name') "
@@ -18,8 +13,8 @@ class EnvironmentDeploymentModeDialog(AbstractDialog):
     deploymentType = Radio(
         xpath=".//div[contains(@class, 'type-control-group')]"
               "//label[div[contains(@class, 'parameter-name') "
-              "and text()='{mode}']]",
-        element_name="Deployment type [{mode}]")
+              "and text()='{type}']]",
+        element_name="Deployment type [{type}]")
 
     def __init__(self):
         AbstractDialog.__init__(self)
@@ -33,7 +28,7 @@ class EnvironmentDeploymentModeDialog(AbstractDialog):
         return rl
 
     def select_deployment_mode(self, value):
-        return self.deploymentMode.find(value).click()
+        return self.deploymentMode.find(mode=value).click()
 
     def select_deployment_type(self, value):
-        return self.deploymentType.find(value).click()
+        return self.deploymentType.find(type=value).click()

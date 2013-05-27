@@ -27,9 +27,12 @@ class CreateEnvironmentDialog(AbstractDialog):
         environment.name = name
         environment.version = version
 
-        return ResultList("Populate create new Environment dialog") \
+        rl = ResultList("Populate create new Environment dialog") \
             .push(self.name.set_value(name)) \
             .push(self.version.set_value(version))
+        if submit:
+            rl.push(self.create())
+        return rl
 
     def verify_name_error(self, value):
         return self.nameErrorMessage.verify_value(value)

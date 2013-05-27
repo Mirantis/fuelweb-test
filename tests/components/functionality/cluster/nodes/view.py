@@ -4,7 +4,8 @@ from engine.poteen.elements.basic.link import Link
 from engine.poteen.log.resultList import ResultList
 from ....generic.abstractView import AbstractView
 from .listView import Cluster_Nodes_ListView
-from tests.components.functionality.cluster.dialogs.environmentDeploymentModeDialog import EnvironmentDeploymentModeDialog
+from ..dialogs.environmentDeploymentModeDialog \
+    import EnvironmentDeploymentModeDialog
 
 
 class Cluster_Nodes_View(AbstractView):
@@ -57,6 +58,7 @@ class Cluster_Nodes_View(AbstractView):
             deploymentType=deploymentType,
             submit=True
         ))
+        return rl
 
 
 def verify_compute_nodes(self, *args):

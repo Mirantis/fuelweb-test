@@ -1,5 +1,5 @@
 from engine.poteen.elements.basic.button import Button
-from ..generic.abstractView import AbstractView
+from ....generic.abstractView import AbstractView
 
 
 class Cluster_Actions_View(AbstractView):
