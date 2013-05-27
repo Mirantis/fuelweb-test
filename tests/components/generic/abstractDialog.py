@@ -1,5 +1,4 @@
 from selenium.webdriver.common.by import By
-from engine.poteen.basePage import BasePage
 from engine.poteen.elements.basic.button import Button
 from .abstractView import AbstractView
 
@@ -21,13 +20,14 @@ class AbstractDialog(AbstractView):
         xpath="./div[@class='modal-footer']/button[contains(.,'{name}')]",
         element_name="Dialog footer button [{name}]")
 
-    def __init__(self, parent=None):
+    def __init__(self):
         self.wait_loading()
         AbstractView.__init__(self, self.__get_control_dialog())
 
-    def __get_control_dialog(self):
-        return self.get_wait_bot().wait_for_web_element(
-            By.XPATH, self.XPATH_DIALOG )
+    @classmethod
+    def __get_control_dialog(cls):
+        return cls.get_wait_bot().wait_for_web_element(
+            By.XPATH, cls.XPATH_DIALOG)
 
     def apply(self):
         return self.click_footer_button(self.BUTTON_APPLY)

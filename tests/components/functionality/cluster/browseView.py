@@ -1,11 +1,14 @@
 from selenium.webdriver.common.by import By
 from engine.poteen.elements.basic.htmlElement import HtmlElement
 from engine.poteen.elements.basic.link import Link
+from engine.poteen.log.resultList import ResultList
+from engine.poteen.utils.storage import Storage
 from ...generic.abstractView import AbstractView
 from ...functionality.cluster.cluster import Cluster
+from ....testdata.cluster import TD_Cluster
 
 
-class BrowseView(AbstractView):
+class Cluster_BrowseView(AbstractView):
     XPATH_ENVIRONMENTS = "//div[@id='content']//div[@class='cluster-list']" \
                          "//a[contains(@class, 'clusterbox') " \
                          "and div[contains(@class, 'cluster-name')]]"
@@ -29,5 +32,13 @@ class BrowseView(AbstractView):
         return [Cluster(x) for x in self.get_action_bot().find_elements(
             By.XPATH, self.XPATH_ENVIRONMENTS)]
 
-    def click_add_new_environment(self):
-        pass
+    def click_add_new_cluster(self, key="cluster"):
+        Storage.put(key, TD_Cluster())
+        return self.newEnvironment.click_and_wait()
+
+    def select(self, name):
+        return ResultList("Select environment [{}]".format(name)) \
+            .push(self.environment.find(name=name).click_and_wait())
+
+    def select_by_key(self, key):
+        return self.select(Storage.get(key).name)

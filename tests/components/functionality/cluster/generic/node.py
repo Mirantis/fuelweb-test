@@ -28,3 +28,5 @@ class Node(AbstractView):
     def select(self):
         if self.is_selected():
             return Result("Node is already selected")
+        else:
+            self.name.click()

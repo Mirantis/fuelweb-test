@@ -21,4 +21,4 @@ class Test_Deployment(TestCasePoteen):
     def test_deploy_no_ha_1_controller_1_compute(self):
         PoteenLogger.add_test_case(
             "Deploy without HA mode 1 controller 1 compute")
-        logger.info(Main().navigate())
+        # logger.info(Main().navigate())
