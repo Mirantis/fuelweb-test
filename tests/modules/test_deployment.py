@@ -1,7 +1,7 @@
 from nose.plugins.attrib import attr
-from engine.poteen.ContextHolder import ContextHolder
-from engine.poteen.PoteenLogger import PoteenLogger
-from engine.poteen.TestCasePoteen import TestCasePoteen
+from engine.poteen.contextHolder import ContextHolder
+from engine.poteen.poteenLogger import PoteenLogger
+from engine.poteen.testCasePoteen import TestCasePoteen
 
 from ..components.functionality.main import Main
 

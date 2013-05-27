@@ -1,6 +1,6 @@
-from engine.poteen.elements.basic.HtmlElement import HtmlElement
-from engine.poteen.elements.basic.Link import Link
-from .AbstractView import AbstractView
+from engine.poteen.elements.basic.htmlElement import HtmlElement
+from engine.poteen.elements.basic.link import Link
+from .abstractView import AbstractView
 
 
 class AbstractMenu(AbstractView):

@@ -1,4 +1,4 @@
-from ..generic.AbstractView import AbstractView
+from ..generic.abstractView import AbstractView
 
 
 class Main(AbstractView):

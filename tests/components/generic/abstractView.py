@@ -1,5 +1,5 @@
-from engine.poteen.BasePage import BasePage
-from engine.poteen.elements.basic.Button import Button
+from engine.poteen.basePage import BasePage
+from engine.poteen.elements.basic.button import Button
 
 
 class AbstractView(BasePage):

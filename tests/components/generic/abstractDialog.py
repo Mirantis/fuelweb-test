@@ -1,7 +1,7 @@
 from selenium.webdriver.common.by import By
-from engine.poteen.BasePage import BasePage
-from engine.poteen.elements.basic.Button import Button
-from .AbstractView import AbstractView
+from engine.poteen.basePage import BasePage
+from engine.poteen.elements.basic.button import Button
+from .abstractView import AbstractView
 
 
 class AbstractDialog(AbstractView):

@@ -3,7 +3,7 @@ import sys
 
 import nose
 
-from engine.poteen.utils.plugin.PoteenRunnerPlugin import PoteenRunnerPlugin
+from engine.poteen.utils.plugin.poteenRunnerPlugin import PoteenRunnerPlugin
 
 
 if __name__ == '__main__':
