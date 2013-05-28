@@ -9,40 +9,41 @@ from ..dialogs.environmentDeploymentModeDialog \
 
 
 class Cluster_Nodes_View(AbstractView):
-    addCompute = Link(
-        xpath="//div[@id='tab-nodes']"
-              "//div[contains(@class, 'node-list-compute')]"
-              "//a[contains(@class, 'btn-add-nodes')]",
-        element_name="Add compute")
-
-    addController = Link(
-        xpath="//div[@id='tab-nodes']"
-              "//div[contains(@class, 'node-list-controller')]"
-              "//a[contains(@class, 'btn-add-nodes')]",
-        element_name="Add controller")
-
-    computes = Button(
-        xpath="//div[@id='tab-nodes']"
-              "//div[contains(@class, 'node-list-compute')]",
-        element_name="computes")
-
-    controllers = HtmlElement(
-        xpath="//div[@id='tab-nodes']"
-              "//div[contains(@class, 'node-list-controller')]",
-        element_name="controllers")
-
-    deploymentMode = Link(
-        xpath="//li[contains(@class, 'change-cluster-mode-btn')]",
-        element_name="Deployment mode")
-
     def __init__(self, parent=None):
+        self.addCompute = Link(
+            xpath="//div[@id='tab-nodes']"
+                  "//div[contains(@class, 'node-list-compute')]"
+                  "//a[contains(@class, 'btn-add-nodes')]",
+            element_name="Add compute"
+        )
+        self.addController = Link(
+            xpath="//div[@id='tab-nodes']"
+                  "//div[contains(@class, 'node-list-controller')]"
+                  "//a[contains(@class, 'btn-add-nodes')]",
+            element_name="Add controller"
+        )
+        self.computes = Button(
+            xpath="//div[@id='tab-nodes']"
+                  "//div[contains(@class, 'node-list-compute')]",
+            element_name="computes"
+        )
+        self.controllers = HtmlElement(
+            xpath="//div[@id='tab-nodes']"
+                  "//div[contains(@class, 'node-list-controller')]",
+            element_name="controllers"
+        )
+        self.deploymentMode = Link(
+            xpath="//li[contains(@class, 'change-cluster-mode-btn')]",
+            element_name="Deployment mode"
+        )
+
         AbstractView.__init__(self, parent)
 
     def click_add_compute(self):
-        return self.addCompute.click()
+        return self.addCompute.click_and_wait()
 
     def click_add_controller(self):
-        return self.addController.click()
+        return self.addController.click_and_wait()
 
     def click_deployment_mode(self):
         return self.deploymentMode.click()
@@ -60,14 +61,12 @@ class Cluster_Nodes_View(AbstractView):
         ))
         return rl
 
+    def verify_compute_nodes(self, *args):
+        return Cluster_Nodes_ListView(
+            self.computes.get_element()
+        ).verify_nodes(*args)
 
-def verify_compute_nodes(self, *args):
-    return Cluster_Nodes_ListView(
-        self.computes.get_element()
-    ).verify_nodes(*args)
-
-
-def verify_controller_nodes(self, *args):
-    return Cluster_Nodes_ListView(
-        self.controllers.get_element()
-    ).verify_nodes(*args)
+    def verify_controller_nodes(self, *args):
+        return Cluster_Nodes_ListView(
+            self.controllers.get_element()
+        ).verify_nodes(*args)

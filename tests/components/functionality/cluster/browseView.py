@@ -16,18 +16,19 @@ class Cluster_BrowseView(AbstractView):
                          "//a[contains(@class, 'clusterbox') " \
                          "and div[contains(@class, 'cluster-name')]]"
 
-    environment = HtmlElement(
-        xpath="//div[@id='content']//div[@class='cluster-list']"
-              "//a[contains(@class, 'clusterbox') "
-              "and div[contains(@class, 'cluster-name') and text()='{name}']]",
-        element_name="Environment {name}")
-
-    newEnvironment = Link(
-        xpath="//div[@id='content']//div[@class='cluster-list']"
-              "//div[contains(@class, 'clusterbox create-cluster')]",
-        element_name="New environment")
-
     def __init__(self, parent=None):
+        self.environment = HtmlElement(
+            xpath="//div[@id='content']//div[@class='cluster-list']"
+                  "//a[contains(@class, 'clusterbox') "
+                  "and div[contains(@class, 'cluster-name') and text()='{name}']]",
+            element_name="Environment {name}"
+        )
+
+        self.newEnvironment = Link(
+            xpath="//div[@id='content']//div[@class='cluster-list']"
+                  "//div[contains(@class, 'clusterbox create-cluster')]",
+            element_name="New environment")
+
         AbstractView.__init__(self, parent)
         self.url = "#clusters"
 

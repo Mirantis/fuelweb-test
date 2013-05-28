@@ -8,25 +8,26 @@ from ...generic.abstractView import AbstractView
 
 
 class Cluster_View(AbstractView):
-    tab = HtmlElement(
-        xpath="//div[@id='content']//ul[contains(@class, 'nav nav-tabs')]"
-              "/li[.//b[@class='{}']]",
-        element_name="Tab")
-
-    deployChanges = Button(
-        xpath="//button[contains(@class, 'deploy-btn')]",
-        element_name="Deploy Changes")
-
-    deploymentBar = HtmlElement(
-        xpath="//li[contains(@class, 'deployment-control')]"
-              "//div[contains(@class, 'progress-deploy')]",
-        element_name="Deployment progress")
-
-    successMessage = HtmlElement(
-        xpath="//div[contains(@class, 'global-success')]/p",
-        element_name="Success message")
-
     def __init__(self, parent=None):
+        self.tab = HtmlElement(
+            xpath="//div[@id='content']//ul[contains(@class, 'nav nav-tabs')]"
+                  "/li[.//b[@class='{}']]",
+            element_name="Tab"
+        )
+        self.deployChanges = Button(
+            xpath="//button[contains(@class, 'deploy-btn')]",
+            element_name="Deploy Changes"
+        )
+        self.deploymentBar = HtmlElement(
+            xpath="//li[contains(@class, 'deployment-control')]"
+                  "//div[contains(@class, 'progress-deploy')]",
+            element_name="Deployment progress")
+
+        self.successMessage = HtmlElement(
+            xpath="//div[contains(@class, 'global-success')]/p",
+            element_name="Success message"
+        )
+
         AbstractView.__init__(self, parent)
 
     def click_actions_tab(self):
@@ -38,7 +39,7 @@ class Cluster_View(AbstractView):
 
     def wait_deployment_done(self, seconds):
         return Result(
-            "Wait for deployment done",
+            "Wait for deployment done ({})".format(seconds),
             WaitBot(seconds).wait_for_disappears(
                 By.XPATH,
                 "//li[contains(@class, 'deployment-control')]"

@@ -12,16 +12,18 @@ class AbstractDialog(AbstractView):
     BUTTON_DELETE = "Delete"
     BUTTON_DEPLOY = "Deploy"
 
-    elementClose = Button(
-        xpath="./div[@class='modal-header']/button[@class='close']",
-        element_name="Dialog [x] header icon")
-
-    footerButton = Button(
-        xpath="./div[@class='modal-footer']/button[contains(.,'{name}')]",
-        element_name="Dialog footer button [{name}]")
-
     def __init__(self):
         self.wait_loading()
+
+        self.elementClose = Button(
+            xpath="./div[@class='modal-header']/button[@class='close']",
+            element_name="Dialog [x] header icon"
+        )
+        self.footerButton = Button(
+            xpath="./div[@class='modal-footer']/button[contains(.,'{name}')]",
+            element_name="Dialog footer button [{name}]"
+        )
+
         AbstractView.__init__(self, self.__get_control_dialog())
 
     @classmethod

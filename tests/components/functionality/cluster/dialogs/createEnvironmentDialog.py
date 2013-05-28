@@ -8,18 +8,19 @@ from tests.testdata.cluster import TD_Cluster
 
 
 class CreateEnvironmentDialog(AbstractDialog):
-    name = Input(
-        xpath=".//input[@name='name']", element_name="Name")
-
-    nameErrorMessage = HtmlElement(
-        xpath="//div[contains(@class,'control-group') and "
-              ".//input[contains(@name, 'name')]]//span[@class='help-inline']",
-        element_name="name error message")
-
-    version = Select(
-        xpath=".//select[@name='release']", element_name="Version")
-
     def __init__(self):
+        self.name = Input(
+            xpath=".//input[@name='name']", element_name="Name"
+        )
+        self.nameErrorMessage = HtmlElement(
+            xpath="//div[contains(@class,'control-group') and "
+                  ".//input[contains(@name, 'name')]]//span[@class='help-inline']",
+            element_name="name error message"
+        )
+        self.version = Select(
+            xpath=".//select[@name='release']", element_name="Version"
+        )
+
         AbstractDialog.__init__(self)
 
     def populate(self, name, version, submit=False):
