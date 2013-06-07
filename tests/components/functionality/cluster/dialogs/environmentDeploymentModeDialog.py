@@ -19,10 +19,9 @@ class EnvironmentDeploymentModeDialog(AbstractDialog):
     def __init__(self):
         AbstractDialog.__init__(self)
 
-    def populate(self, deploymentMode, deploymentType, submit=False):
+    def populate(self, deploymentMode, submit=False):
         rl = ResultList("Populate Environment mode")\
-            .push(self.select_deployment_mode(deploymentMode))\
-            .push(self.select_deployment_type(deploymentType))
+            .push(self.select_deployment_mode(deploymentMode))
         if submit:
             rl.push(self.apply())
         return rl
