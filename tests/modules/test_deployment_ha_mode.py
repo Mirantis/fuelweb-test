@@ -23,91 +23,70 @@ class Test_Deployment_HA_Mode(TestCasePoteen):
         PoteenLogger.add_test_suite("Cluster deployment")
         ContextHolder.set_browser("firefox")
         ContextHolder.set_do_screenshot(False)
-        ContextHolder.set_url("http://localhost:8000/")
+        ContextHolder.set_url("http://10.20.0.2:8000/")
+
+    def deploy(self, controllers=0, computes=0):
+        PoteenLogger.add_test_case(
+            "Deploy in mode with HA ({controllers} controllers + "
+            "{computes} compute nodes)".format(
+                controllers=controllers, computes=computes))
+
+        cluster_key = "cluster"
+        cluster_name = "Test environment"
+
+        logger.info(Main().navigate())
+        logger.info(Cluster_BrowseView().remove_all())
+        logger.info(Cluster_BrowseView().click_add_new_cluster(cluster_key))
+        logger.info(CreateEnvironmentDialog().populate(
+            name=cluster_name,
+            version=TestConstants.OPENSTACK_CURRENT_VERSION,
+            submit=True
+        ))
+        logger.info(Cluster_BrowseView().select_by_key(cluster_key))
+        logger.info(Cluster_Nodes_View().select_environment_mode(
+            deploymentMode=Cluster.DEPLOYMENT_MODE_MULTI_NODE_WITH_HA
+        ))
+
+        if controllers > 0:
+            logger.info(Cluster_Nodes_View().click_add_controller())
+            available_nodes_names = Cluster_Nodes_ListView().get_nodes_names_by_status('Discovered')
+            logger.info(Cluster_Nodes_ListView().select_nodes(
+                *available_nodes_names[:controllers]
+            ))
+
+        if computes > 0:
+            logger.info(Cluster_Nodes_View().click_add_compute())
+            logger.info(Cluster_Nodes_ListView().select_nodes(
+                *available_nodes_names[controllers:controllers + computes]
+            ))
+
+        logger.info(Cluster_Nodes_View().verify_controller_nodes(
+            *available_nodes_names[:controllers]
+        ))
+        logger.info(Cluster_Nodes_View().verify_compute_nodes(
+            *available_nodes_names[controllers:controllers + computes]
+        ))
+
+        logger.info(Cluster_View().click_deploy_changes())
+        logger.info(DeployChangesDialog().deploy())
+        logger.info(Cluster_View().wait_deployment_done(
+            TestConstants.DEFAULT_DEPLOYMENT_TIMEOUT
+        ))
+        logger.info(Cluster_View().verify_success_message(
+            "Deployment of environment {name} is done."
+            " Access WebUI of OpenStack"
+            .format(name=cluster_name)
+        ))
 
     @attr(env=["fakeui"], set=["smoke", "regression", "full"])
     def test_deploy_2_controller(self):
-        PoteenLogger.add_test_case(
-            "Deploy in mode with HA (only 2 controllers)")
-
-        cluster_key = "cluster"
-        cluster_name = "Test environment"
-
-        logger.info(Main().navigate())
-        logger.info(Cluster_BrowseView().remove_all())
-        logger.info(Cluster_BrowseView().click_add_new_cluster(cluster_key))
-        logger.info(CreateEnvironmentDialog().populate(
-            name=cluster_name,
-            version=TestConstants.OPENSTACK_CURRENT_VERSION,
-            submit=True
-        ))
-        logger.info(Cluster_BrowseView().select_by_key(cluster_key))
-        logger.info(Cluster_Nodes_View().select_environment_mode(
-            deploymentType=Cluster.DEPLOYMENT_TYPE_COMPUTE_ONLY,
-            deploymentMode=Cluster.DEPLOYMENT_MODE_MULTI_NODE_WITH_HA
-        ))
-        logger.info(Cluster_Nodes_View().click_add_controller())
-        logger.info(Cluster_Nodes_ListView().select_nodes(
-            "Supermicro X9DRW", "Dell Inspiron"
-        ))
-        logger.info(Cluster_Nodes_View().verify_controller_nodes(
-            "Supermicro X9DRW", "Dell Inspiron"
-        ))
-        logger.info(Cluster_View().click_deploy_changes())
-        logger.info(DeployChangesDialog().deploy())
-        logger.info(Cluster_View().wait_deployment_done(
-            TestConstants.DEFAULT_DEPLOYMENT_TIMEOUT
-        ))
-        logger.info(Cluster_View().verify_success_message(
-            "Deployment of environment {name} is done."
-            " Access WebUI of OpenStack"
-            .format(name=cluster_name)
-        ))
+        self.deploy(2)
 
     @attr(env=["fakeui"], set=["smoke", "regression", "full"])
     def test_deploy_3_controller_2_compute(self):
-        PoteenLogger.add_test_case(
-            "Deploy in mode with HA (3 controllers + 2 compute nodes)")
+        self.deploy(3, 2)
 
-        cluster_key = "cluster"
-        cluster_name = "Test environment"
+    @attr(env=["fakeui"], set=["smoke", "regression", "full"])
+    def test_deploy_3_controller_4_compute(self):
+        self.deploy(3, 4)
 
-        logger.info(Main().navigate())
-        logger.info(Cluster_BrowseView().remove_all())
-        logger.info(Cluster_BrowseView().click_add_new_cluster(cluster_key))
-        logger.info(CreateEnvironmentDialog().populate(
-            name=cluster_name,
-            version=TestConstants.OPENSTACK_CURRENT_VERSION,
-            submit=True
-        ))
-        logger.info(Cluster_BrowseView().select_by_key(cluster_key))
-        logger.info(Cluster_Nodes_View().select_environment_mode(
-            deploymentType=Cluster.DEPLOYMENT_TYPE_COMPUTE_ONLY,
-            deploymentMode=Cluster.DEPLOYMENT_MODE_MULTI_NODE_WITH_HA
-        ))
-        logger.info(Cluster_Nodes_View().click_add_controller())
-        logger.info(Cluster_Nodes_ListView().select_nodes(
-            "Supermicro X9DRW", "Dell Inspiron", "VirtualBox"
-        ))
-        logger.info(Cluster_Nodes_View().click_add_compute())
-        logger.info(Cluster_Nodes_ListView().select_nodes(
-            "KVM", "Supermicro X9SCD"
-        ))
-
-        logger.info(Cluster_Nodes_View().verify_controller_nodes(
-            "Supermicro X9DRW", "Dell Inspiron", "VirtualBox"
-        ))
-        logger.info(Cluster_Nodes_View().verify_compute_nodes(
-            "KVM", "Supermicro X9SCD"
-        ))
-
-        logger.info(Cluster_View().click_deploy_changes())
-        logger.info(DeployChangesDialog().deploy())
-        logger.info(Cluster_View().wait_deployment_done(
-            TestConstants.DEFAULT_DEPLOYMENT_TIMEOUT
-        ))
-        logger.info(Cluster_View().verify_success_message(
-            "Deployment of environment {name} is done."
-            " Access WebUI of OpenStack"
-            .format(name=cluster_name)
-        ))

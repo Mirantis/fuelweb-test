@@ -54,15 +54,14 @@ class Cluster_Nodes_View(AbstractView):
     def click_deployment_mode(self):
         return self.deploymentMode.click()
 
-    def select_environment_mode(self, deploymentMode, deploymentType):
+    def select_environment_mode(self, deploymentMode):
         rl = ResultList(
-            "Select environment mode [{mode}] type [{type}]".format(
-                mode=deploymentMode, type=deploymentType)
+            "Select environment mode [{mode}]".format(
+                mode=deploymentMode)
         )
         rl.push(self.click_deployment_mode())
         rl.push(EnvironmentDeploymentModeDialog().populate(
             deploymentMode=deploymentMode,
-            deploymentType=deploymentType,
             submit=True
         ))
         return rl

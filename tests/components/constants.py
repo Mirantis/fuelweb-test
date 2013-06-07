@@ -2,7 +2,7 @@
 
 class TestConstants(object):
 
-    OPENSTACK_FOLSOM = "Folsom"
+    OPENSTACK_FOLSOM = "Grizzly"
     OPENSTACK_CURRENT_VERSION = OPENSTACK_FOLSOM
 
     DEFAULT_DEPLOYMENT_TIMEOUT = 500
