@@ -16,14 +16,14 @@ from tests.components.functionality.cluster.nodes.view import Cluster_Nodes_View
 logger = PoteenLogger
 
 
-class Test_Deployment_HA_Mode(TestCasePoteen):
+class TestDeploymentHAMode(TestCasePoteen):
     @classmethod
     def setUpClass(cls):
-        super(Test_Deployment_HA_Mode, cls).setUpClass()
+        super(TestDeploymentHAMode, cls).setUpClass()
         PoteenLogger.add_test_suite("Cluster deployment")
-        ContextHolder.set_browser("firefox")
-        ContextHolder.set_do_screenshot(False)
-        ContextHolder.set_url("http://10.20.0.2:8000/")
+        # ContextHolder.set_browser("firefox")
+        # ContextHolder.set_do_screenshot(False)
+        # ContextHolder.set_url("http://10.20.0.2:8000/")
 
     def deploy(self, controllers=0, computes=0):
         PoteenLogger.add_test_case(
