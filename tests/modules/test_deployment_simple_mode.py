@@ -16,10 +16,10 @@ from tests.components.functionality.cluster.nodes.view import Cluster_Nodes_View
 logger = PoteenLogger
 
 
-class Test_Deployment_Simple_Mode(TestCasePoteen):
+class TestDeploymentSimpleMode(TestCasePoteen):
     @classmethod
     def setUpClass(cls):
-        super(Test_Deployment_Simple_Mode, cls).setUpClass()
+        super(TestDeploymentSimpleMode, cls).setUpClass()
         PoteenLogger.add_test_suite("Cluster deployment")
         # ContextHolder.set_browser("firefox")
         # ContextHolder.set_do_screenshot(False)
