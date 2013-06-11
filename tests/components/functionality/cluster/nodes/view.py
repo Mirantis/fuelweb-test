@@ -107,6 +107,11 @@ class Cluster_Nodes_View(AbstractView):
         return Cluster_Nodes_ListView(self.cinders.get_element())\
             .get_nodes()
 
+    def verify_controller_nodes_not_exist(self, *args):
+        return Cluster_Nodes_ListView(
+            self.computes.get_element()
+        ).verify_nodes_not_exist(*args)
+
     def verify_error_contains(self, *args):
         rl = ResultList("Verify error alert contains")
         for string in args:
