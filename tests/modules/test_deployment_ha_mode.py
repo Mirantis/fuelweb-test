@@ -4,18 +4,18 @@ from engine.poteen.poteenLogger import PoteenLogger
 from engine.poteen.testCasePoteen import TestCasePoteen
 
 from ..components.functionality.main import Main
-from tests.components.settings import *
-from tests.components.functionality.cluster.browseView \
+from ..components.settings import *
+from ..components.functionality.cluster.browseView \
     import Cluster_BrowseView
-from tests.components.functionality.cluster.cluster import Cluster
-from tests.components.functionality.cluster.dialogs.createEnvironmentDialog \
+from ..components.functionality.cluster.cluster import Cluster
+from ..components.functionality.cluster.dialogs.createEnvironmentDialog \
     import CreateEnvironmentDialog
-from tests.components.functionality.cluster.dialogs.deployChangesDialog \
+from ..components.functionality.cluster.dialogs.deployChangesDialog \
     import DeployChangesDialog
-from tests.components.functionality.cluster.editView import Cluster_View
-from tests.components.functionality.cluster.nodes.listView \
+from ..components.functionality.cluster.editView import Cluster_View
+from ..components.functionality.cluster.nodes.listView \
     import Cluster_Nodes_ListView
-from tests.components.functionality.cluster.nodes.view \
+from ..components.functionality.cluster.nodes.view \
     import Cluster_Nodes_View
 
 logger = PoteenLogger
