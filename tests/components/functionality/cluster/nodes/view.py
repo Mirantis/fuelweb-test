@@ -2,6 +2,7 @@ from engine.poteen.elements.basic.button import Button
 from engine.poteen.elements.basic.htmlElement import HtmlElement
 from engine.poteen.elements.basic.link import Link
 from engine.poteen.log.resultList import ResultList
+from engine.poteen.log.result import Result
 from ....generic.abstractView import AbstractView
 from .listView import Cluster_Nodes_ListView
 from ..dialogs.environmentDeploymentModeDialog \
@@ -35,6 +36,11 @@ class Cluster_Nodes_View(AbstractView):
         self.deploymentMode = Link(
             xpath="//li[contains(@class, 'change-cluster-mode-btn')]",
             element_name="Deployment mode"
+        )
+        self.alertError = HtmlElement(
+            xpath="//div[contains(@class, 'alert-block') "
+                  "and contains(@class, 'global-error')]/p",
+            element_name="Alert Error"
         )
 
         AbstractView.__init__(self, parent)
@@ -70,3 +76,12 @@ class Cluster_Nodes_View(AbstractView):
         return Cluster_Nodes_ListView(
             self.controllers.get_element()
         ).verify_nodes(*args)
+
+    def verify_error_contains(self, *args):
+        rl = ResultList("Verify error alert contains")
+        for string in args:
+            rl.push(Result(
+                "String [{string}] exists".format(string=string),
+                self.alertError.get_value().find(string) != -1
+            ))
+        return rl
