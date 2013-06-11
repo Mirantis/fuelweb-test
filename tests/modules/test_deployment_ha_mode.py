@@ -4,14 +4,19 @@ from engine.poteen.poteenLogger import PoteenLogger
 from engine.poteen.testCasePoteen import TestCasePoteen
 
 from ..components.functionality.main import Main
-from tests.components.constants import TestConstants
-from tests.components.functionality.cluster.browseView import Cluster_BrowseView
-from tests.components.functionality.cluster.cluster import Cluster
-from tests.components.functionality.cluster.dialogs.createEnvironmentDialog import CreateEnvironmentDialog
-from tests.components.functionality.cluster.dialogs.deployChangesDialog import DeployChangesDialog
-from tests.components.functionality.cluster.editView import Cluster_View
-from tests.components.functionality.cluster.nodes.listView import Cluster_Nodes_ListView
-from tests.components.functionality.cluster.nodes.view import Cluster_Nodes_View
+from ..components.settings import *
+from ..components.functionality.cluster.browseView \
+    import Cluster_BrowseView
+from ..components.functionality.cluster.cluster import Cluster
+from ..components.functionality.cluster.dialogs.createEnvironmentDialog \
+    import CreateEnvironmentDialog
+from ..components.functionality.cluster.dialogs.deployChangesDialog \
+    import DeployChangesDialog
+from ..components.functionality.cluster.editView import Cluster_View
+from ..components.functionality.cluster.nodes.listView \
+    import Cluster_Nodes_ListView
+from ..components.functionality.cluster.nodes.view \
+    import Cluster_Nodes_View
 
 logger = PoteenLogger
 
@@ -39,7 +44,7 @@ class TestDeploymentHAMode(TestCasePoteen):
         logger.info(Cluster_BrowseView().click_add_new_cluster(cluster_key))
         logger.info(CreateEnvironmentDialog().populate(
             name=cluster_name,
-            version=TestConstants.OPENSTACK_CURRENT_VERSION,
+            version=OPENSTACK_CURRENT_VERSION,
             submit=True
         ))
         logger.info(Cluster_BrowseView().select_by_key(cluster_key))
@@ -49,7 +54,8 @@ class TestDeploymentHAMode(TestCasePoteen):
 
         if controllers > 0:
             logger.info(Cluster_Nodes_View().click_add_controller())
-            available_nodes_names = Cluster_Nodes_ListView().get_nodes_names_by_status('Discovered')
+            available_nodes_names = Cluster_Nodes_ListView()\
+                .get_nodes_names_by_status('Discovered')
             logger.info(Cluster_Nodes_ListView().select_nodes(
                 *available_nodes_names[:controllers]
             ))
@@ -70,7 +76,7 @@ class TestDeploymentHAMode(TestCasePoteen):
         logger.info(Cluster_View().click_deploy_changes())
         logger.info(DeployChangesDialog().deploy())
         logger.info(Cluster_View().wait_deployment_done(
-            TestConstants.DEFAULT_DEPLOYMENT_TIMEOUT
+            DEFAULT_DEPLOYMENT_TIMEOUT
         ))
         logger.info(Cluster_View().verify_success_message(
             "Deployment of environment {name} is done."
