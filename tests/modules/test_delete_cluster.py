@@ -73,7 +73,7 @@ class Test_Deployment(TestCasePoteen):
 
         logger.info(Main().navigate())
         logger.info(Cluster_BrowseView().remove("Test environment"))
-     #   logger.info(Cluster().verify_status("Removing"))
+        logger.info(Cluster().verify_status("Removing"))
         logger.info(Cluster_BrowseView().verify_clusters_amount(self, 0))
 
     @attr(env=["fakeui"], set=["smoke", "regression", "full"])
@@ -97,14 +97,20 @@ class Test_Deployment(TestCasePoteen):
             deploymentMode=Cluster.DEPLOYMENT_MODE_MULTI_NODE
         ))
         logger.info(Cluster_Nodes_View().click_add_controller())
-        logger.info(Cluster_Nodes_ListView().select_nodes(
+        logger.info(Cluster_Nodes_ListView().click_nodes(
             "Supermicro X9SCD (offline)"
+        ))
+        logger.info(Cluster_Nodes_ListView().select_nodes(
+            "Supermicro X9DRW"
         ))
         logger.info(Cluster_Nodes_View().click_add_compute())
         logger.info(Cluster_Nodes_ListView().select_nodes(
             "Dell Inspiron"
         ))
         logger.info(Cluster_Nodes_View().verify_controller_nodes(
+            "Supermicro X9DRW"
+        ))
+        logger.info(Cluster_Nodes_View().verify_controller_nodes_not_exist(
             "Supermicro X9SCD (offline)"
         ))
         logger.info(Cluster_Nodes_View().verify_compute_nodes(
@@ -115,15 +121,16 @@ class Test_Deployment(TestCasePoteen):
         logger.info(Cluster_View().wait_deployment_done(
             TestConstants.DEFAULT_DEPLOYMENT_TIMEOUT
         ))
-        logger.info(Cluster_View().verify_error_message(
-            "Deployment has failed."
-            " Check these nodes:'Supermicro X9SCD (offline)'"
+        logger.info(Cluster_View().verify_success_message(
+            "Deployment of environment {name} is done."
+            " Access WebUI of OpenStack"
             .format(name=cluster_name)
         ))
 
+        logger.info(Main().navigate())
         logger.info(Cluster_BrowseView().remove("Test environment"))
-    #    logger.info(Cluster().verify_status("Removing"))
-    #    logger.info(Cluster_BrowseView().get_clusters().__sizeof__()==0)
+     #   logger.info(Cluster().verify_status("Removing"))
+      #  logger.info(Cluster_BrowseView().verify_clusters_amount(self, 0))
 
 
 
