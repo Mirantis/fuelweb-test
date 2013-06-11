@@ -1,9 +1,7 @@
-from engine.poteen.bots.verifyBot import VerifyBot
 from engine.poteen.decorators import catch_stale_error
 from engine.poteen.elements.basic.button import Button
 from engine.poteen.elements.basic.htmlElement import HtmlElement
 from engine.poteen.elements.basic.link import Link
-from engine.poteen.error import ElementNotFoundException
 from engine.poteen.log.resultList import ResultList
 from engine.poteen.log.result import Result
 from ....generic.abstractView import AbstractView
@@ -112,6 +110,11 @@ class Cluster_Nodes_View(AbstractView):
             xpath="//div[contains(@class, 'alert-block') "
                   "and contains(@class, 'global-error')]/p",
             element_name="Alert Error"
+        )
+        self.version = HtmlElement(
+            xpath="//li[contains(@class, 'summary-settings-btn') "
+                  "and contains(b/text(), 'Version')]",
+            element_name="Version"
         )
         self.controller_placeholder = HtmlElement(
             xpath="//div[contains(@class, 'node-list node-list-controller')]"
@@ -267,3 +270,9 @@ class Cluster_Nodes_View(AbstractView):
 
     def verify_cinders_amount(self,  value):
         return self.verify_amount("cinders", value)
+
+    def verify_version(self, expected_value):
+        version = self.version.find().get_value()
+        return Result("String [{version}] contains [{expected_value}]".format(
+            version=version, expected_value=expected_value),
+            version.find(expected_value) != -1)
