@@ -38,7 +38,8 @@ class Cluster_Nodes_View(AbstractView):
             element_name="Deployment mode"
         )
         self.alertError = HtmlElement(
-            xpath="//div[contains(@class, 'alert-block') and contains(@class, 'global-error')]/p",
+            xpath="//div[contains(@class, 'alert-block') "
+                  "and contains(@class, 'global-error')]/p",
             element_name="Alert Error"
         )
 
