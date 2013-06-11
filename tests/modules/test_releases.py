@@ -21,9 +21,9 @@ class TestDeploymentSimpleMode(TestCasePoteen):
     def setUpClass(cls):
         super(TestDeploymentSimpleMode, cls).setUpClass()
         PoteenLogger.add_test_suite("Cluster deployment")
-        ContextHolder.set_browser("firefox")
-        ContextHolder.set_do_screenshot(False)
-        ContextHolder.set_url("http://10.20.0.2:8000/")
+        # ContextHolder.set_browser("firefox")
+        # ContextHolder.set_do_screenshot(False)
+        # ContextHolder.set_url("http://10.20.0.2:8000/")
 
     @attr(env=["fakeui"], set=["smoke", "regression", "full"])
     def test_deploy_no_ha_1_controller_1_compute(self):
