@@ -1,0 +1,133 @@
+from nose.plugins.attrib import attr
+from engine.poteen.contextHolder import ContextHolder
+from engine.poteen.poteenLogger import PoteenLogger
+from engine.poteen.testCasePoteen import TestCasePoteen
+
+from tests.components.functionality.main import Main
+from tests.components.constants import TestConstants
+from tests.components.functionality.cluster.browseView import Cluster_BrowseView
+from tests.components.functionality.cluster.cluster import Cluster
+from tests.components.functionality.cluster.dialogs.createEnvironmentDialog import CreateEnvironmentDialog
+from tests.components.functionality.cluster.dialogs.deleteEnvironmentDialog import DeleteEnvironmentDialog
+from tests.components.functionality.cluster.dialogs.deployChangesDialog import DeployChangesDialog
+from tests.components.functionality.cluster.editView import Cluster_View
+from tests.components.functionality.cluster.nodes.listView import Cluster_Nodes_ListView
+from tests.components.functionality.cluster.nodes.view import Cluster_Nodes_View
+
+logger = PoteenLogger
+
+
+class Test_Deployment(TestCasePoteen):
+    @classmethod
+    def setUpClass(cls):
+        super(Test_Deployment, cls).setUpClass()
+        PoteenLogger.add_test_suite("Delete cluster")
+        ContextHolder.set_browser("firefox")
+        ContextHolder.set_do_screenshot(False)
+        ContextHolder.set_url("http://localhost:8000/")
+
+    @attr(env=["fakeui"], set=["smoke", "regression", "full"])
+    def test_delete_cluster_after_successful_deployment(self):
+        PoteenLogger.add_test_case(
+            "Delete cluster after successful deployment")
+
+        cluster_key = "cluster"
+        cluster_name = "Test environment"
+
+        logger.info(Main().navigate())
+        logger.info(Cluster_BrowseView().remove_all())
+        logger.info(Cluster_BrowseView().click_add_new_cluster(cluster_key))
+        logger.info(CreateEnvironmentDialog().populate(
+            name=cluster_name,
+            version=TestConstants.OPENSTACK_CURRENT_VERSION,
+            submit=True
+        ))
+        logger.info(Cluster_BrowseView().select_by_key(cluster_key))
+        logger.info(Cluster_Nodes_View().select_environment_mode(
+            deploymentMode=Cluster.DEPLOYMENT_MODE_MULTI_NODE
+        ))
+        logger.info(Cluster_Nodes_View().click_add_controller())
+        logger.info(Cluster_Nodes_ListView().select_nodes(
+            "Supermicro X9DRW"
+        ))
+        logger.info(Cluster_Nodes_View().click_add_compute())
+        logger.info(Cluster_Nodes_ListView().select_nodes(
+            "Dell Inspiron"
+        ))
+        logger.info(Cluster_Nodes_View().verify_controller_nodes(
+            "Supermicro X9DRW"
+        ))
+        logger.info(Cluster_Nodes_View().verify_compute_nodes(
+            "Dell Inspiron"
+        ))
+        logger.info(Cluster_View().click_deploy_changes())
+        logger.info(DeployChangesDialog().deploy())
+        logger.info(Cluster_View().wait_deployment_done(
+            TestConstants.DEFAULT_DEPLOYMENT_TIMEOUT
+        ))
+        logger.info(Cluster_View().verify_success_message(
+            "Deployment of environment {name} is done."
+            " Access WebUI of OpenStack"
+            .format(name=cluster_name)
+        ))
+
+        logger.info(Main().navigate())
+        logger.info(Cluster_BrowseView().remove("Test environment"))
+     #   logger.info(Cluster().verify_status("Removing"))
+        logger.info(Cluster_BrowseView().verify_clusters_amount(self, 0))
+
+    @attr(env=["fakeui"], set=["smoke", "regression", "full"])
+    def test_can_not_add_offline_node(self):
+        PoteenLogger.add_test_case(
+            "Delete cluster with offline node")
+
+        cluster_key = "cluster"
+        cluster_name = "Test environment"
+
+        logger.info(Main().navigate())
+        logger.info(Cluster_BrowseView().remove_all())
+        logger.info(Cluster_BrowseView().click_add_new_cluster(cluster_key))
+        logger.info(CreateEnvironmentDialog().populate(
+            name=cluster_name,
+            version=TestConstants.OPENSTACK_CURRENT_VERSION,
+            submit=True
+        ))
+        logger.info(Cluster_BrowseView().select_by_key(cluster_key))
+        logger.info(Cluster_Nodes_View().select_environment_mode(
+            deploymentMode=Cluster.DEPLOYMENT_MODE_MULTI_NODE
+        ))
+        logger.info(Cluster_Nodes_View().click_add_controller())
+        logger.info(Cluster_Nodes_ListView().select_nodes(
+            "Supermicro X9SCD (offline)"
+        ))
+        logger.info(Cluster_Nodes_View().click_add_compute())
+        logger.info(Cluster_Nodes_ListView().select_nodes(
+            "Dell Inspiron"
+        ))
+        logger.info(Cluster_Nodes_View().verify_controller_nodes(
+            "Supermicro X9SCD (offline)"
+        ))
+        logger.info(Cluster_Nodes_View().verify_compute_nodes(
+            "Dell Inspiron"
+        ))
+        logger.info(Cluster_View().click_deploy_changes())
+        logger.info(DeployChangesDialog().deploy())
+        logger.info(Cluster_View().wait_deployment_done(
+            TestConstants.DEFAULT_DEPLOYMENT_TIMEOUT
+        ))
+        logger.info(Cluster_View().verify_error_message(
+            "Deployment has failed."
+            " Check these nodes:'Supermicro X9SCD (offline)'"
+            .format(name=cluster_name)
+        ))
+
+        logger.info(Cluster_BrowseView().remove("Test environment"))
+    #    logger.info(Cluster().verify_status("Removing"))
+    #    logger.info(Cluster_BrowseView().get_clusters().__sizeof__()==0)
+
+
+
+
+
+
+

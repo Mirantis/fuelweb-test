@@ -7,11 +7,10 @@ from engine.poteen.utils.storage import Storage
 from ...generic.abstractView import AbstractView
 from ...functionality.cluster.cluster import Cluster
 from ....testdata.cluster import TD_Cluster
-from ....components.functionality.cluster.actions.view \
-    import Cluster_Actions_View
-from ....components.functionality.cluster.dialogs.deleteEnvironmentDialog \
-    import DeleteEnvironmentDialog
+from ....components.functionality.cluster.actions.view import Cluster_Actions_View
+from ....components.functionality.cluster.dialogs.deleteEnvironmentDialog import DeleteEnvironmentDialog
 from ....components.functionality.cluster.editView import Cluster_View
+from engine.poteen.log.result import Result
 
 
 class Cluster_BrowseView(AbstractView):
@@ -68,3 +67,10 @@ class Cluster_BrowseView(AbstractView):
 
     def select_by_key(self, key):
         return self.select(Storage.get(key).name)
+
+    def verify_clusters_amount (self, value):
+        return Result(
+            "Verify if amount of clusters is {value}"
+            .format(value=value),
+            len(self.get_clusters()) == value
+        )
