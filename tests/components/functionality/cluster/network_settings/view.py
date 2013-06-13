@@ -12,7 +12,7 @@ from ..dialogs.environmentDeploymentModeDialog \
 from tests.components.functionality.cluster.generic.ip_range_row import IpRangeRow
 
 
-class Cluster_Nodes_View(AbstractView):
+class NetworkSettingsView(AbstractView):
     def __init__(self, parent=None):
         self.save_settings = Button(
             xpath=".//div[contains(@class, 'apply-btn')]",
