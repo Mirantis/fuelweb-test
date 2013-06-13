@@ -14,7 +14,8 @@ class CreateEnvironmentDialog(AbstractDialog):
         )
         self.nameErrorMessage = HtmlElement(
             xpath="//div[contains(@class,'control-group') and "
-                  ".//input[contains(@name, 'name')]]//span[@class='help-inline']",
+                  ".//input[contains(@name, 'name')]]"
+                  "//span[@class='help-inline']",
             element_name="name error message"
         )
         self.version = Select(

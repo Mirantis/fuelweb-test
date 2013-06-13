@@ -95,4 +95,3 @@ class TestDeploymentHAMode(TestCasePoteen):
     @attr(env=["fakeui"], set=["smoke", "regression", "full"])
     def test_deploy_3_controller_4_compute(self):
         self.deploy(3, 4)
-

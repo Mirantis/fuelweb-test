@@ -36,5 +36,3 @@ class AbstractMenu(AbstractView):
         )
 
         AbstractView.__init__(self, parent)
-
-    

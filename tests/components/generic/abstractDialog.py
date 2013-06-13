@@ -61,4 +61,3 @@ class AbstractDialog(AbstractView):
     def wait_loading(self):
         self.get_wait_bot().wait_for_stop_moving(By.XPATH, self.XPATH_DIALOG)
         self.get_wait_bot().wait_loading()
-
