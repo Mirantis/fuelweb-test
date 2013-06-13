@@ -18,4 +18,3 @@ class ConfigureView(AbstractView):
             element_name="Back To Node List")
 
         AbstractView.__init__(self)
-

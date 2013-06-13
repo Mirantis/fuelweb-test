@@ -3,8 +3,10 @@ from engine.poteen.elements.basic.button import Button
 from engine.poteen.elements.basic.htmlElement import HtmlElement
 from engine.poteen.log.result import Result
 from ....generic.abstractView import AbstractView
-from tests.components.functionality.cluster.generic.volume_group import VolumeGroup
-from tests.components.functionality.cluster.generic.volume_group_box import VolumeGroupBox
+from tests.components.functionality.cluster.generic.volume_group \
+    import VolumeGroup
+from tests.components.functionality.cluster.generic.volume_group_box \
+    import VolumeGroupBox
 
 
 class DiskBox(BaseElement):
@@ -49,6 +51,6 @@ class DiskBox(BaseElement):
 
     def get_volume_group(self, name):
         return VolumeGroup(self.volume_group.find(name=name))
-    
+
     def get_volume_group_box(self, name):
         return VolumeGroupBox(self.volume_group_box.find(name=name))

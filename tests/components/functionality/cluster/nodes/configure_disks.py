@@ -1,5 +1,6 @@
 from engine.poteen.elements.basic.htmlElement import HtmlElement
-from tests.components.functionality.cluster.generic.configure_view import ConfigureView
+from tests.components.functionality.cluster.generic.configure_view \
+    import ConfigureView
 from tests.components.functionality.cluster.generic.disk_box import DiskBox
 from tests.components.generic.abstractView import AbstractView
 
@@ -16,4 +17,3 @@ class ConfigureDisks(ConfigureView):
 
     def get_disk_box(self, name):
         return DiskBox(self.disk_box.find(name=name))
-

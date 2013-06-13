@@ -17,6 +17,8 @@ from ..components.functionality.cluster.nodes.listView \
     import Cluster_Nodes_ListView
 from ..components.functionality.cluster.nodes.view \
     import Cluster_Nodes_View
+from tests.components.functionality.cluster.nodes.configure_interfaces \
+    import ConfigureInterfaces
 
 logger = PoteenLogger
 
@@ -95,3 +97,8 @@ class TestDeploymentHAMode(TestCasePoteen):
     @attr(env=["fakeui"], set=["smoke", "regression", "full"])
     def test_deploy_3_controller_4_compute(self):
         self.deploy(3, 4)
+
+    @attr(env=["fakeui"], set=["smoke", "regression", "full"])
+    def test_test(self):
+        Main().navigate()
+        ConfigureInterfaces().drag_network_to('floating', 'eth1')
