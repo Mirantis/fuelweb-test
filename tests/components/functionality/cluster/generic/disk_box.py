@@ -1,7 +1,9 @@
+from engine.poteen.bots.waitBot import WaitBot
 from engine.poteen.elements.baseElement import BaseElement
 from engine.poteen.elements.basic.button import Button
 from engine.poteen.elements.basic.htmlElement import HtmlElement
 from engine.poteen.log.result import Result
+from engine.poteen.log.resultList import ResultList
 from ....generic.abstractView import AbstractView
 from tests.components.functionality.cluster.generic.volume_group \
     import VolumeGroup
@@ -29,6 +31,10 @@ class DiskBox(BaseElement):
             element_name="Volume group {name}")
 
         self.disk_parameter = HtmlElement(
+            xpath=".//div[contains(@class,'disk-map-details-item')]",
+            element_name="Disk parameter {name}")
+
+        self.disk_map_details = HtmlElement(
             xpath=".//div[contains(@class,'disk-map-details-item') and "
                   "div[@class='disk-map-details-name']='{name}']/"
                   "div[@class='disk-map-details-parameter']",
@@ -44,7 +50,7 @@ class DiskBox(BaseElement):
             element_name="Make Bootable")
 
         self.disk_map = HtmlElement(
-            xpath=".//div[@class='disk-map-short disk-map-full')]",
+            xpath=".//div[@class='disk-map-short disk-map-full']",
             element_name="Disk map")
 
         BaseElement.__init__(self, parent)
@@ -54,3 +60,18 @@ class DiskBox(BaseElement):
 
     def get_volume_group_box(self, name):
         return VolumeGroupBox(self.volume_group_box.find(name=name))
+
+    def click_disk_map(self):
+        rl = ResultList("Click disk map")
+        rl.push(self.disk_map.click())
+        WaitBot().wait_for_web_element_stop_resizing(
+            self.disk_map.find().get_element())
+        return rl
+
+    def verify_volume_size_is_identical(self, name):
+        rl = ResultList("Verify volume size is identical everywhere")
+        group_box_size = self.get_volume_group_box(name).size.get_value()
+        rl.push(self.get_volume_group(name).size.verify_value_contains(
+            group_box_size))
+        return rl
+

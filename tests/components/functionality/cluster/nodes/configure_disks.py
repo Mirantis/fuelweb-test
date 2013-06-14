@@ -16,4 +16,4 @@ class ConfigureDisks(ConfigureView):
         AbstractView.__init__(self)
 
     def get_disk_box(self, name):
-        return DiskBox(self.disk_box.find(name=name))
+        return DiskBox(self.disk_box.find(name=name).get_element())

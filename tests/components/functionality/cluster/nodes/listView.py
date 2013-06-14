@@ -37,7 +37,7 @@ class Cluster_Nodes_ListView(AbstractView):
         return nodes_names
 
     def get_nodes(self):
-        return self._get_nodes("//div[contains(@class, 'nodebox')]")
+        return self._get_nodes(".//div[contains(@class, 'nodebox')]")
 
     def get_nodes_by_status(self, status):
         return self._get_nodes(
