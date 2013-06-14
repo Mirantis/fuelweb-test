@@ -4,14 +4,16 @@ from tests.components.generic.abstractDialog import AbstractDialog
 
 
 class NodeHardwareDialog(AbstractDialog):
-    accordion_header = HtmlElement(xpath="//div[@class='accordion-toggle' "
-                                         "and contains(text(),'{name}')]/p",
-                                   element_name="Accordion header [{name}]")
 
     BUTTON_NETWORK_CONFIGURATION = "Network Configuration"
     BUTTON_DISK_CONFIGURATION = "Disk Configuration"
 
     def __init__(self):
+        self.accordion_header = HtmlElement(
+            xpath="//div[@class='accordion-toggle' "
+            "and contains(text(),'{name}')]/p",
+            element_name="Accordion header [{name}]")
+
         AbstractDialog.__init__(self)
 
     def click_memory(self):

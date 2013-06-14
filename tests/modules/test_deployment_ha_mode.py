@@ -102,3 +102,5 @@ class TestDeploymentHAMode(TestCasePoteen):
     def test_test(self):
         Main().navigate()
         ConfigureInterfaces().drag_network_to('floating', 'eth1')
+        
+
