@@ -98,9 +98,3 @@ class TestDeploymentHAMode(TestCasePoteen):
     def test_deploy_3_controller_4_compute(self):
         self.deploy(3, 4)
 
-    @attr(env=["fakeui"], set=["smoke", "regression", "full"])
-    def test_test(self):
-        Main().navigate()
-        ConfigureInterfaces().drag_network_to('floating', 'eth1')
-        
-
