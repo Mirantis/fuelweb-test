@@ -1,9 +1,10 @@
 from engine.poteen.bots.actionBot import ActionBot
+from engine.poteen.bots.waitBot import WaitBot
 from engine.poteen.elements.basic.htmlElement import HtmlElement
 from engine.poteen.log.result import Result
 from engine.poteen.log.resultList import ResultList
 from ....generic.abstractView import AbstractView
-from tests.components.functionality.cluster.generic.node import Node
+from .....components.functionality.cluster.generic.node import Node
 from selenium.webdriver.common.by import By
 
 
@@ -37,7 +38,7 @@ class Cluster_Nodes_ListView(AbstractView):
         return nodes_names
 
     def get_nodes(self):
-        return self._get_nodes("//div[contains(@class, 'nodebox')]")
+        return self._get_nodes(".//div[contains(@class, 'nodebox')]")
 
     def get_nodes_by_status(self, status):
         return self._get_nodes(
@@ -53,6 +54,8 @@ class Cluster_Nodes_ListView(AbstractView):
             node = Node(self.node.find(name=name).get_element())
             rl.push(node.select())
         rl.push(self.apply())
+        WaitBot().wait_for_disappears(By.XPATH, "//div[contains(@class,'nodes-screen')]")
+        WaitBot().wait_for_displays(By.XPATH, "//div[@class='nodes-by-roles-screen']")
         return rl
 
     def verify_nodes(self, *args):

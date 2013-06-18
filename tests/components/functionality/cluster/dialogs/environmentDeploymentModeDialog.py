@@ -1,6 +1,6 @@
 from engine.poteen.elements.basic.radio import Radio
 from engine.poteen.log.resultList import ResultList
-from tests.components.generic.abstractDialog import AbstractDialog
+from .....components.generic.abstractDialog import AbstractDialog
 
 
 class EnvironmentDeploymentModeDialog(AbstractDialog):

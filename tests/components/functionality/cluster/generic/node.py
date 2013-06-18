@@ -13,6 +13,10 @@ class Node(AbstractView):
 
         self.status = HtmlElement(
             xpath=".//div[@class='node-status']", element_name="Status")
+
+        self.hardware = HtmlElement(
+            xpath=".//div[@class='node-hardware']", element_name="Hardware")
+
         AbstractView.__init__(self, parent)
 
     def get_name(self):
@@ -29,3 +33,6 @@ class Node(AbstractView):
             return Result("Node is already selected")
         else:
             return self.name.click()
+
+    def click_hardware(self):
+        return self.hardware.click()

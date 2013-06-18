@@ -23,6 +23,12 @@ class Cluster_Nodes_View(AbstractView):
                   "//a[contains(@class, 'btn-add-nodes')]",
             element_name="Add controller"
         )
+        self.addCinder = Link(
+            xpath="//div[@id='tab-nodes']"
+                  "//div[contains(@class, 'node-list-cinder')]"
+                  "//a[contains(@class, 'btn-add-nodes')]",
+            element_name="Add controller"
+        )
         self.computes = Button(
             xpath="//div[@id='tab-nodes']"
                   "//div[contains(@class, 'node-list-compute')]",
@@ -32,6 +38,11 @@ class Cluster_Nodes_View(AbstractView):
             xpath="//div[@id='tab-nodes']"
                   "//div[contains(@class, 'node-list-controller')]",
             element_name="controllers"
+        )
+        self.cinders = Button(
+            xpath="//div[@id='tab-nodes']"
+                  "//div[contains(@class, 'node-list-cinder')]",
+            element_name="cinders"
         )
         self.deploymentMode = Link(
             xpath="//li[contains(@class, 'change-cluster-mode-btn')]",
@@ -51,6 +62,9 @@ class Cluster_Nodes_View(AbstractView):
     def click_add_controller(self):
         return self.addController.click_and_wait()
 
+    def click_add_cinder(self):
+        return self.addCinder.click_and_wait()
+
     def click_deployment_mode(self):
         return self.deploymentMode.click()
 
@@ -66,6 +80,11 @@ class Cluster_Nodes_View(AbstractView):
         ))
         return rl
 
+    def verify_cinder_nodes(self, *args):
+        return Cluster_Nodes_ListView(
+            self.cinders.get_element()
+        ).verify_nodes(*args)
+
     def verify_compute_nodes(self, *args):
         return Cluster_Nodes_ListView(
             self.computes.get_element()
@@ -75,6 +94,18 @@ class Cluster_Nodes_View(AbstractView):
         return Cluster_Nodes_ListView(
             self.controllers.get_element()
         ).verify_nodes(*args)
+
+    def get_nodes_controllers(self):
+        return Cluster_Nodes_ListView(self.controllers.get_element())\
+            .get_nodes()
+
+    def get_nodes_computes(self):
+        return Cluster_Nodes_ListView(self.computes.get_element())\
+            .get_nodes()
+
+    def get_nodes_cinders(self):
+        return Cluster_Nodes_ListView(self.cinders.get_element())\
+            .get_nodes()
 
     def verify_error_contains(self, *args):
         rl = ResultList("Verify error alert contains")

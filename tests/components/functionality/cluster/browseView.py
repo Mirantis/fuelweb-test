@@ -1,4 +1,5 @@
 from selenium.webdriver.common.by import By
+from engine.poteen.bots.waitBot import WaitBot
 from engine.poteen.elements.basic.htmlElement import HtmlElement
 from engine.poteen.elements.basic.link import Link
 from engine.poteen.log.resultList import ResultList
@@ -44,11 +45,15 @@ class Cluster_BrowseView(AbstractView):
         return self.newEnvironment.click_and_wait()
 
     def remove(self, name):
-        return ResultList("Delete environment {name}".format(name=name)) \
+        rl = ResultList("Delete environment {name}".format(name=name)) \
             .push(self.environment.find(name=name).click_and_wait()) \
             .push(Cluster_View().click_actions_tab()) \
             .push(Cluster_Actions_View().click_delete_cluster_button()) \
             .push(DeleteEnvironmentDialog().delete())
+        env = self.environment.find(name=name)
+        if env.is_found():
+                WaitBot().wait_for_web_element_disappears(env.get_element())
+        return rl
 
     def remove_all(self):
         rl = ResultList("Remove all existing environments")

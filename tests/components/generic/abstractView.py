@@ -16,7 +16,7 @@ class AbstractView(BasePage):
         BasePage.__init__(self, parent)
 
     def apply(self):
-        return self.applyButton.click_and_wait()
+        return self.applyButton.click()
 
     def cancel(self):
         return self.cancelButton.click_and_wait()
