@@ -68,7 +68,7 @@ class Cluster_BrowseView(AbstractView):
     def select_by_key(self, key):
         return self.select(Storage.get(key).name)
 
-    def verify_clusters_amount (self, value):
+    def verify_clusters_amount(self, value):
         return Result(
             "Verify if amount of clusters is {value}"
             .format(value=value),

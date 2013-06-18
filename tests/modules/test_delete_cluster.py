@@ -22,9 +22,9 @@ class Test_Deployment(TestCasePoteen):
     def setUpClass(cls):
         super(Test_Deployment, cls).setUpClass()
         PoteenLogger.add_test_suite("Delete cluster")
-        ContextHolder.set_browser("firefox")
-        ContextHolder.set_do_screenshot(False)
-        ContextHolder.set_url("http://localhost:8000/")
+        # ContextHolder.set_browser("firefox")
+        # ContextHolder.set_do_screenshot(False)
+        # ContextHolder.set_url("http://localhost:8000/")
 
     @attr(env=["fakeui"], set=["smoke", "regression", "full"])
     def test_delete_cluster_after_successful_deployment(self):
@@ -73,8 +73,7 @@ class Test_Deployment(TestCasePoteen):
 
         logger.info(Main().navigate())
         logger.info(Cluster_BrowseView().remove("Test environment"))
-        logger.info(Cluster().verify_status("Removing"))
-        logger.info(Cluster_BrowseView().verify_clusters_amount(self, 0))
+        logger.info(Cluster_BrowseView().verify_clusters_amount(0))
 
     @attr(env=["fakeui"], set=["smoke", "regression", "full"])
     def test_can_not_add_offline_node(self):
@@ -129,12 +128,4 @@ class Test_Deployment(TestCasePoteen):
 
         logger.info(Main().navigate())
         logger.info(Cluster_BrowseView().remove("Test environment"))
-     #   logger.info(Cluster().verify_status("Removing"))
-      #  logger.info(Cluster_BrowseView().verify_clusters_amount(self, 0))
-
-
-
-
-
-
-
+        logger.info(Cluster_BrowseView().verify_clusters_amount(self, 0))
