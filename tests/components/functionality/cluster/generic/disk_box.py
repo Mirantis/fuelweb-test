@@ -1,14 +1,11 @@
 from engine.poteen.basePage import BasePage
 from engine.poteen.bots.waitBot import WaitBot
-from engine.poteen.elements.baseElement import BaseElement
 from engine.poteen.elements.basic.button import Button
 from engine.poteen.elements.basic.htmlElement import HtmlElement
-from engine.poteen.log.result import Result
 from engine.poteen.log.resultList import ResultList
-from ....generic.abstractView import AbstractView
-from tests.components.functionality.cluster.generic.volume_group \
+from .....components.functionality.cluster.generic.volume_group \
     import VolumeGroup
-from tests.components.functionality.cluster.generic.volume_group_box \
+from .....components.functionality.cluster.generic.volume_group_box \
     import VolumeGroupBox
 
 

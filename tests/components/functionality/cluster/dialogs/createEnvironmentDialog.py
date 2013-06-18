@@ -3,8 +3,8 @@ from engine.poteen.elements.basic.input import Input
 from engine.poteen.elements.basic.select import Select
 from engine.poteen.log.resultList import ResultList
 from engine.poteen.utils.storage import Storage
-from tests.components.generic.abstractDialog import AbstractDialog
-from tests.testdata.cluster import TD_Cluster
+from .....components.generic.abstractDialog import AbstractDialog
+from .....testdata.cluster import TD_Cluster
 
 
 class CreateEnvironmentDialog(AbstractDialog):

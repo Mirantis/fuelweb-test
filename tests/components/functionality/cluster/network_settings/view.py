@@ -4,7 +4,7 @@ from engine.poteen.elements.basic.input import Input
 from engine.poteen.elements.basic.radio import Radio
 from engine.poteen.elements.basic.select import Select
 from ....generic.abstractView import AbstractView
-from tests.components.functionality.cluster.generic.ip_range_row \
+from .....components.functionality.cluster.generic.ip_range_row \
     import IpRangeRow
 
 

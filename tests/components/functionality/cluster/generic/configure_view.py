@@ -1,5 +1,5 @@
 from engine.poteen.elements.basic.button import Button
-from tests.components.generic.abstractView import AbstractView
+from .....components.generic.abstractView import AbstractView
 
 
 class ConfigureView(AbstractView):

@@ -1,8 +1,8 @@
 from engine.poteen.elements.basic.htmlElement import HtmlElement
-from tests.components.functionality.cluster.generic.configure_view \
+from .....components.functionality.cluster.generic.configure_view \
     import ConfigureView
-from tests.components.functionality.cluster.generic.disk_box import DiskBox
-from tests.components.generic.abstractView import AbstractView
+from .....components.functionality.cluster.generic.disk_box import DiskBox
+from .....components.generic.abstractView import AbstractView
 
 
 class ConfigureDisks(ConfigureView):

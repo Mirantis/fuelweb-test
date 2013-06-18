@@ -1,4 +1,4 @@
-from tests.components.generic.abstractDialog import AbstractDialog
+from .....components.generic.abstractDialog import AbstractDialog
 
 
 class DeleteEnvironmentDialog(AbstractDialog):

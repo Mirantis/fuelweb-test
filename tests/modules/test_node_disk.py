@@ -15,9 +15,9 @@ from ..components.functionality.cluster.nodes.listView \
     import Cluster_Nodes_ListView
 from ..components.functionality.cluster.nodes.view \
     import Cluster_Nodes_View
-from tests.components.functionality.cluster.dialogs.node_hardware_dialog \
+from ..components.functionality.cluster.dialogs.node_hardware_dialog \
     import NodeHardwareDialog
-from tests.components.functionality.cluster.nodes.configure_disks \
+from ..components.functionality.cluster.nodes.configure_disks \
     import ConfigureDisks
 
 logger = PoteenLogger

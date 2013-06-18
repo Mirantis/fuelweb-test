@@ -17,8 +17,6 @@ from ..components.functionality.cluster.nodes.listView \
     import Cluster_Nodes_ListView
 from ..components.functionality.cluster.nodes.view \
     import Cluster_Nodes_View
-from tests.components.functionality.cluster.nodes.configure_interfaces \
-    import ConfigureInterfaces
 
 logger = PoteenLogger
 

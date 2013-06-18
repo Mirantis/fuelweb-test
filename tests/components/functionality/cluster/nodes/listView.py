@@ -4,7 +4,7 @@ from engine.poteen.elements.basic.htmlElement import HtmlElement
 from engine.poteen.log.result import Result
 from engine.poteen.log.resultList import ResultList
 from ....generic.abstractView import AbstractView
-from tests.components.functionality.cluster.generic.node import Node
+from .....components.functionality.cluster.generic.node import Node
 from selenium.webdriver.common.by import By
 
 
