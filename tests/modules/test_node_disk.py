@@ -1,3 +1,4 @@
+import logging
 from nose.plugins.attrib import attr
 
 from engine.poteen.contextHolder import ContextHolder
@@ -30,6 +31,7 @@ class TestDeploymentSimpleMode(TestCasePoteen):
         # ContextHolder.set_browser("firefox")
         # ContextHolder.set_do_screenshot(False)
         # ContextHolder.set_url("http://10.20.0.2:8000/")
+        # ContextHolder.LOG_LEVEL = logging.DEBUG
 
     @attr(env=["fakeui"], set=["smoke", "regression", "full"])
     def test_controller_disk(self):
@@ -79,13 +81,13 @@ class TestDeploymentSimpleMode(TestCasePoteen):
         logger.info(ConfigureDisks().get_disk_box(
             'sdb').verify_volume_size_is_identical('Base System'))
         logger.info(ConfigureDisks().get_disk_box(
-            'sdb').make_bootable.find().verify_('disabled', None))
+            'sdb').make_bootable.find().verify_attribute('disabled', None))
 
         logger.info(ConfigureDisks().get_disk_box('sdc').click_disk_map())
         logger.info(ConfigureDisks().get_disk_box(
             'sdc').verify_volume_size_is_identical('Base System'))
         logger.info(ConfigureDisks().get_disk_box(
-            'sdc').make_bootable.find().verify_('disabled', None))
+            'sdc').make_bootable.find().verify_attribute('disabled', None))
 
     @attr(env=["fakeui"], set=["smoke", "regression", "full"])
     def test_compute_disk(self):
@@ -137,13 +139,13 @@ class TestDeploymentSimpleMode(TestCasePoteen):
         logger.info(ConfigureDisks().get_disk_box(
             'sdb').verify_volume_size_is_identical('Virtual Storage'))
         logger.info(ConfigureDisks().get_disk_box(
-            'sdb').make_bootable.find().verify_('disabled', None))
+            'sdb').make_bootable.find().verify_attribute('disabled', None))
 
         logger.info(ConfigureDisks().get_disk_box('sdc').click_disk_map())
         logger.info(ConfigureDisks().get_disk_box(
             'sdc').verify_volume_size_is_identical('Virtual Storage'))
         logger.info(ConfigureDisks().get_disk_box(
-            'sdc').make_bootable.find().verify_('disabled', None))
+            'sdc').make_bootable.find().verify_attribute('disabled', None))
 
     @attr(env=["fakeui"], set=["smoke", "regression", "full"])
     def test_cinder_disk(self):
@@ -195,10 +197,10 @@ class TestDeploymentSimpleMode(TestCasePoteen):
         logger.info(ConfigureDisks().get_disk_box(
             'sdb').verify_volume_size_is_identical('Cinder'))
         logger.info(ConfigureDisks().get_disk_box(
-            'sdb').make_bootable.find().verify_('disabled', None))
+            'sdb').make_bootable.find().verify_attribute('disabled', None))
 
         logger.info(ConfigureDisks().get_disk_box('sdc').click_disk_map())
         logger.info(ConfigureDisks().get_disk_box(
             'sdc').verify_volume_size_is_identical('Cinder'))
         logger.info(ConfigureDisks().get_disk_box(
-            'sdc').make_bootable.find().verify_('disabled', None))
+            'sdc').make_bootable.find().verify_attribute('disabled', None))

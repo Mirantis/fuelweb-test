@@ -1,9 +1,10 @@
+from engine.poteen.basePage import BasePage
 from engine.poteen.elements.baseElement import BaseElement
 from engine.poteen.elements.basic.button import Button
 from engine.poteen.elements.basic.input import Input
 
 
-class IpRangeRow(BaseElement):
+class IpRangeRow(BasePage):
     def __init__(self, parent=None):
         self.ip_range_start = Input(
             xpath=".//input[@name='ip_ranges-start']",
@@ -21,4 +22,4 @@ class IpRangeRow(BaseElement):
             xpath=".//button[contains(@class,'ip-ranges-delete')]",
             element_name="Ip range delete")
 
-        BaseElement.__init__(self, parent)
+        BasePage.__init__(self, parent)

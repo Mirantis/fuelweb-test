@@ -1,10 +1,11 @@
+from engine.poteen.basePage import BasePage
 from engine.poteen.elements.baseElement import BaseElement
 from engine.poteen.elements.basic.htmlElement import HtmlElement
 from engine.poteen.elements.basic.input import Input
 from engine.poteen.elements.basic.link import Link
 
 
-class VolumeGroupBox(BaseElement):
+class VolumeGroupBox(BasePage):
     def __init__(self, parent=None):
         self.name = HtmlElement(
             xpath=".//div[@class='volume-group-box-name']",
@@ -18,4 +19,4 @@ class VolumeGroupBox(BaseElement):
             xpath=".//div[@class='use-all-unallocated']",
             element_name="Use all unallocated")
 
-        BaseElement.__init__(self, parent)
+        BasePage.__init__(self, parent)

@@ -1,3 +1,4 @@
+from engine.poteen.basePage import BasePage
 from engine.poteen.bots.waitBot import WaitBot
 from engine.poteen.elements.baseElement import BaseElement
 from engine.poteen.elements.basic.button import Button
@@ -11,7 +12,7 @@ from tests.components.functionality.cluster.generic.volume_group_box \
     import VolumeGroupBox
 
 
-class DiskBox(BaseElement):
+class DiskBox(BasePage):
     def __init__(self, parent=None):
         self.caption = HtmlElement(
             xpath=".//div[contains(@class,'disk-box-name')]",
@@ -53,7 +54,7 @@ class DiskBox(BaseElement):
             xpath=".//div[@class='disk-map-short disk-map-full']",
             element_name="Disk map")
 
-        BaseElement.__init__(self, parent)
+        BasePage.__init__(self, parent)
 
     def get_volume_group(self, name):
         return VolumeGroup(self.volume_group.find(name=name))

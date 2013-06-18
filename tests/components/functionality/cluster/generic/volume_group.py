@@ -1,9 +1,10 @@
+from engine.poteen.basePage import BasePage
 from engine.poteen.elements.baseElement import BaseElement
 from engine.poteen.elements.basic.htmlElement import HtmlElement
 from engine.poteen.elements.basic.link import Link
 
 
-class VolumeGroup(BaseElement):
+class VolumeGroup(BasePage):
     def __init__(self, parent=None):
         self.name = HtmlElement(
             xpath=".//div[@class='volume-group-name']",
@@ -17,4 +18,4 @@ class VolumeGroup(BaseElement):
             xpath=".//div[@class='close-btn']",
             element_name="close")
 
-        BaseElement.__init__(self, parent)
+        BasePage.__init__(self, parent)

@@ -1,4 +1,5 @@
 from engine.poteen.bots.actionBot import ActionBot
+from engine.poteen.bots.waitBot import WaitBot
 from engine.poteen.elements.basic.htmlElement import HtmlElement
 from engine.poteen.log.result import Result
 from engine.poteen.log.resultList import ResultList
@@ -53,6 +54,8 @@ class Cluster_Nodes_ListView(AbstractView):
             node = Node(self.node.find(name=name).get_element())
             rl.push(node.select())
         rl.push(self.apply())
+        WaitBot().wait_for_disappears(By.XPATH, "//div[contains(@class,'nodes-screen')]")
+        WaitBot().wait_for_displays(By.XPATH, "//div[@class='nodes-by-roles-screen']")
         return rl
 
     def verify_nodes(self, *args):
