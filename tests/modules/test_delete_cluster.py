@@ -1,5 +1,4 @@
 from nose.plugins.attrib import attr
-from engine.poteen.contextHolder import ContextHolder
 from engine.poteen.poteenLogger import PoteenLogger
 from engine.poteen.testCasePoteen import TestCasePoteen
 
@@ -7,11 +6,13 @@ from ..components.functionality.main import Main
 from ..components.constants import TestConstants
 from ..components.functionality.cluster.browseView import Cluster_BrowseView
 from ..components.functionality.cluster.cluster import Cluster
-from ..components.functionality.cluster.dialogs.createEnvironmentDialog import CreateEnvironmentDialog
-from ..components.functionality.cluster.dialogs.deleteEnvironmentDialog import DeleteEnvironmentDialog
-from ..components.functionality.cluster.dialogs.deployChangesDialog import DeployChangesDialog
+from ..components.functionality.cluster.dialogs.createEnvironmentDialog \
+    import CreateEnvironmentDialog
+from ..components.functionality.cluster.dialogs.deployChangesDialog \
+    import DeployChangesDialog
 from ..components.functionality.cluster.editView import Cluster_View
-from ..components.functionality.cluster.nodes.listView import Cluster_Nodes_ListView
+from ..components.functionality.cluster.nodes.listView \
+    import Cluster_Nodes_ListView
 from ..components.functionality.cluster.nodes.view import Cluster_Nodes_View
 
 logger = PoteenLogger
@@ -22,9 +23,6 @@ class Test_Deployment(TestCasePoteen):
     def setUpClass(cls):
         super(Test_Deployment, cls).setUpClass()
         PoteenLogger.add_test_suite("Delete cluster")
-        # ContextHolder.set_browser("firefox")
-        # ContextHolder.set_do_screenshot(False)
-        # ContextHolder.set_url("http://localhost:8000/")
 
     @attr(env=["fakeui"], set=["smoke", "regression", "full"])
     def test_delete_cluster_after_successful_deployment(self):
