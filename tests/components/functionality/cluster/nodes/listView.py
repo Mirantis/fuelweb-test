@@ -54,8 +54,10 @@ class Cluster_Nodes_ListView(AbstractView):
             node = Node(self.node.find(name=name).get_element())
             rl.push(node.select())
         rl.push(self.apply())
-        WaitBot().wait_for_disappears(By.XPATH, "//div[contains(@class,'nodes-screen')]")
-        WaitBot().wait_for_displays(By.XPATH, "//div[@class='nodes-by-roles-screen']")
+        WaitBot().wait_for_disappears(\
+            By.XPATH, "//div[contains(@class,'nodes-screen')]")
+        WaitBot().wait_for_displays(\
+            By.XPATH, "//div[@class='nodes-by-roles-screen']")
         return rl
 
     def click_nodes(self, *args):

@@ -24,6 +24,5 @@ class Cluster(AbstractView):
     def get_status(self):
         return self.status.get_value().strip()
 
-    def verify_status(self,status):
+    def verify_status(self, status):
         return self.get_status().verify_value(status)
-

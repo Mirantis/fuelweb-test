@@ -7,8 +7,10 @@ from engine.poteen.utils.storage import Storage
 from ...generic.abstractView import AbstractView
 from ...functionality.cluster.cluster import Cluster
 from ....testdata.cluster import TD_Cluster
-from ....components.functionality.cluster.actions.view import Cluster_Actions_View
-from ....components.functionality.cluster.dialogs.deleteEnvironmentDialog import DeleteEnvironmentDialog
+from ....components.functionality.cluster.actions.view \
+    import Cluster_Actions_View
+from ....components.functionality.cluster.dialogs.deleteEnvironmentDialog \
+    import DeleteEnvironmentDialog
 from ....components.functionality.cluster.editView import Cluster_View
 from engine.poteen.log.result import Result
 
