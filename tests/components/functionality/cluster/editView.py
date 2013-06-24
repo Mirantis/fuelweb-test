@@ -28,6 +28,11 @@ class Cluster_View(AbstractView):
             element_name="Success message"
         )
 
+        self.errorMessage = HtmlElement(
+            xpath="//div[contains(@class, 'global-error')]/p",
+            element_name="Error message"
+        )
+
         AbstractView.__init__(self, parent)
 
     def click_actions_tab(self):
@@ -49,3 +54,6 @@ class Cluster_View(AbstractView):
 
     def verify_success_message(self, value):
         return self.successMessage.verify_value_contains(value)
+
+    def verify_error_message(self, value):
+        return self.errorMessage.verify_value_contains(value)

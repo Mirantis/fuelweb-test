@@ -12,6 +12,7 @@ from ....components.functionality.cluster.actions.view \
 from ....components.functionality.cluster.dialogs.deleteEnvironmentDialog \
     import DeleteEnvironmentDialog
 from ....components.functionality.cluster.editView import Cluster_View
+from engine.poteen.log.result import Result
 
 
 class Cluster_BrowseView(AbstractView):
@@ -68,3 +69,10 @@ class Cluster_BrowseView(AbstractView):
 
     def select_by_key(self, key):
         return self.select(Storage.get(key).name)
+
+    def verify_clusters_amount(self, value):
+        return Result(
+            "Verify if amount of clusters is {value}"
+            .format(value=value),
+            len(self.get_clusters()) == value
+        )

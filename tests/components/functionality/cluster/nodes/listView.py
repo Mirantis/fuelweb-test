@@ -54,8 +54,17 @@ class Cluster_Nodes_ListView(AbstractView):
             node = Node(self.node.find(name=name).get_element())
             rl.push(node.select())
         rl.push(self.apply())
-        WaitBot().wait_for_disappears(By.XPATH, "//div[contains(@class,'nodes-screen')]")
-        WaitBot().wait_for_displays(By.XPATH, "//div[@class='nodes-by-roles-screen']")
+        WaitBot().wait_for_disappears(
+            By.XPATH, "//div[contains(@class,'nodes-screen')]")
+        WaitBot().wait_for_displays(
+            By.XPATH, "//div[@class='nodes-by-roles-screen']")
+        return rl
+
+    def click_nodes(self, *args):
+        rl = ResultList("Select nodes")
+        for name in args:
+            node = Node(self.node.find(name=name).get_element())
+            rl.push(node.select())
         return rl
 
     def verify_nodes(self, *args):
@@ -64,5 +73,14 @@ class Cluster_Nodes_ListView(AbstractView):
             rl.push(Result(
                 "Node [{name}] exists".format(name=name),
                 self.node.find(name=name).is_found()
+            ))
+        return rl
+
+    def verify_nodes_not_exist(self, *args):
+        rl = ResultList("Verify nodes not exist")
+        for name in args:
+            rl.push(Result(
+                "Node [{name}] not exists".format(name=name),
+                self.node.find(name=name).is_not_found()
             ))
         return rl

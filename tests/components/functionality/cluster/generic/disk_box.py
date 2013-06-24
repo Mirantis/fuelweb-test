@@ -72,4 +72,3 @@ class DiskBox(BasePage):
         rl.push(self.get_volume_group(name).size.verify_value_contains(
             group_box_size))
         return rl
-

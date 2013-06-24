@@ -7,6 +7,7 @@ from ..components.functionality.main import Main
 from ..components.settings import *
 from ..components.functionality.cluster.browseView \
     import Cluster_BrowseView
+from ..components.constants import TestConstants
 from ..components.functionality.cluster.cluster import Cluster
 from ..components.functionality.cluster.dialogs.createEnvironmentDialog \
     import CreateEnvironmentDialog
@@ -21,14 +22,14 @@ from ..components.functionality.cluster.nodes.view \
 logger = PoteenLogger
 
 
-class TestDeploymentHAMode(TestCasePoteen):
+class Test_Deployment_HA_Mode(TestCasePoteen):
     @classmethod
     def setUpClass(cls):
-        super(TestDeploymentHAMode, cls).setUpClass()
+        super(Test_Deployment_HA_Mode, cls).setUpClass()
         PoteenLogger.add_test_suite("Cluster deployment")
         # ContextHolder.set_browser("firefox")
         # ContextHolder.set_do_screenshot(False)
-        # ContextHolder.set_url("http://10.20.0.2:8000/")
+        # ContextHolder.set_url("http://10.20.0.2:8000/"
 
     def deploy(self, controllers=0, computes=0):
         PoteenLogger.add_test_case(
@@ -44,7 +45,7 @@ class TestDeploymentHAMode(TestCasePoteen):
         logger.info(Cluster_BrowseView().click_add_new_cluster(cluster_key))
         logger.info(CreateEnvironmentDialog().populate(
             name=cluster_name,
-            version=OPENSTACK_CURRENT_VERSION,
+            version=TestConstants.OPENSTACK_CURRENT_VERSION,
             submit=True
         ))
         logger.info(Cluster_BrowseView().select_by_key(cluster_key))
@@ -76,7 +77,7 @@ class TestDeploymentHAMode(TestCasePoteen):
         logger.info(Cluster_View().click_deploy_changes())
         logger.info(DeployChangesDialog().deploy())
         logger.info(Cluster_View().wait_deployment_done(
-            DEFAULT_DEPLOYMENT_TIMEOUT
+            TestConstants.DEFAULT_DEPLOYMENT_TIMEOUT
         ))
         logger.info(Cluster_View().verify_success_message(
             "Deployment of environment {name} is done."
@@ -95,4 +96,3 @@ class TestDeploymentHAMode(TestCasePoteen):
     @attr(env=["fakeui"], set=["smoke", "regression", "full"])
     def test_deploy_3_controller_4_compute(self):
         self.deploy(3, 4)
-
