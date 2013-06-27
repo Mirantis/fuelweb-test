@@ -58,8 +58,14 @@ class Cluster_BrowseView(AbstractView):
 
     def remove_all(self):
         rl = ResultList("Remove all existing environments")
+        _list = []
         for env in self.get_clusters():
-            rl.push(self.remove(env.get_name()))
+            _list.append(env.get_name())
+        rl.info("There is(are) {} environments to remove. Names: {}".format(
+            len(_list), str(_list)
+        ))
+        for name in _list:
+            rl.push(self.remove(name))
         rl.info("All environments were removed")
         return rl
 
