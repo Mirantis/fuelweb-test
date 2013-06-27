@@ -3,7 +3,6 @@ from engine.poteen.poteenLogger import PoteenLogger
 from engine.poteen.testCasePoteen import TestCasePoteen
 
 from ..components.functionality.main import Main
-from ..components.constants import TestConstants
 from ..components.functionality.cluster.browseView import Cluster_BrowseView
 from ..components.functionality.cluster.cluster import Cluster
 from ..components.functionality.cluster.dialogs.createEnvironmentDialog \
@@ -14,6 +13,7 @@ from ..components.functionality.cluster.editView import Cluster_View
 from ..components.functionality.cluster.nodes.listView \
     import Cluster_Nodes_ListView
 from ..components.functionality.cluster.nodes.view import Cluster_Nodes_View
+from ..components.settings import *
 
 logger = PoteenLogger
 
@@ -37,7 +37,7 @@ class Test_Deployment(TestCasePoteen):
         logger.info(Cluster_BrowseView().click_add_new_cluster(cluster_key))
         logger.info(CreateEnvironmentDialog().populate(
             name=cluster_name,
-            version=TestConstants.OPENSTACK_CURRENT_VERSION,
+            version=OPENSTACK_CURRENT_VERSION,
             submit=True
         ))
         logger.info(Cluster_BrowseView().select_by_key(cluster_key))
@@ -61,7 +61,7 @@ class Test_Deployment(TestCasePoteen):
         logger.info(Cluster_View().click_deploy_changes())
         logger.info(DeployChangesDialog().deploy())
         logger.info(Cluster_View().wait_deployment_done(
-            TestConstants.DEFAULT_DEPLOYMENT_TIMEOUT
+            DEFAULT_DEPLOYMENT_TIMEOUT_UI
         ))
         logger.info(Cluster_View().verify_success_message(
             "Deployment of environment {name} is done."
@@ -86,7 +86,7 @@ class Test_Deployment(TestCasePoteen):
         logger.info(Cluster_BrowseView().click_add_new_cluster(cluster_key))
         logger.info(CreateEnvironmentDialog().populate(
             name=cluster_name,
-            version=TestConstants.OPENSTACK_CURRENT_VERSION,
+            version=OPENSTACK_CURRENT_VERSION,
             submit=True
         ))
         logger.info(Cluster_BrowseView().select_by_key(cluster_key))
@@ -116,7 +116,7 @@ class Test_Deployment(TestCasePoteen):
         logger.info(Cluster_View().click_deploy_changes())
         logger.info(DeployChangesDialog().deploy())
         logger.info(Cluster_View().wait_deployment_done(
-            TestConstants.DEFAULT_DEPLOYMENT_TIMEOUT
+            DEFAULT_DEPLOYMENT_TIMEOUT_UI
         ))
         logger.info(Cluster_View().verify_success_message(
             "Deployment of environment {name} is done."

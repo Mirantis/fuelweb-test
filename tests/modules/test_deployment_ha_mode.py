@@ -6,7 +6,6 @@ from ..components.functionality.main import Main
 from ..components.settings import *
 from ..components.functionality.cluster.browseView \
     import Cluster_BrowseView
-from ..components.constants import TestConstants
 from ..components.functionality.cluster.cluster import Cluster
 from ..components.functionality.cluster.dialogs.createEnvironmentDialog \
     import CreateEnvironmentDialog
@@ -43,7 +42,7 @@ class Test_Deployment_HA_Mode(TestCasePoteen):
         logger.info(Cluster_BrowseView().click_add_new_cluster(cluster_key))
         logger.info(CreateEnvironmentDialog().populate(
             name=cluster_name,
-            version=TestConstants.OPENSTACK_CURRENT_VERSION,
+            version=OPENSTACK_CURRENT_VERSION,
             submit=True
         ))
         logger.info(Cluster_BrowseView().select_by_key(cluster_key))
@@ -75,7 +74,7 @@ class Test_Deployment_HA_Mode(TestCasePoteen):
         logger.info(Cluster_View().click_deploy_changes())
         logger.info(DeployChangesDialog().deploy())
         logger.info(Cluster_View().wait_deployment_done(
-            TestConstants.DEFAULT_DEPLOYMENT_TIMEOUT
+            DEFAULT_DEPLOYMENT_TIMEOUT_UI
         ))
 
     def verify_success(self, cluster_name):

@@ -1,6 +1,5 @@
 from nose.plugins.attrib import attr
 
-from engine.poteen.contextHolder import ContextHolder
 from engine.poteen.poteenLogger import PoteenLogger
 from engine.poteen.testCasePoteen import TestCasePoteen
 
@@ -27,9 +26,6 @@ class TestDeploymentSimpleMode(TestCasePoteen):
     def setUpClass(cls):
         super(TestDeploymentSimpleMode, cls).setUpClass()
         PoteenLogger.add_test_suite("Cluster deployment")
-        # ContextHolder.set_browser("firefox")
-        # ContextHolder.set_do_screenshot(False)
-        # ContextHolder.set_url("http://127.0.0.1:8000/")
 
     @attr(env=["fakeui"], set=["smoke", "regression", "full"])
     def test_deploy_no_ha_1_controller_1_compute(self):
@@ -106,7 +102,7 @@ class TestDeploymentSimpleMode(TestCasePoteen):
         logger.info(Cluster_View().click_deploy_changes())
         logger.info(DeployChangesDialog().deploy())
         logger.info(Cluster_View().wait_deployment_done(
-            DEFAULT_DEPLOYMENT_TIMEOUT
+            DEFAULT_DEPLOYMENT_TIMEOUT_UI
         ))
         logger.info(Cluster_View().verify_success_message(
             "Deployment of environment {name} is done."
@@ -144,7 +140,7 @@ class TestDeploymentSimpleMode(TestCasePoteen):
         logger.info(Cluster_View().click_deploy_changes())
         logger.info(DeployChangesDialog().deploy())
         logger.info(Cluster_View().wait_deployment_done(
-            DEFAULT_DEPLOYMENT_TIMEOUT
+            DEFAULT_DEPLOYMENT_TIMEOUT_UI
         ))
         logger.info(Cluster_View().verify_error_message(
             "Not enough controllers, "
@@ -188,7 +184,7 @@ class TestDeploymentSimpleMode(TestCasePoteen):
         logger.info(Cluster_View().click_deploy_changes())
         logger.info(DeployChangesDialog().deploy())
         logger.info(Cluster_View().wait_deployment_done(
-            DEFAULT_DEPLOYMENT_TIMEOUT
+            DEFAULT_DEPLOYMENT_TIMEOUT_UI
         ))
         logger.info(Cluster_View().verify_success_message(
             "Deployment of environment {name} is done."
@@ -233,7 +229,7 @@ class TestDeploymentSimpleMode(TestCasePoteen):
         logger.info(Cluster_View().click_deploy_changes())
         logger.info(DeployChangesDialog().deploy())
         logger.info(Cluster_View().wait_deployment_done(
-            DEFAULT_DEPLOYMENT_TIMEOUT
+            DEFAULT_DEPLOYMENT_TIMEOUT_UI
         ))
         logger.info(Cluster_View().verify_success_message(
             "Deployment of environment {name} is done."
@@ -278,7 +274,7 @@ class TestDeploymentSimpleMode(TestCasePoteen):
         logger.info(Cluster_View().click_deploy_changes())
         logger.info(DeployChangesDialog().deploy())
         logger.info(Cluster_View().wait_deployment_done(
-            DEFAULT_DEPLOYMENT_TIMEOUT
+            DEFAULT_DEPLOYMENT_TIMEOUT_UI
         ))
         logger.info(Cluster_View().verify_success_message(
             "Deployment of environment {name} is done."
@@ -358,7 +354,7 @@ class TestDeploymentSimpleMode(TestCasePoteen):
             logger.info(Main().navigate())
             logger.info(Cluster_BrowseView().select_by_key(cluster_key))
             logger.info(Cluster_View().wait_deployment_done(
-                DEFAULT_DEPLOYMENT_TIMEOUT
+                DEFAULT_DEPLOYMENT_TIMEOUT_UI
             ))
             logger.info(Cluster_View().verify_success_message(
                 "Deployment of environment {name} is done."
