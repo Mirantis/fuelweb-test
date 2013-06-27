@@ -42,13 +42,14 @@ class Cluster_View(AbstractView):
     def click_deploy_changes(self):
         return self.deployChanges.click()
 
-    def wait_deployment_done(self, seconds):
+    def wait_deployment_done(self, seconds, poll_frequency=5):
         return Result(
             "Wait for deployment done ({})".format(seconds),
             WaitBot(seconds).wait_for_disappears(
                 By.XPATH,
                 "//li[contains(@class, 'deployment-control')]"
-                "//div[contains(@class, 'progress-deploy')] "
+                "//div[contains(@class, 'progress-deploy')] ",
+                poll_frequency=poll_frequency
             )
         )
 

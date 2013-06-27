@@ -68,7 +68,7 @@ class TestDeploymentSimpleMode(TestCasePoteen):
         logger.info(Cluster_View().click_deploy_changes())
         logger.info(DeployChangesDialog().deploy())
         logger.info(Cluster_View().wait_deployment_done(
-            DEFAULT_DEPLOYMENT_TIMEOUT
+            DEFAULT_DEPLOYMENT_TIMEOUT_UI
         ))
         logger.info(Cluster_View().verify_success_message(
             "Deployment of environment {name} is done."
