@@ -1,5 +1,4 @@
 from nose.plugins.attrib import attr
-from engine.poteen.contextHolder import ContextHolder
 from engine.poteen.poteenLogger import PoteenLogger
 from engine.poteen.testCasePoteen import TestCasePoteen
 
@@ -23,22 +22,21 @@ logger = PoteenLogger
 
 
 class Test_Deployment_HA_Mode(TestCasePoteen):
+
+    cluster_name = "Test environment"
+
     @classmethod
     def setUpClass(cls):
         super(Test_Deployment_HA_Mode, cls).setUpClass()
         PoteenLogger.add_test_suite("Cluster deployment")
-        # ContextHolder.set_browser("firefox")
-        # ContextHolder.set_do_screenshot(False)
-        # ContextHolder.set_url("http://10.20.0.2:8000/"
 
-    def deploy(self, controllers=0, computes=0):
+    def deploy(self, cluster_name, controllers=0, computes=0):
         PoteenLogger.add_test_case(
             "Deploy in mode with HA ({controllers} controllers + "
             "{computes} compute nodes)".format(
                 controllers=controllers, computes=computes))
 
         cluster_key = "cluster"
-        cluster_name = "Test environment"
 
         logger.info(Main().navigate())
         logger.info(Cluster_BrowseView().remove_all())
@@ -79,6 +77,8 @@ class Test_Deployment_HA_Mode(TestCasePoteen):
         logger.info(Cluster_View().wait_deployment_done(
             TestConstants.DEFAULT_DEPLOYMENT_TIMEOUT
         ))
+
+    def verify_success(self, cluster_name):
         logger.info(Cluster_View().verify_success_message(
             "Deployment of environment {name} is done."
             " Access WebUI of OpenStack"
@@ -87,12 +87,17 @@ class Test_Deployment_HA_Mode(TestCasePoteen):
 
     @attr(env=["fakeui"], set=["smoke", "regression", "full"])
     def test_deploy_2_controller(self):
-        self.deploy(2)
+        self.deploy(self.cluster_name, 2)
+        logger.info(Cluster_View().verify_error_message(
+            "Not enough controllers, ha mode requires at least 3 controllers"
+        ))
 
     @attr(env=["fakeui"], set=["smoke", "regression", "full"])
     def test_deploy_3_controller_2_compute(self):
-        self.deploy(3, 2)
+        self.deploy(self.cluster_name, 3, 2)
+        self.verify_success(self.cluster_name)
 
     @attr(env=["fakeui"], set=["smoke", "regression", "full"])
     def test_deploy_3_controller_4_compute(self):
-        self.deploy(3, 4)
+        self.deploy(self.cluster_name, 3, 4)
+        self.verify_success(self.cluster_name)
