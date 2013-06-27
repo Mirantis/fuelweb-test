@@ -126,4 +126,4 @@ class Test_Deployment(TestCasePoteen):
 
         logger.info(Main().navigate())
         logger.info(Cluster_BrowseView().remove("Test environment"))
-        logger.info(Cluster_BrowseView().verify_clusters_amount(self, 0))
+        logger.info(Cluster_BrowseView().verify_clusters_amount(0))
