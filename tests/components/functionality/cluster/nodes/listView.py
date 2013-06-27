@@ -58,6 +58,7 @@ class Cluster_Nodes_ListView(AbstractView):
             By.XPATH, "//div[contains(@class,'nodes-screen')]")
         WaitBot().wait_for_displays(
             By.XPATH, "//div[@class='nodes-by-roles-screen']")
+        ActionBot().wait_for_time(2)
         return rl
 
     def click_nodes(self, *args):

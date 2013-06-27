@@ -1,3 +1,4 @@
+from engine.poteen.decorators import catch_stale_error
 from engine.poteen.elements.basic.button import Button
 from engine.poteen.elements.basic.htmlElement import HtmlElement
 from engine.poteen.elements.basic.link import Link
@@ -80,16 +81,19 @@ class Cluster_Nodes_View(AbstractView):
         ))
         return rl
 
+    @catch_stale_error
     def verify_cinder_nodes(self, *args):
         return Cluster_Nodes_ListView(
             self.cinders.get_element()
         ).verify_nodes(*args)
 
+    @catch_stale_error
     def verify_compute_nodes(self, *args):
         return Cluster_Nodes_ListView(
             self.computes.get_element()
         ).verify_nodes(*args)
 
+    @catch_stale_error
     def verify_controller_nodes(self, *args):
         return Cluster_Nodes_ListView(
             self.controllers.get_element()
