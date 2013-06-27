@@ -146,10 +146,9 @@ class TestDeploymentSimpleMode(TestCasePoteen):
         logger.info(Cluster_View().wait_deployment_done(
             DEFAULT_DEPLOYMENT_TIMEOUT
         ))
-        logger.info(Cluster_View().verify_success_message(
-            "Deployment of environment {name} is done."
-            " Access WebUI of OpenStack"
-            .format(name=cluster_name)
+        logger.info(Cluster_View().verify_error_message(
+            "Not enough controllers, "
+            "multinode mode requires at least 1 controller"
         ))
 
     @attr(env=["fakeui"], set=["smoke", "regression", "full"])
@@ -287,17 +286,12 @@ class TestDeploymentSimpleMode(TestCasePoteen):
             .format(name=cluster_name)
         ))
         logger.info(Cluster_Nodes_View().click_add_compute())
-        logger.info(Cluster_Nodes_ListView().select_nodes(
+        logger.info(Cluster_Nodes_ListView().click_nodes(
             "Supermicro X9SCD (offline)",
         ))
-        logger.info(Cluster_Nodes_View().verify_compute_nodes(
-            "Dell Inspiron", "Supermicro X9SCD", "Supermicro X9SCD (offline)"
+        logger.info(Cluster_Nodes_ListView().applyButton.verify_attribute(
+            'disabled', 'true'
         ))
-        logger.info(Cluster_View().click_deploy_changes())
-        logger.info(DeployChangesDialog().deploy())
-        logger.info(Cluster_Nodes_View().verify_error_contains(
-            "Supermicro X9SCD (offline)", "is offline. Remove it from "
-                                          "environment and try again."))
 
     @attr(env=["fakeui"], set=["smoke", "regression", "full"])
     def test_deploy_concurrent_deployment_3_environments(self):

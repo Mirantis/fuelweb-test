@@ -1,4 +1,5 @@
 from engine.poteen.bots.actionBot import ActionBot
+from engine.poteen.bots.verifyBot import VerifyBot
 from engine.poteen.bots.waitBot import WaitBot
 from engine.poteen.elements.basic.htmlElement import HtmlElement
 from engine.poteen.log.result import Result
