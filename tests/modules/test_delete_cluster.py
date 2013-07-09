@@ -14,11 +14,12 @@ from ..components.functionality.cluster.nodes.listView \
     import Cluster_Nodes_ListView
 from ..components.functionality.cluster.nodes.view import Cluster_Nodes_View
 from ..components.settings import *
+from base_test_case import BaseTestCase
 
 logger = PoteenLogger
 
 
-class Test_Deployment(TestCasePoteen):
+class Test_Deployment(BaseTestCase):
     @classmethod
     def setUpClass(cls):
         super(Test_Deployment, cls).setUpClass()

@@ -36,7 +36,7 @@ class CiFuelWeb(CiBase):
     def node_roles(self):
         return NodeRoles(
             admin_names=['admin'],
-            other_names=['slave-%02d' % x for x in range(1, 2)]
+            other_names=['slave-%02d' % x for x in range(1, 5)]
         )
 
     def env_name(self):
