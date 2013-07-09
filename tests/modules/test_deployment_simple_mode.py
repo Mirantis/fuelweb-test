@@ -17,11 +17,13 @@ from ..components.functionality.cluster.nodes.listView \
     import Cluster_Nodes_ListView
 from ..components.functionality.cluster.nodes.view \
     import Cluster_Nodes_View
+from ..ci.ci_fuel_web import CiFuelWeb
+from base_test_case import BaseTestCase
 
 logger = PoteenLogger
 
 
-class TestDeploymentSimpleMode(TestCasePoteen):
+class TestDeploymentSimpleMode(BaseTestCase):
     @classmethod
     def setUpClass(cls):
         super(TestDeploymentSimpleMode, cls).setUpClass()
@@ -33,12 +35,10 @@ class TestDeploymentSimpleMode(TestCasePoteen):
             "Deploy without HA mode 1 controller 1 compute")
 
         cluster_key = "cluster"
-        cluster_name = "Test simple deployment"
+        cluster_name = "Test environment"
 
         logger.info(Main().navigate())
         logger.info(Cluster_BrowseView().remove_all())
-
-        # create cluster
         logger.info(Cluster_BrowseView().click_add_new_cluster(cluster_key))
         logger.info(CreateEnvironmentDialog().populate(
             name=cluster_name,
@@ -46,7 +46,6 @@ class TestDeploymentSimpleMode(TestCasePoteen):
             submit=True
         ))
         logger.info(Cluster_BrowseView().select_by_key(cluster_key))
-
         logger.info(Cluster_Nodes_View().select_environment_mode(
             deploymentMode=Cluster.DEPLOYMENT_MODE_MULTI_NODE
         ))
