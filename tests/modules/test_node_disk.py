@@ -17,11 +17,12 @@ from ..components.functionality.cluster.dialogs.node_hardware_dialog \
     import NodeHardwareDialog
 from ..components.functionality.cluster.nodes.configure_disks \
     import ConfigureDisks
+from base_test_case import BaseTestCase
 
 logger = PoteenLogger
 
 
-class TestDeploymentDisks(TestCasePoteen):
+class TestDeploymentDisks(BaseTestCase):
     @classmethod
     def setUpClass(cls):
         super(TestDeploymentDisks, cls).setUpClass()

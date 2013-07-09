@@ -16,11 +16,12 @@ from ..components.functionality.cluster.nodes.listView \
     import Cluster_Nodes_ListView
 from ..components.functionality.cluster.nodes.view \
     import Cluster_Nodes_View
+from base_test_case import BaseTestCase
 
 logger = PoteenLogger
 
 
-class Test_Deployment_HA_Mode(TestCasePoteen):
+class Test_Deployment_HA_Mode(BaseTestCase):
 
     cluster_name = "Test environment"
 
