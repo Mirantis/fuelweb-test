@@ -37,6 +37,8 @@ class TestDeploymentSimpleMode(BaseTestCase):
         cluster_key = "cluster"
         cluster_name = "Test environment"
 
+        self.bootstrap_nodes(self.ci().nodes().slaves[0:2])
+
         logger.info(Main().navigate())
         logger.info(Cluster_BrowseView().remove_all())
         logger.info(Cluster_BrowseView().click_add_new_cluster(cluster_key))
@@ -50,18 +52,22 @@ class TestDeploymentSimpleMode(BaseTestCase):
             deploymentMode=Cluster.DEPLOYMENT_MODE_MULTI_NODE
         ))
         logger.info(Cluster_Nodes_View().click_add_controller())
+
+        available_nodes_names = Cluster_Nodes_ListView()\
+            .get_nodes_names_by_status('Discovered')
+
         logger.info(Cluster_Nodes_ListView().select_nodes(
-            "Supermicro X9DRW"
+            *available_nodes_names[:1]
         ))
         logger.info(Cluster_Nodes_View().click_add_compute())
         logger.info(Cluster_Nodes_ListView().select_nodes(
-            "Dell Inspiron"
+            *available_nodes_names[1:2]
         ))
         logger.info(Cluster_Nodes_View().verify_controller_nodes(
-            "Supermicro X9DRW"
+            *available_nodes_names[:1]
         ))
         logger.info(Cluster_Nodes_View().verify_compute_nodes(
-            "Dell Inspiron"
+            *available_nodes_names[1:2]
         ))
         logger.info(Cluster_View().click_deploy_changes())
         logger.info(DeployChangesDialog().deploy())
