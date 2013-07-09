@@ -17,11 +17,13 @@ from ..components.functionality.cluster.nodes.listView \
     import Cluster_Nodes_ListView
 from ..components.functionality.cluster.nodes.view \
     import Cluster_Nodes_View
+from ..ci.ci_fuel_web import CiFuelWeb
+from base_test_case import BaseTestCase
 
 logger = PoteenLogger
 
 
-class TestDeploymentSimpleMode(TestCasePoteen):
+class TestDeploymentSimpleMode(BaseTestCase):
     @classmethod
     def setUpClass(cls):
         super(TestDeploymentSimpleMode, cls).setUpClass()
@@ -361,3 +363,9 @@ class TestDeploymentSimpleMode(TestCasePoteen):
                 " Access WebUI of OpenStack"
                 .format(name=cluster_info['name'])
             ))
+
+    @attr(env=["fakeui"], set=["smoke", "regression", "full"])
+    def test_ci(self):
+        ci = CiFuelWeb()
+        empty_state = ci.setup_environment()
+        pass
