@@ -17,8 +17,7 @@ class Cluster_Nodes_ListView(AbstractView):
 
     def __init__(self, parent=None):
         self.node = HtmlElement(
-            xpath=".//div[contains(@class, 'nodebox') and "
-                  "not(contains(@class, 'nodebox-gradient')) and "
+            xpath=".//div[contains(@class, ' nodebox ') and "
                   ".//div[@class='node-name' and ./div/text()='{name}']]",
             element_name="Node [{name}]"
         )
