@@ -1,3 +1,5 @@
+from selenium.webdriver.common.by import By
+from engine.poteen.bots.waitBot import WaitBot
 from engine.poteen.elements.basic.htmlElement import HtmlElement
 from engine.poteen.elements.basic.input import Input
 from engine.poteen.elements.basic.select import Select
@@ -32,7 +34,8 @@ class CreateEnvironmentDialog(AbstractDialog):
         rl = ResultList("Populate create new Environment dialog") \
             .push(self.name.set_value(name)) \
             .push(self.version.set_value(version))
-        if submit:
+        if submit & WaitBot().wait_for_stop_resizing(By.XPATH,
+                                                     self.XPATH_DIALOG):
             rl.push(self.create())
         return rl
 
