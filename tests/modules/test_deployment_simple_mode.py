@@ -80,6 +80,7 @@ class TestDeploymentSimpleMode(BaseTestCase):
             Cluster_View().verify_successful_deployment_per_name(cluster_name)
         )
 
+    @snapshot_errors
     @attr(env=["fakeui"], set=["smoke", "regression", "full"])
     def test_deploy_no_ha_1_controller(self):
         PoteenLogger.add_test_case(
@@ -280,18 +281,22 @@ class TestDeploymentSimpleMode(BaseTestCase):
             deploymentMode=Cluster.DEPLOYMENT_MODE_MULTI_NODE
         ))
         logger.info(Cluster_Nodes_View().click_add_controller())
+
+        available_nodes_names = Cluster_Nodes_ListView()\
+            .get_nodes_names_by_status('Discovered')
+
         logger.info(Cluster_Nodes_ListView().select_nodes(
-            "Supermicro X9DRW"
+            *available_nodes_names[:1]
         ))
         logger.info(Cluster_Nodes_View().click_add_compute())
         logger.info(Cluster_Nodes_ListView().select_nodes(
-            "Dell Inspiron", "Supermicro X9SCD",
+            *available_nodes_names[1:3]
         ))
         logger.info(Cluster_Nodes_View().verify_controller_nodes(
-            "Supermicro X9DRW"
+            *available_nodes_names[:1]
         ))
         logger.info(Cluster_Nodes_View().verify_compute_nodes(
-            "Dell Inspiron", "Supermicro X9SCD",
+            *available_nodes_names[1:3]
         ))
         logger.info(Cluster_View().click_deploy_changes())
         logger.info(DeployChangesDialog().deploy())
@@ -302,8 +307,12 @@ class TestDeploymentSimpleMode(BaseTestCase):
             Cluster_View().verify_successful_deployment_per_name(cluster_name)
         )
         logger.info(Cluster_Nodes_View().click_add_compute())
+
+        available_nodes_names = Cluster_Nodes_ListView()\
+            .get_nodes_names_by_status('Offline')
+
         logger.info(Cluster_Nodes_ListView().click_nodes(
-            "Supermicro X9SCD (offline)",
+            *available_nodes_names[:1],
         ))
         logger.info(Cluster_Nodes_ListView().applyButton.verify_attribute(
             'disabled', 'true'
