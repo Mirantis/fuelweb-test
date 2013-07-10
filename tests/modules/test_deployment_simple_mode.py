@@ -82,6 +82,7 @@ class TestDeploymentSimpleMode(BaseTestCase):
             .format(name=cluster_name)
         ))
 
+    @snapshot_errors
     @attr(env=["fakeui"], set=["smoke", "regression", "full"])
     def test_deploy_no_ha_1_controller(self):
         PoteenLogger.add_test_case(
@@ -89,6 +90,8 @@ class TestDeploymentSimpleMode(BaseTestCase):
 
         cluster_key = "cluster"
         cluster_name = "Test environment"
+
+        self.bootstrap_nodes(self.ci().nodes().slaves[0:1])
 
         logger.info(Main().navigate())
         logger.info(Cluster_BrowseView().remove_all())
@@ -103,11 +106,15 @@ class TestDeploymentSimpleMode(BaseTestCase):
             deploymentMode=Cluster.DEPLOYMENT_MODE_MULTI_NODE
         ))
         logger.info(Cluster_Nodes_View().click_add_controller())
+
+        available_nodes_names = Cluster_Nodes_ListView()\
+            .get_nodes_names_by_status('Discovered')
+
         logger.info(Cluster_Nodes_ListView().select_nodes(
-            "Supermicro X9DRW"
+            *available_nodes_names[:1]
         ))
         logger.info(Cluster_Nodes_View().verify_controller_nodes(
-            "Supermicro X9DRW"
+            *available_nodes_names[:1]
         ))
         logger.info(Cluster_View().click_deploy_changes())
         logger.info(DeployChangesDialog().deploy())
@@ -120,6 +127,7 @@ class TestDeploymentSimpleMode(BaseTestCase):
             .format(name=cluster_name)
         ))
 
+    @snapshot_errors
     @attr(env=["fakeui"], set=["smoke", "regression", "full"])
     def test_deploy_no_ha_1_compute(self):
         PoteenLogger.add_test_case(
@@ -127,6 +135,8 @@ class TestDeploymentSimpleMode(BaseTestCase):
 
         cluster_key = "cluster"
         cluster_name = "Test environment"
+
+        self.bootstrap_nodes(self.ci().nodes().slaves[0:1])
 
         logger.info(Main().navigate())
         logger.info(Cluster_BrowseView().remove_all())
@@ -141,11 +151,15 @@ class TestDeploymentSimpleMode(BaseTestCase):
             deploymentMode=Cluster.DEPLOYMENT_MODE_MULTI_NODE
         ))
         logger.info(Cluster_Nodes_View().click_add_compute())
+
+        available_nodes_names = Cluster_Nodes_ListView()\
+            .get_nodes_names_by_status('Discovered')
+
         logger.info(Cluster_Nodes_ListView().select_nodes(
-            "Dell Inspiron"
+            *available_nodes_names[:1]
         ))
         logger.info(Cluster_Nodes_View().verify_compute_nodes(
-            "Dell Inspiron"
+            *available_nodes_names[:1]
         ))
         logger.info(Cluster_View().click_deploy_changes())
         logger.info(DeployChangesDialog().deploy())
@@ -157,6 +171,7 @@ class TestDeploymentSimpleMode(BaseTestCase):
             "multinode mode requires at least 1 controller"
         ))
 
+    @snapshot_errors
     @attr(env=["fakeui"], set=["smoke", "regression", "full"])
     def test_deploy_no_ha_1_controller_3_compute(self):
         PoteenLogger.add_test_case(
@@ -165,6 +180,8 @@ class TestDeploymentSimpleMode(BaseTestCase):
         cluster_key = "cluster"
         cluster_name = "Test environment"
 
+        self.bootstrap_nodes(self.ci().nodes().slaves[0:4])
+
         logger.info(Main().navigate())
         logger.info(Cluster_BrowseView().remove_all())
         logger.info(Cluster_BrowseView().click_add_new_cluster(cluster_key))
@@ -178,18 +195,22 @@ class TestDeploymentSimpleMode(BaseTestCase):
             deploymentMode=Cluster.DEPLOYMENT_MODE_MULTI_NODE
         ))
         logger.info(Cluster_Nodes_View().click_add_controller())
+
+        available_nodes_names = Cluster_Nodes_ListView()\
+            .get_nodes_names_by_status('Discovered')
+
         logger.info(Cluster_Nodes_ListView().select_nodes(
-            "Supermicro X9DRW"
+            *available_nodes_names[:1]
         ))
         logger.info(Cluster_Nodes_View().click_add_compute())
         logger.info(Cluster_Nodes_ListView().select_nodes(
-            "Dell Inspiron", "Supermicro X9SCD", "KVM"
+            *available_nodes_names[1:4]
         ))
         logger.info(Cluster_Nodes_View().verify_controller_nodes(
-            "Supermicro X9DRW"
+            *available_nodes_names[:1]
         ))
         logger.info(Cluster_Nodes_View().verify_compute_nodes(
-            "Dell Inspiron", "Supermicro X9SCD", "KVM"
+            *available_nodes_names[1:4]
         ))
         logger.info(Cluster_View().click_deploy_changes())
         logger.info(DeployChangesDialog().deploy())
@@ -202,6 +223,7 @@ class TestDeploymentSimpleMode(BaseTestCase):
             .format(name=cluster_name)
         ))
 
+    @snapshot_errors
     @attr(env=["fakeui"], set=["smoke", "regression", "full"])
     def test_deploy_no_ha_1_controller_4_compute(self):
         PoteenLogger.add_test_case(
@@ -210,6 +232,8 @@ class TestDeploymentSimpleMode(BaseTestCase):
         cluster_key = "cluster"
         cluster_name = "Test environment"
 
+        self.bootstrap_nodes(self.ci().nodes().slaves[0:5])
+
         logger.info(Main().navigate())
         logger.info(Cluster_BrowseView().remove_all())
         logger.info(Cluster_BrowseView().click_add_new_cluster(cluster_key))
@@ -223,18 +247,22 @@ class TestDeploymentSimpleMode(BaseTestCase):
             deploymentMode=Cluster.DEPLOYMENT_MODE_MULTI_NODE
         ))
         logger.info(Cluster_Nodes_View().click_add_controller())
+
+        available_nodes_names = Cluster_Nodes_ListView()\
+            .get_nodes_names_by_status('Discovered')
+
         logger.info(Cluster_Nodes_ListView().select_nodes(
-            "Supermicro X9DRW"
+            *available_nodes_names[:1]
         ))
         logger.info(Cluster_Nodes_View().click_add_compute())
         logger.info(Cluster_Nodes_ListView().select_nodes(
-            "Dell Inspiron", "Supermicro X9SCD", "KVM", "VirtualBox"
+            *available_nodes_names[1:5]
         ))
         logger.info(Cluster_Nodes_View().verify_controller_nodes(
-            "Supermicro X9DRW"
+            *available_nodes_names[:1]
         ))
         logger.info(Cluster_Nodes_View().verify_compute_nodes(
-            "Dell Inspiron", "Supermicro X9SCD", "KVM", "VirtualBox"
+            *available_nodes_names[1:5]
         ))
         logger.info(Cluster_View().click_deploy_changes())
         logger.info(DeployChangesDialog().deploy())
@@ -247,6 +275,7 @@ class TestDeploymentSimpleMode(BaseTestCase):
             .format(name=cluster_name)
         ))
 
+    @snapshot_errors
     @attr(env=["fakeui"], set=["smoke", "regression", "full"])
     def test_deploy_no_ha_1_controller_2_compute_1_offline_compute(self):
         PoteenLogger.add_test_case(
@@ -299,6 +328,7 @@ class TestDeploymentSimpleMode(BaseTestCase):
             'disabled', 'true'
         ))
 
+    @snapshot_errors
     @attr(env=["fakeui"], set=["smoke", "regression", "full"])
     def test_deploy_concurrent_deployment_3_environments(self):
         PoteenLogger.add_test_case(
@@ -307,20 +337,22 @@ class TestDeploymentSimpleMode(BaseTestCase):
         clusters = {
             "cluster1": {
                 "name": "Test environment 1",
-                "controllers": ["VirtualBox"],
-                "computes": ["Supermicro X9DRW"]
+                "controllers": 1,
+                "computes": 1
             },
             "cluster2": {
                 "name": "Test environment 2",
-                "controllers": ["Supermicro X9SCD"],
-                "computes": ["KVM"]
+                "controllers": 1,
+                "computes": 1
             },
             "cluster3": {
                 "name": "Test environment 3",
-                "controllers": ["Dell Inspiron"],
-                "computes": ["Supermicro X9DRW (srv07)"]
+                "controllers": 1,
+                "computes": 1
             }
         }
+
+        self.bootstrap_nodes(self.ci().nodes().slaves[0:6])
 
         logger.info(Main().navigate())
         logger.info(Cluster_BrowseView().remove_all())
@@ -340,18 +372,24 @@ class TestDeploymentSimpleMode(BaseTestCase):
                 deploymentMode=Cluster.DEPLOYMENT_MODE_MULTI_NODE
             ))
             logger.info(Cluster_Nodes_View().click_add_controller())
+
+            available_nodes_names = Cluster_Nodes_ListView()\
+                .get_nodes_names_by_status('Discovered')
+
             logger.info(Cluster_Nodes_ListView().select_nodes(
-                *cluster_info['controllers']
+                *available_nodes_names[1:cluster_info['controllers']]
             ))
             logger.info(Cluster_Nodes_View().click_add_compute())
             logger.info(Cluster_Nodes_ListView().select_nodes(
-                *cluster_info['computes']
+                *available_nodes_names[
+                    cluster_info['controllers']:cluster_info['computes']]
             ))
             logger.info(Cluster_Nodes_View().verify_controller_nodes(
-                *cluster_info['controllers']
+                *available_nodes_names[1:cluster_info['controllers']]
             ))
             logger.info(Cluster_Nodes_View().verify_compute_nodes(
-                *cluster_info['computes']
+                *available_nodes_names[
+                    cluster_info['controllers']:cluster_info['computes']]
             ))
 
         for cluster_key, cluster_info in clusters.iteritems():
@@ -371,9 +409,3 @@ class TestDeploymentSimpleMode(BaseTestCase):
                 " Access WebUI of OpenStack"
                 .format(name=cluster_info['name'])
             ))
-
-    @attr(env=["fakeui"], set=["smoke", "regression", "full"])
-    def test_ci(self):
-        ci = CiFuelWeb()
-        empty_state = ci.setup_environment()
-        pass
