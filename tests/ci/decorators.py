@@ -19,7 +19,11 @@ import logging
 import os
 import time
 import urllib2
+from engine.poteen.log.result import Result
+from engine.poteen.poteenLogger import PoteenLogger
 from settings import LOGS_DIR
+
+poteen_logger = PoteenLogger
 
 
 def save_logs(ip, filename):
@@ -61,6 +65,9 @@ def snapshot_errors(func):
             name = 'error-%s' % func.__name__
             description = "Failed in method '%s'" % func.__name__
             logging.debug("Snapshot %s %s" % (name, description))
+            poteen_logger.info(Result(
+                "Snapshot {name} {description}"
+                .format(name=name, description=description), True))
             if args[0].ci() is not None:
                 args[0].ci().environment().suspend(verbose=False)
                 args[0].ci().environment().snapshot(

@@ -19,6 +19,7 @@ from ..components.functionality.cluster.nodes.view \
     import Cluster_Nodes_View
 from ..ci.ci_fuel_web import CiFuelWeb
 from base_test_case import BaseTestCase
+from ..ci.decorators import snapshot_errors
 
 logger = PoteenLogger
 
@@ -29,6 +30,7 @@ class TestDeploymentSimpleMode(BaseTestCase):
         super(TestDeploymentSimpleMode, cls).setUpClass()
         PoteenLogger.add_test_suite("Cluster deployment")
 
+    @snapshot_errors
     @attr(env=["fakeui"], set=["smoke", "regression", "full"])
     def test_deploy_no_ha_1_controller_1_compute(self):
         PoteenLogger.add_test_case(
