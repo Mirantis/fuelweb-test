@@ -1,4 +1,5 @@
 from nose.plugins.attrib import attr
+import time
 
 from engine.poteen.poteenLogger import PoteenLogger
 from engine.poteen.testCasePoteen import TestCasePoteen
@@ -284,6 +285,8 @@ class TestDeploymentSimpleMode(BaseTestCase):
         cluster_key = "cluster"
         cluster_name = "Test environment"
 
+        self.bootstrap_nodes(self.ci().nodes().slaves[0:4])
+
         logger.info(Main().navigate())
         logger.info(Cluster_BrowseView().remove_all())
         logger.info(Cluster_BrowseView().click_add_new_cluster(cluster_key))
@@ -297,18 +300,22 @@ class TestDeploymentSimpleMode(BaseTestCase):
             deploymentMode=Cluster.DEPLOYMENT_MODE_MULTI_NODE
         ))
         logger.info(Cluster_Nodes_View().click_add_controller())
+
+        available_nodes_names = Cluster_Nodes_ListView()\
+            .get_nodes_names_by_status('Discovered')
+
         logger.info(Cluster_Nodes_ListView().select_nodes(
-            "Supermicro X9DRW"
+            *available_nodes_names[:1]
         ))
         logger.info(Cluster_Nodes_View().click_add_compute())
         logger.info(Cluster_Nodes_ListView().select_nodes(
-            "Dell Inspiron", "Supermicro X9SCD",
+            *available_nodes_names[1:3]
         ))
         logger.info(Cluster_Nodes_View().verify_controller_nodes(
-            "Supermicro X9DRW"
+            *available_nodes_names[:1]
         ))
         logger.info(Cluster_Nodes_View().verify_compute_nodes(
-            "Dell Inspiron", "Supermicro X9SCD",
+            *available_nodes_names[1:3]
         ))
         logger.info(Cluster_View().click_deploy_changes())
         logger.info(DeployChangesDialog().deploy())
@@ -320,9 +327,18 @@ class TestDeploymentSimpleMode(BaseTestCase):
             " Access WebUI of OpenStack"
             .format(name=cluster_name)
         ))
+
+        # try to add offline node
+        self.ci().nodes().slaves[3].suspend()
+        # wait for updating status of the offline node in fuelweb
+        time.sleep(60*4)
         logger.info(Cluster_Nodes_View().click_add_compute())
+
+        available_nodes_names = Cluster_Nodes_ListView()\
+            .get_nodes_names_by_status('Offline')
+
         logger.info(Cluster_Nodes_ListView().click_nodes(
-            "Supermicro X9SCD (offline)",
+            *available_nodes_names[:1],
         ))
         logger.info(Cluster_Nodes_ListView().applyButton.verify_attribute(
             'disabled', 'true'
