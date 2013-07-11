@@ -312,7 +312,7 @@ class TestDeploymentSimpleMode(BaseTestCase):
             .get_nodes_names_by_status('Offline')
 
         logger.info(Cluster_Nodes_ListView().click_nodes(
-            *available_nodes_names[:1],
+            *available_nodes_names[:1]
         ))
         logger.info(Cluster_Nodes_ListView().applyButton.verify_attribute(
             'disabled', 'true'
