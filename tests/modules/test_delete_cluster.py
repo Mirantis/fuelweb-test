@@ -34,42 +34,15 @@ class Test_Deployment(BaseTestCase):
         cluster_name = "Test environment"
 
         logger.info(Main().navigate())
-        logger.info(Cluster_BrowseView().remove_all())
-
-        # create cluster
-        logger.info(Cluster_BrowseView().click_add_new_cluster(cluster_key))
-        logger.info(CreateEnvironmentDialog().populate(
-            name=cluster_name,
-            version=OPENSTACK_CURRENT_VERSION,
-            submit=True
+        self.create_environment(cluster_name, cluster_key,
+                                Cluster.DEPLOYMENT_MODE_MULTI_NODE)
+        self.add_nodes(1, 1)
+        self.deploy_changes()
+        logger.info(Cluster_View().verify_success_message(
+            "Deployment of environment {name} is done."
+            " Access WebUI of OpenStack"
+            .format(name=cluster_name)
         ))
-        logger.info(Cluster_BrowseView().select_by_key(cluster_key))
-
-        logger.info(Cluster_Nodes_View().select_environment_mode(
-            deploymentMode=Cluster.DEPLOYMENT_MODE_MULTI_NODE
-        ))
-        logger.info(Cluster_Nodes_View().click_add_controller())
-        logger.info(Cluster_Nodes_ListView().select_nodes(
-            "Supermicro X9DRW"
-        ))
-        logger.info(Cluster_Nodes_View().click_add_compute())
-        logger.info(Cluster_Nodes_ListView().select_nodes(
-            "Dell Inspiron"
-        ))
-        logger.info(Cluster_Nodes_View().verify_controller_nodes(
-            "Supermicro X9DRW"
-        ))
-        logger.info(Cluster_Nodes_View().verify_compute_nodes(
-            "Dell Inspiron"
-        ))
-        logger.info(Cluster_View().click_deploy_changes())
-        logger.info(DeployChangesDialog().deploy())
-        logger.info(Cluster_View().wait_deployment_done(
-            DEFAULT_DEPLOYMENT_TIMEOUT_UI
-        ))
-        logger.info(
-            Cluster_View().verify_successful_deployment_per_name(cluster_name)
-        )
 
         logger.info(Main().navigate())
         logger.info(Cluster_BrowseView().remove("Test environment"))
@@ -84,20 +57,9 @@ class Test_Deployment(BaseTestCase):
         cluster_name = "Test environment"
 
         logger.info(Main().navigate())
-        logger.info(Cluster_BrowseView().remove_all())
+        self.create_environment(cluster_name, cluster_key,
+                                Cluster.DEPLOYMENT_MODE_MULTI_NODE)
 
-        # create cluster
-        logger.info(Cluster_BrowseView().click_add_new_cluster(cluster_key))
-        logger.info(CreateEnvironmentDialog().populate(
-            name=cluster_name,
-            version=OPENSTACK_CURRENT_VERSION,
-            submit=True
-        ))
-        logger.info(Cluster_BrowseView().select_by_key(cluster_key))
-
-        logger.info(Cluster_Nodes_View().select_environment_mode(
-            deploymentMode=Cluster.DEPLOYMENT_MODE_MULTI_NODE
-        ))
         logger.info(Cluster_Nodes_View().click_add_controller())
         logger.info(Cluster_Nodes_ListView().click_nodes(
             "Supermicro X9SCD (offline)"
