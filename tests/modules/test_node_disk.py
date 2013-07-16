@@ -64,25 +64,10 @@ class TestDeploymentDisks(BaseTestCase):
             Cluster_Nodes_View().get_nodes_controllers()[-1].click_hardware())
         logger.info(NodeHardwareDialog().click_disk_configuration())
 
-        # verify default disks settings
-        logger.info(ConfigureDisks().get_disk_box('sda').click_disk_map())
-        logger.info(ConfigureDisks().get_disk_box(
-            'sda').verify_volume_size_is_identical('Base System'))
-        logger.info(ConfigureDisks().get_disk_box(
-            'sda').make_bootable.find().verify_attribute(
-                'disabled', 'true'))
-
-        # logger.info(ConfigureDisks().get_disk_box('sdb').click_disk_map())
-        # logger.info(ConfigureDisks().get_disk_box(
-        #     'sdb').verify_volume_size_is_identical('Base System'))
-        # logger.info(ConfigureDisks().get_disk_box(
-        #     'sdb').make_bootable.find().verify_attribute('disabled', None))
-        #
-        # logger.info(ConfigureDisks().get_disk_box('sdc').click_disk_map())
-        # logger.info(ConfigureDisks().get_disk_box(
-        #     'sdc').verify_volume_size_is_identical('Base System'))
-        # logger.info(ConfigureDisks().get_disk_box(
-        #     'sdc').make_bootable.find().verify_attribute('disabled', None))
+        self.verify_bottom_buttons()
+        self.verify_disk_boxes({
+            'sda': {'Base System': {'btn_close': False}},
+            'sdb': {'Base System': {'btn_close': True}}})
 
     @attr(env=["fakeui"], set=["smoke", "regression", "full"])
     def test_compute_disk(self):
@@ -120,27 +105,11 @@ class TestDeploymentDisks(BaseTestCase):
             Cluster_Nodes_View().get_nodes_computes()[-1].click_hardware())
         logger.info(NodeHardwareDialog().click_disk_configuration())
 
-        # verify default disks settings
-        logger.info(ConfigureDisks().get_disk_box('sda').click_disk_map())
-        logger.info(ConfigureDisks().get_disk_box(
-            'sda').verify_volume_size_is_identical('Base System'))
-        logger.info(ConfigureDisks().get_disk_box(
-            'sda').verify_volume_size_is_identical('Virtual Storage'))
-        logger.info(ConfigureDisks().get_disk_box(
-            'sda').make_bootable.find().verify_attribute(
-                'disabled', 'true'))
-
-        # logger.info(ConfigureDisks().get_disk_box('sdb').click_disk_map())
-        # logger.info(ConfigureDisks().get_disk_box(
-        #     'sdb').verify_volume_size_is_identical('Virtual Storage'))
-        # logger.info(ConfigureDisks().get_disk_box(
-        #     'sdb').make_bootable.find().verify_attribute('disabled', None))
-        #
-        # logger.info(ConfigureDisks().get_disk_box('sdc').click_disk_map())
-        # logger.info(ConfigureDisks().get_disk_box(
-        #     'sdc').verify_volume_size_is_identical('Virtual Storage'))
-        # logger.info(ConfigureDisks().get_disk_box(
-        #     'sdc').make_bootable.find().verify_attribute('disabled', None))
+        self.verify_bottom_buttons()
+        self.verify_disk_boxes({
+            'sda': {'Base System': {'btn_close': False},
+                    'Virtual Storage': {'btn_close': True}},
+            'sdb': {'Virtual Storage': {'btn_close': True}}})
 
     @attr(env=["fakeui"], set=["smoke", "regression", "full"])
     def test_cinder_disk(self):
@@ -178,24 +147,43 @@ class TestDeploymentDisks(BaseTestCase):
             Cluster_Nodes_View().get_nodes_computes()[-1].click_hardware())
         logger.info(NodeHardwareDialog().click_disk_configuration())
 
-        # verify default disks settings
-        logger.info(ConfigureDisks().get_disk_box('sda').click_disk_map())
-        logger.info(ConfigureDisks().get_disk_box(
-            'sda').verify_volume_size_is_identical('Base System'))
-        logger.info(ConfigureDisks().get_disk_box(
-            'sda').verify_volume_size_is_identical('Cinder'))
-        logger.info(ConfigureDisks().get_disk_box(
-            'sda').make_bootable.find().verify_attribute(
-                'disabled', 'true'))
+        self.verify_bottom_buttons()
+        self.verify_disk_boxes({
+            'sda': {'Base System': {'btn_close': False},
+                    'Cinder': {'btn_close': True}},
+            'sdb': {'Cinder': {'btn_close': True}}})
 
-        # logger.info(ConfigureDisks().get_disk_box('sdb').click_disk_map())
-        # logger.info(ConfigureDisks().get_disk_box(
-        #     'sdb').verify_volume_size_is_identical('Cinder'))
-        # logger.info(ConfigureDisks().get_disk_box(
-        #     'sdb').make_bootable.find().verify_attribute('disabled', None))
-        #
-        # logger.info(ConfigureDisks().get_disk_box('sdc').click_disk_map())
-        # logger.info(ConfigureDisks().get_disk_box(
-        #     'sdc').verify_volume_size_is_identical('Cinder'))
-        # logger.info(ConfigureDisks().get_disk_box(
-        #     'sdc').make_bootable.find().verify_attribute('disabled', None))
+    def verify_bottom_buttons(self):
+        logger.info(ConfigureDisks().loadDefaults.find().verify_attribute(
+            'disabled', None))
+        logger.info(ConfigureDisks().applyButton.find().verify_attribute(
+            'disabled', 'true'))
+        logger.info(ConfigureDisks().cancelChanges.find().verify_attribute(
+            'disabled', 'true'))
+        logger.info(ConfigureDisks().backToNodeList.find().verify_attribute(
+            'disabled', None))
+
+    def verify_disk_box(self, disk_name, boxes):
+        for bn, info in boxes.iteritems():
+            logger.info(ConfigureDisks().get_disk_box(
+                disk_name).get_volume_group(bn).close.find().verify_attribute(
+                    'class', 'close-btn hide'))
+
+        logger.info(ConfigureDisks().get_disk_box(disk_name).click_disk_map())
+
+        for bn, info in boxes.iteritems():
+            logger.info(ConfigureDisks().get_disk_box(
+                disk_name).verify_volume_size_is_identical(bn))
+            logger.info(ConfigureDisks().get_disk_box(
+                disk_name).make_bootable.find().verify_attribute(
+                    'disabled', 'true'))
+
+            close_btn_class_attr = 'close-btn' if info['btn_close'] \
+                else 'close-btn hide'
+            logger.info(ConfigureDisks().get_disk_box(
+                disk_name).get_volume_group(bn).close.find().verify_attribute(
+                    'class', close_btn_class_attr))
+
+    def verify_disk_boxes(self, info):
+        for disk_name, boxes_info in info.iteritems():
+            self.verify_disk_box(disk_name, boxes_info)
