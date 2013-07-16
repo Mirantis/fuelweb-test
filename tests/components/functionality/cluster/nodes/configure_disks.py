@@ -13,7 +13,7 @@ class ConfigureDisks(ConfigureView):
                   "contains(div[@class='disk-box-name pull-left'],'{name}')]",
             element_name="Disk box {name}")
 
-        AbstractView.__init__(self)
+        ConfigureView.__init__(self)
 
     def get_disk_box(self, name):
         return DiskBox(self.disk_box.find(name=name).get_element())
