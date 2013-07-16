@@ -1,3 +1,4 @@
+from selenium.common.exceptions import ElementNotVisibleException
 from engine.poteen.basePage import BasePage
 from engine.poteen.bots.waitBot import WaitBot
 from engine.poteen.elements.basic.button import Button
@@ -54,14 +55,27 @@ class DiskBox(BasePage):
         BasePage.__init__(self, parent)
 
     def get_volume_group(self, name):
-        return VolumeGroup(self.volume_group.find(name=name))
+        return VolumeGroup(self.volume_group.find(name=name).get_element())
 
     def get_volume_group_box(self, name):
         return VolumeGroupBox(self.volume_group_box.find(name=name))
 
     def click_disk_map(self):
         rl = ResultList("Click disk map")
-        rl.push(self.disk_map.click())
+
+        elements = self._parent\
+            .find_elements_by_xpath(".//div[@class='toggle-volume']")
+        for el in elements:
+            try:
+                res = HtmlElement(element=el).click()
+                if not res.i_passed():
+                    raise ElementNotVisibleException()
+            except ElementNotVisibleException:
+                continue
+            else:
+                break
+        rl.push(res)
+
         WaitBot().wait_for_web_element_stop_resizing(
             self.disk_map.find().get_element())
         return rl
