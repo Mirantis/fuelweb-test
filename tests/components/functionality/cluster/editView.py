@@ -11,7 +11,7 @@ class Cluster_View(AbstractView):
     def __init__(self, parent=None):
         self.tab = HtmlElement(
             xpath="//div[@id='content']//ul[contains(@class, 'nav nav-tabs')]"
-                  "/li[.//b[@class='{}']]",
+                  "/li/a[b[@class='{}']]",
             element_name="Tab"
         )
         self.deployChanges = Button(
@@ -38,6 +38,10 @@ class Cluster_View(AbstractView):
     def click_actions_tab(self):
         return ResultList("Click actions tab") \
             .push(self.tab.find("tab-actions-normal").click())
+
+    def click_network_settings_tab(self):
+        return ResultList("Click network settings tab") \
+            .push(self.tab.find("tab-network-normal").click())
 
     def click_deploy_changes(self):
         return self.deployChanges.click()
