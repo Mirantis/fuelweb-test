@@ -5,11 +5,13 @@ from engine.poteen.elements.basic.button import Button
 class AbstractView(BasePage):
     def __init__(self, parent=None):
         self.applyButton = Button(
-            xpath=".//div[contains(@class, 'btn-apply')]",
+            xpath=".//*[self::button or self::div]"
+                  "[contains(@class, 'btn-apply')]",
             element_name="Apply"
         )
         self.cancelButton = Button(
-            xpath=".//div[contains(@class, 'btn-discard')]",
+            xpath=".//*[self::button or self::div]"
+                  "[contains(@class, 'btn-discard')]",
             element_name="Cancel"
         )
 
