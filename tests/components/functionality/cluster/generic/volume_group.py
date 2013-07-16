@@ -14,7 +14,7 @@ class VolumeGroup(BasePage):
             element_name="name")
 
         self.close = Link(
-            xpath=".//div[@class='close-btn']",
+            xpath=".//div[contains(@class,'close-btn')]",
             element_name="close")
 
         BasePage.__init__(self, parent)
