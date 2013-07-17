@@ -1,7 +1,6 @@
 from nose.plugins.attrib import attr
 
 from engine.poteen.poteenLogger import PoteenLogger
-from engine.poteen.testCasePoteen import TestCasePoteen
 
 from ..components.functionality.main import Main
 from ..components.settings import *
@@ -198,7 +197,7 @@ class TestDeploymentDisks(BaseTestCase):
         self.verify_bottom_buttons()
 
     @attr(env=["fakeui"], set=["smoke", "regression", "full"])
-    def test_load_defaults(self):
+    def test_load_defaults_cancel(self):
         PoteenLogger.add_test_case(
             "Load defaults")
 
@@ -232,10 +231,21 @@ class TestDeploymentDisks(BaseTestCase):
         logger.info(
             Cluster_Nodes_View().get_nodes_computes()[-1].click_hardware())
         logger.info(NodeHardwareDialog().click_disk_configuration())
+
+        # test load defaults
         logger.info(ConfigureDisks().get_disk_box('sdb').click_disk_map())
         logger.info(ConfigureDisks().get_disk_box(
             'sdb').get_volume_group_box('Cinder').size.set_value('11.51'))
-        logger.info(ConfigureDisks().loadDefaults.find().click())
+        logger.info(ConfigureDisks().loadDefaults.find().click_and_wait())
+        logger.info(ConfigureDisks().get_disk_box('sdb').click_disk_map())
+        logger.info(ConfigureDisks().get_disk_box(
+            'sdb').get_volume_group_box('Cinder').size.verify_value('15.51'))
+        self.verify_bottom_buttons()
+
+        # test cancel
+        logger.info(ConfigureDisks().get_disk_box(
+            'sdb').get_volume_group_box('Cinder').size.set_value('10.12'))
+        logger.info(ConfigureDisks().cancelChanges.find().click_and_wait())
         logger.info(ConfigureDisks().get_disk_box('sdb').click_disk_map())
         logger.info(ConfigureDisks().get_disk_box(
             'sdb').get_volume_group_box('Cinder').size.verify_value('15.51'))
