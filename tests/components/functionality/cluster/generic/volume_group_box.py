@@ -15,7 +15,7 @@ class VolumeGroupBox(BasePage):
             element_name="size")
 
         self.use_all_unallocated = Link(
-            xpath=".//div[@class='use-all-unallocated']",
+            xpath=".//span[@class='use-all-unallocated']",
             element_name="Use all unallocated")
 
         BasePage.__init__(self, parent)
