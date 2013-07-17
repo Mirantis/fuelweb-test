@@ -115,36 +115,7 @@ class TestDeploymentDisks(BaseTestCase):
         PoteenLogger.add_test_case(
             "Cinder disk")
 
-        cluster_key = "cluster"
-        cluster_name = "Test cinder disk"
-
-        logger.info(Main().navigate())
-        logger.info(Cluster_BrowseView().remove_all())
-
-        # create cluster
-        logger.info(Cluster_BrowseView().click_add_new_cluster(cluster_key))
-        logger.info(CreateEnvironmentDialog().populate(
-            name=cluster_name,
-            version=OPENSTACK_CURRENT_VERSION,
-            submit=True
-        ))
-        logger.info(Cluster_BrowseView().select_by_key(cluster_key))
-
-        # add cinder node
-        logger.info(Cluster_Nodes_View().click_add_cinder())
-        available_nodes_names = Cluster_Nodes_ListView()\
-            .get_nodes_names_by_status('Discovered')
-        logger.info(Cluster_Nodes_ListView().select_nodes(
-            available_nodes_names[-1]
-        ))
-        logger.info(Cluster_Nodes_View().verify_cinder_nodes(
-            available_nodes_names[-1]
-        ))
-
-        # navigate to disks configuration page
-        logger.info(
-            Cluster_Nodes_View().get_nodes_computes()[-1].click_hardware())
-        logger.info(NodeHardwareDialog().click_disk_configuration())
+        self.create_env_add_cinder_go_to_disks_conf("Cinder disk")
 
         self.verify_bottom_buttons()
         self.verify_disk_boxes({
@@ -157,36 +128,8 @@ class TestDeploymentDisks(BaseTestCase):
         PoteenLogger.add_test_case(
             "Buttons interactions")
 
-        cluster_key = "cluster"
-        cluster_name = "Test buttons interactions"
+        self.create_env_add_cinder_go_to_disks_conf("Buttons interactions")
 
-        logger.info(Main().navigate())
-        logger.info(Cluster_BrowseView().remove_all())
-
-        # create cluster
-        logger.info(Cluster_BrowseView().click_add_new_cluster(cluster_key))
-        logger.info(CreateEnvironmentDialog().populate(
-            name=cluster_name,
-            version=OPENSTACK_CURRENT_VERSION,
-            submit=True
-        ))
-        logger.info(Cluster_BrowseView().select_by_key(cluster_key))
-
-        # add cinder node
-        logger.info(Cluster_Nodes_View().click_add_cinder())
-        available_nodes_names = Cluster_Nodes_ListView()\
-            .get_nodes_names_by_status('Discovered')
-        logger.info(Cluster_Nodes_ListView().select_nodes(
-            available_nodes_names[-1]
-        ))
-        logger.info(Cluster_Nodes_View().verify_cinder_nodes(
-            available_nodes_names[-1]
-        ))
-
-        # navigate to disks configuration page
-        logger.info(
-            Cluster_Nodes_View().get_nodes_computes()[-1].click_hardware())
-        logger.info(NodeHardwareDialog().click_disk_configuration())
         self.verify_bottom_buttons()
         logger.info(ConfigureDisks().get_disk_box('sdb').click_disk_map())
         logger.info(ConfigureDisks().get_disk_box(
@@ -201,36 +144,7 @@ class TestDeploymentDisks(BaseTestCase):
         PoteenLogger.add_test_case(
             "Load defaults")
 
-        cluster_key = "cluster"
-        cluster_name = "Load defaults"
-
-        logger.info(Main().navigate())
-        logger.info(Cluster_BrowseView().remove_all())
-
-        # create cluster
-        logger.info(Cluster_BrowseView().click_add_new_cluster(cluster_key))
-        logger.info(CreateEnvironmentDialog().populate(
-            name=cluster_name,
-            version=OPENSTACK_CURRENT_VERSION,
-            submit=True
-        ))
-        logger.info(Cluster_BrowseView().select_by_key(cluster_key))
-
-        # add cinder node
-        logger.info(Cluster_Nodes_View().click_add_cinder())
-        available_nodes_names = Cluster_Nodes_ListView()\
-            .get_nodes_names_by_status('Discovered')
-        logger.info(Cluster_Nodes_ListView().select_nodes(
-            available_nodes_names[-1]
-        ))
-        logger.info(Cluster_Nodes_View().verify_cinder_nodes(
-            available_nodes_names[-1]
-        ))
-
-        # navigate to disks configuration page
-        logger.info(
-            Cluster_Nodes_View().get_nodes_computes()[-1].click_hardware())
-        logger.info(NodeHardwareDialog().click_disk_configuration())
+        self.create_env_add_cinder_go_to_disks_conf("Load defaults")
 
         # test load defaults
         logger.info(ConfigureDisks().get_disk_box('sdb').click_disk_map())
@@ -256,36 +170,7 @@ class TestDeploymentDisks(BaseTestCase):
         PoteenLogger.add_test_case(
             "Remove volume group")
 
-        cluster_key = "cluster"
-        cluster_name = "Remove volume group"
-
-        logger.info(Main().navigate())
-        logger.info(Cluster_BrowseView().remove_all())
-
-        # create cluster
-        logger.info(Cluster_BrowseView().click_add_new_cluster(cluster_key))
-        logger.info(CreateEnvironmentDialog().populate(
-            name=cluster_name,
-            version=OPENSTACK_CURRENT_VERSION,
-            submit=True
-        ))
-        logger.info(Cluster_BrowseView().select_by_key(cluster_key))
-
-        # add cinder node
-        logger.info(Cluster_Nodes_View().click_add_cinder())
-        available_nodes_names = Cluster_Nodes_ListView()\
-            .get_nodes_names_by_status('Discovered')
-        logger.info(Cluster_Nodes_ListView().select_nodes(
-            available_nodes_names[-1]
-        ))
-        logger.info(Cluster_Nodes_View().verify_cinder_nodes(
-            available_nodes_names[-1]
-        ))
-
-        # navigate to disks configuration page
-        logger.info(
-            Cluster_Nodes_View().get_nodes_computes()[-1].click_hardware())
-        logger.info(NodeHardwareDialog().click_disk_configuration())
+        self.create_env_add_cinder_go_to_disks_conf("Remove volume group")
 
         logger.info(ConfigureDisks().get_disk_box('sda').click_disk_map())
         logger.info(ConfigureDisks().get_disk_box('sda').get_volume_group(
@@ -302,36 +187,7 @@ class TestDeploymentDisks(BaseTestCase):
         PoteenLogger.add_test_case(
             "Error message")
 
-        cluster_key = "cluster"
-        cluster_name = "Error message"
-
-        logger.info(Main().navigate())
-        logger.info(Cluster_BrowseView().remove_all())
-
-        # create cluster
-        logger.info(Cluster_BrowseView().click_add_new_cluster(cluster_key))
-        logger.info(CreateEnvironmentDialog().populate(
-            name=cluster_name,
-            version=OPENSTACK_CURRENT_VERSION,
-            submit=True
-        ))
-        logger.info(Cluster_BrowseView().select_by_key(cluster_key))
-
-        # add cinder node
-        logger.info(Cluster_Nodes_View().click_add_cinder())
-        available_nodes_names = Cluster_Nodes_ListView()\
-            .get_nodes_names_by_status('Discovered')
-        logger.info(Cluster_Nodes_ListView().select_nodes(
-            available_nodes_names[-1]
-        ))
-        logger.info(Cluster_Nodes_View().verify_cinder_nodes(
-            available_nodes_names[-1]
-        ))
-
-        # navigate to disks configuration page
-        logger.info(
-            Cluster_Nodes_View().get_nodes_computes()[-1].click_hardware())
-        logger.info(NodeHardwareDialog().click_disk_configuration())
+        self.create_env_add_cinder_go_to_disks_conf("Error message")
 
         # Maximal size error message
         logger.info(ConfigureDisks().get_disk_box('sda').click_disk_map())
@@ -359,36 +215,7 @@ class TestDeploymentDisks(BaseTestCase):
         PoteenLogger.add_test_case(
             "Make bootable")
 
-        cluster_key = "cluster"
-        cluster_name = "Make bootable"
-
-        logger.info(Main().navigate())
-        logger.info(Cluster_BrowseView().remove_all())
-
-        # create cluster
-        logger.info(Cluster_BrowseView().click_add_new_cluster(cluster_key))
-        logger.info(CreateEnvironmentDialog().populate(
-            name=cluster_name,
-            version=OPENSTACK_CURRENT_VERSION,
-            submit=True
-        ))
-        logger.info(Cluster_BrowseView().select_by_key(cluster_key))
-
-        # add cinder node
-        logger.info(Cluster_Nodes_View().click_add_cinder())
-        available_nodes_names = Cluster_Nodes_ListView()\
-            .get_nodes_names_by_status('Discovered')
-        logger.info(Cluster_Nodes_ListView().select_nodes(
-            available_nodes_names[-1]
-        ))
-        logger.info(Cluster_Nodes_View().verify_cinder_nodes(
-            available_nodes_names[-1]
-        ))
-
-        # navigate to disks configuration page
-        logger.info(
-            Cluster_Nodes_View().get_nodes_computes()[-1].click_hardware())
-        logger.info(NodeHardwareDialog().click_disk_configuration())
+        self.create_env_add_cinder_go_to_disks_conf("Make bootable")
 
         logger.info(ConfigureDisks().get_disk_box('sda').click_disk_map())
         logger.info(ConfigureDisks().get_disk_box('sdb').click_disk_map())
@@ -467,3 +294,34 @@ class TestDeploymentDisks(BaseTestCase):
     def verify_disk_boxes(self, info):
         for disk_name, boxes_info in info.iteritems():
             self.verify_disk_box(disk_name, boxes_info)
+
+    def create_env_add_cinder_go_to_disks_conf(self, env_name):
+        cluster_key = "cluster"
+
+        logger.info(Main().navigate())
+        logger.info(Cluster_BrowseView().remove_all())
+
+        # create cluster
+        logger.info(Cluster_BrowseView().click_add_new_cluster(cluster_key))
+        logger.info(CreateEnvironmentDialog().populate(
+            name=env_name,
+            version=OPENSTACK_CURRENT_VERSION,
+            submit=True
+        ))
+        logger.info(Cluster_BrowseView().select_by_key(cluster_key))
+
+        # add cinder node
+        logger.info(Cluster_Nodes_View().click_add_cinder())
+        available_nodes_names = Cluster_Nodes_ListView()\
+            .get_nodes_names_by_status('Discovered')
+        logger.info(Cluster_Nodes_ListView().select_nodes(
+            available_nodes_names[-1]
+        ))
+        logger.info(Cluster_Nodes_View().verify_cinder_nodes(
+            available_nodes_names[-1]
+        ))
+
+        # navigate to disks configuration page
+        logger.info(
+            Cluster_Nodes_View().get_nodes_cinders()[-1].click_hardware())
+        logger.info(NodeHardwareDialog().click_disk_configuration())
