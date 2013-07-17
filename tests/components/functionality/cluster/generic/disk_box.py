@@ -52,6 +52,11 @@ class DiskBox(BasePage):
             xpath=".//div[@class='disk-map-short disk-map-full']",
             element_name="Disk map")
 
+        self.error_message = HtmlElement(
+            xpath=".//div[@class='volume-group-error-message' and contains(text(),'{text}')]",
+            element_name="Error Message"
+        )
+
         BasePage.__init__(self, parent)
 
     def get_volume_group(self, name):

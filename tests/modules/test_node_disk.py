@@ -287,7 +287,6 @@ class TestDeploymentDisks(BaseTestCase):
             Cluster_Nodes_View().get_nodes_computes()[-1].click_hardware())
         logger.info(NodeHardwareDialog().click_disk_configuration())
 
-        # test load defaults
         logger.info(ConfigureDisks().get_disk_box('sda').click_disk_map())
         logger.info(ConfigureDisks().get_disk_box('sda').get_volume_group(
             'Cinder').close.click_and_wait())
@@ -297,6 +296,63 @@ class TestDeploymentDisks(BaseTestCase):
             'sda').get_volume_group('Cinder').size.verify_value('0.00 GB'))
         logger.info(ConfigureDisks().get_disk_box(
             'sda').get_volume_group('Unallocated').size.verify_value('300.46 GB'))
+
+    @attr(env=["fakeui"], set=["smoke", "regression", "full"])
+    def test_error_message(self):
+        PoteenLogger.add_test_case(
+            "Error message")
+
+        cluster_key = "cluster"
+        cluster_name = "Error message"
+
+        logger.info(Main().navigate())
+        logger.info(Cluster_BrowseView().remove_all())
+
+        # create cluster
+        logger.info(Cluster_BrowseView().click_add_new_cluster(cluster_key))
+        logger.info(CreateEnvironmentDialog().populate(
+            name=cluster_name,
+            version=OPENSTACK_CURRENT_VERSION,
+            submit=True
+        ))
+        logger.info(Cluster_BrowseView().select_by_key(cluster_key))
+
+        # add cinder node
+        logger.info(Cluster_Nodes_View().click_add_cinder())
+        available_nodes_names = Cluster_Nodes_ListView()\
+            .get_nodes_names_by_status('Discovered')
+        logger.info(Cluster_Nodes_ListView().select_nodes(
+            available_nodes_names[-1]
+        ))
+        logger.info(Cluster_Nodes_View().verify_cinder_nodes(
+            available_nodes_names[-1]
+        ))
+
+        # navigate to disks configuration page
+        logger.info(
+            Cluster_Nodes_View().get_nodes_computes()[-1].click_hardware())
+        logger.info(NodeHardwareDialog().click_disk_configuration())
+
+        # Maximal size error message
+        logger.info(ConfigureDisks().get_disk_box('sda').click_disk_map())
+        logger.info(ConfigureDisks().get_disk_box(
+            'sda').get_volume_group_box('Cinder').size.set_value('350.00'))
+        logger.info(ConfigureDisks().get_disk_box(
+            'sda').get_volume_group_box('Cinder').size.verify_attribute(
+                'class', 'input-mini error'))
+        logger.info(ConfigureDisks().get_disk_box(
+            'sda').error_message.find(text='Maximal size').verify_value(
+                'Maximal size is 300.47 GB'))
+
+        # Minimal size error message
+        logger.info(ConfigureDisks().get_disk_box(
+            'sda').get_volume_group_box('Base System').size.set_value('12.00'))
+        logger.info(ConfigureDisks().get_disk_box(
+            'sda').get_volume_group_box('Base System').size.verify_attribute(
+                'class', 'input-mini error'))
+        logger.info(ConfigureDisks().get_disk_box(
+            'sda').error_message.find(text='Minimal size').verify_value(
+                'Minimal size is 18.59 GB'))
 
     def verify_bottom_buttons(self, load_defaults=None,
                               apply='true', cancel='true', back_to_node=None):
