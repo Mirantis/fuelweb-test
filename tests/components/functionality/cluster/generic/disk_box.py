@@ -58,7 +58,7 @@ class DiskBox(BasePage):
         return VolumeGroup(self.volume_group.find(name=name).get_element())
 
     def get_volume_group_box(self, name):
-        return VolumeGroupBox(self.volume_group_box.find(name=name))
+        return VolumeGroupBox(self.volume_group_box.find(name=name).get_element())
 
     def click_disk_map(self):
         rl = ResultList("Click disk map")
