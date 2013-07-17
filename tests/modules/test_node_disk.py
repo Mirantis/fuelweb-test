@@ -197,6 +197,50 @@ class TestDeploymentDisks(BaseTestCase):
             'sdb').get_volume_group_box('Cinder').use_all_unallocated.click())
         self.verify_bottom_buttons()
 
+    @attr(env=["fakeui"], set=["smoke", "regression", "full"])
+    def test_load_defaults(self):
+        PoteenLogger.add_test_case(
+            "Load defaults")
+
+        cluster_key = "cluster"
+        cluster_name = "Load defaults"
+
+        logger.info(Main().navigate())
+        logger.info(Cluster_BrowseView().remove_all())
+
+        # create cluster
+        logger.info(Cluster_BrowseView().click_add_new_cluster(cluster_key))
+        logger.info(CreateEnvironmentDialog().populate(
+            name=cluster_name,
+            version=OPENSTACK_CURRENT_VERSION,
+            submit=True
+        ))
+        logger.info(Cluster_BrowseView().select_by_key(cluster_key))
+
+        # add cinder node
+        logger.info(Cluster_Nodes_View().click_add_cinder())
+        available_nodes_names = Cluster_Nodes_ListView()\
+            .get_nodes_names_by_status('Discovered')
+        logger.info(Cluster_Nodes_ListView().select_nodes(
+            available_nodes_names[-1]
+        ))
+        logger.info(Cluster_Nodes_View().verify_cinder_nodes(
+            available_nodes_names[-1]
+        ))
+
+        # navigate to disks configuration page
+        logger.info(
+            Cluster_Nodes_View().get_nodes_computes()[-1].click_hardware())
+        logger.info(NodeHardwareDialog().click_disk_configuration())
+        logger.info(ConfigureDisks().get_disk_box('sdb').click_disk_map())
+        logger.info(ConfigureDisks().get_disk_box(
+            'sdb').get_volume_group_box('Cinder').size.set_value('11.51'))
+        logger.info(ConfigureDisks().loadDefaults.find().click())
+        logger.info(ConfigureDisks().get_disk_box('sdb').click_disk_map())
+        logger.info(ConfigureDisks().get_disk_box(
+            'sdb').get_volume_group_box('Cinder').size.verify_value('15.51'))
+        self.verify_bottom_buttons()
+
     def verify_bottom_buttons(self, load_defaults=None,
                               apply='true', cancel='true', back_to_node=None):
         logger.info(ConfigureDisks().loadDefaults.find().verify_attribute(
