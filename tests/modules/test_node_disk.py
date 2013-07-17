@@ -259,6 +259,38 @@ class TestDeploymentDisks(BaseTestCase):
             'sda').bootable_marker.verify_attribute(
                 'style', 'display: inline;'))
 
+    @attr(env=["fakeui"], set=["smoke", "regression", "full"])
+    def test_field_validation(self):
+        PoteenLogger.add_test_case(
+            "Field validation")
+
+        self.create_env_add_cinder_go_to_disks_conf("Field validation")
+
+        logger.info(ConfigureDisks().get_disk_box('sda').click_disk_map())
+
+        # letters
+        logger.info(ConfigureDisks().get_disk_box(
+            'sda').get_volume_group_box('Cinder').size.set_value('letters123'))
+        logger.info(ConfigureDisks().get_disk_box(
+            'sda').get_volume_group_box('Cinder').size.verify_attribute(
+                'class', 'input-mini error'))
+        logger.info(ConfigureDisks().get_disk_box(
+            'sda').error_message.find(text='Invalid size').verify_value(
+                'Invalid size'))
+
+        logger.info(ConfigureDisks().get_disk_box(
+            'sda').get_volume_group_box('Cinder').size.set_value('19.00'))
+
+        # negative value
+        logger.info(ConfigureDisks().get_disk_box(
+            'sda').get_volume_group_box('Cinder').size.set_value('-20'))
+        logger.info(ConfigureDisks().get_disk_box(
+            'sda').get_volume_group_box('Cinder').size.verify_attribute(
+                'class', 'input-mini error'))
+        logger.info(ConfigureDisks().get_disk_box(
+            'sda').error_message.find(text='Invalid size').verify_value(
+                'Invalid size'))
+
     def verify_bottom_buttons(self, load_defaults=None,
                               apply='true', cancel='true', back_to_node=None):
         logger.info(ConfigureDisks().loadDefaults.find().verify_attribute(
