@@ -16,14 +16,26 @@ from tests.components.functionality.cluster.nodes.view \
 logger = PoteenLogger
 
 
-class TestDeploymentSimpleMode(TestCasePoteen):
+class TestReleases(TestCasePoteen):
     @classmethod
     def setUpClass(cls):
-        super(TestDeploymentSimpleMode, cls).setUpClass()
+        super(TestReleases, cls).setUpClass()
         PoteenLogger.add_test_suite("Cluster deployment")
-        # ContextHolder.set_browser("firefox")
-        # ContextHolder.set_do_screenshot(False)
-        # ContextHolder.set_url("http://10.20.0.2:8000/")
+
+    @attr(env=["fakeui"], set=["smoke", "regression", "full"])
+    def test_releases_page_layout(self):
+        PoteenLogger.add_test_case(
+            "Releases page layout")
+
+        cluster_key = "cluster"
+
+        logger.info(Main().navigate())
+        logger.info(Cluster_BrowseView().click_add_new_cluster(cluster_key))
+        CreateEnvironmentDialog().verify_releases_list(
+            ['RHOS 3.0 for RHEL 6.4 (2013.1.2)',
+             'Grizzly on CentOS 6.4 (2013.1.2)'])
+
+
 
     @attr(env=["fakeui"], set=["smoke", "regression", "full"])
     def test_deploy_no_ha_1_controller_1_compute(self):

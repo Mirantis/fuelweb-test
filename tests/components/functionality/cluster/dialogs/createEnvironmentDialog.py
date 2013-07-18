@@ -1,5 +1,6 @@
 from selenium.webdriver.common.by import By
-from engine.poteen.bots.waitBot import WaitBot
+from engine.poteen.bots.actionBot import ActionBot
+from engine.poteen.bots.verifyBot import VerifyBot
 from engine.poteen.elements.basic.htmlElement import HtmlElement
 from engine.poteen.elements.basic.input import Input
 from engine.poteen.elements.basic.select import Select
@@ -45,3 +46,11 @@ class CreateEnvironmentDialog(AbstractDialog):
 
     def verify_name_error(self, value):
         return self.nameErrorMessage.verify_value(value)
+
+    def verify_releases_list(self, expected_releases):
+        rl = ResultList("Verify releases list")
+        web_elements_releases = ActionBot().find_elements(
+            By.TAG_NAME, 'option', self.version.get_element())
+        releases = [we.text for we in web_elements_releases]
+        VerifyBot().verify_equal(set(expected_releases), set(releases), 'Releases')
+        return  rl
