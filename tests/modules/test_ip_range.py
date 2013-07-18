@@ -1,3 +1,4 @@
+from engine.poteen.bots.verifyBot import VerifyBot
 from tests.components.functionality.cluster.network_settings.view \
     import NetworkSettingsView
 from tests.components.settings import OPENSTACK_CURRENT_VERSION
@@ -51,20 +52,20 @@ class Test_Network_settings(TestCasePoteen):
         logger.info(NetworkSettingsView().verify_flatDHCP_manager_value("on"))
         logger.info(NetworkSettingsView().verify_VLAN_manager_value("off"))
         logger.info(NetworkSettingsView().verify_amount_of_blocks(5))
-        logger.info(NetworkSettingsView().verify_disabled(NetworkSettingsView()
+        logger.info(VerifyBot().verify_disabled(NetworkSettingsView()
             .cancel_changes.get_element(), 'true', "Cancel changes button"))
-        logger.info(NetworkSettingsView().verify_disabled(NetworkSettingsView()
+        logger.info(VerifyBot().verify_disabled(NetworkSettingsView()
             .save_settings.get_element(), 'true', "Save settings button"))
-        logger.info(NetworkSettingsView().verify_disabled(NetworkSettingsView()
+        logger.info(VerifyBot().verify_disabled(NetworkSettingsView()
             .verify_networks.get_element(), None, "Verify networks button"))
         default_value = NetworkSettingsView().vm_networks_cidr.get_value()
         logger.info(NetworkSettingsView().vm_networks_cidr
         .set_value("240.0.1.0/25"))
-        logger.info(NetworkSettingsView().verify_disabled(NetworkSettingsView()
+        logger.info(VerifyBot().verify_disabled(NetworkSettingsView()
                 .save_settings.get_element(), None, "Save settings button"))
         logger.info(NetworkSettingsView().vm_networks_cidr
                                         .set_value(default_value))
-        logger.info(NetworkSettingsView().verify_disabled(NetworkSettingsView()
+        logger.info(VerifyBot().verify_disabled(NetworkSettingsView()
             .save_settings.get_element(), 'true', "Save settings button"))
 
     @attr(env=["fakeui"], set=["smoke", "regression", "full"])
@@ -94,16 +95,16 @@ class Test_Network_settings(TestCasePoteen):
         logger.info(NetworkSettingsView().verify_VLAN_manager_value("off"))
         logger.info(NetworkSettingsView()
         .verify_visibility_vlan_manager_fields(False))
-        logger.info(NetworkSettingsView().verify_disabled(NetworkSettingsView()
+        logger.info(VerifyBot().verify_disabled(NetworkSettingsView()
             .save_settings.get_element(), 'true', "Save settings button"))
         logger.info(NetworkSettingsView().set_VLAN_manager("on"))
         logger.info(NetworkSettingsView().verify_flatDHCP_manager_value("off"))
-        logger.info(NetworkSettingsView().verify_disabled(NetworkSettingsView()
+        logger.info(VerifyBot().verify_disabled(NetworkSettingsView()
                 .save_settings.get_element(), None, "Save settings button"))
         logger.info(NetworkSettingsView()
                 .verify_visibility_vlan_manager_fields(True))
         logger.info(NetworkSettingsView().set_flatDHCP_manager("on"))
-        logger.info(NetworkSettingsView().verify_flatDHCP_manager_value("off"))
+        logger.info(NetworkSettingsView().verify_VLAN_manager_value("off"))
         logger.info(NetworkSettingsView()
         .verify_visibility_vlan_manager_fields(False))
 
