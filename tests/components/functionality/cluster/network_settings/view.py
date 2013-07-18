@@ -172,10 +172,6 @@ class NetworkSettingsView(AbstractView):
             status
         )
 
-    def verify_disabled(self, web_element, value, name):
-        return VerifyBot().verify_contains_attribute(
-            web_element, "disabled", value, name)
-
     def verify_visibility_vlan_manager_fields(self, value):
         rl = ResultList("Verify vlan manager fields "
                         "are visible: {value}".format(value=value))
@@ -185,9 +181,16 @@ class NetworkSettingsView(AbstractView):
         rl.push(VerifyBot().verify_visibility(NetworkSettingsView()
         .vm_networks_size_of_networks.get_element(), value,
                                               "Size of networks"))
-        rl.push(VerifyBot().verify_exists_and_visible(NetworkSettingsView()
-        .vm_networks_vlan_id_range_start, value,
+        if value:
+            rl.push(VerifyBot().verify_visibility(NetworkSettingsView()
+                .vm_networks_vlan_id_range_start.get_element(), value,
                                             "Start of VLAN ID range"))
-        rl.push(VerifyBot().verify_exists_and_visible(NetworkSettingsView()
-        .vm_networks_vlan_id_range_end, value, "End of VLAN ID range"))
+            rl.push(VerifyBot().verify_visibility(NetworkSettingsView()
+                .vm_networks_vlan_id_range_end.get_element(), value,
+                                                  "End of VLAN ID range"))
+        else:
+            rl.push(VerifyBot().verify_visibility(NetworkSettingsView()
+                .vm_networks_vlan_id_range_start, value,"Start of VLAN ID range"))
+            rl.push(VerifyBot().verify_visibility(NetworkSettingsView()
+                .vm_networks_vlan_id_range_end, value, "End of VLAN ID range"))
         return rl
