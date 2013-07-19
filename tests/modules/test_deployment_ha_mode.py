@@ -27,7 +27,7 @@ class Test_Deployment_HA_Mode(TestCasePoteen):
     @classmethod
     def setUpClass(cls):
         super(Test_Deployment_HA_Mode, cls).setUpClass()
-        PoteenLogger.add_test_suite("Cluster deployment")
+        PoteenLogger.add_test_suite("Cluster HA mode deployment")
 
     def deploy(self, cluster_name, controllers=0, computes=0):
         PoteenLogger.add_test_case(
@@ -77,13 +77,6 @@ class Test_Deployment_HA_Mode(TestCasePoteen):
             DEFAULT_DEPLOYMENT_TIMEOUT_UI
         ))
 
-    def verify_success(self, cluster_name):
-        logger.info(Cluster_View().verify_success_message(
-            "Deployment of environment {name} is done."
-            " Access WebUI of OpenStack"
-            .format(name=cluster_name)
-        ))
-
     @attr(env=["fakeui"], set=["smoke", "regression", "full"])
     def test_deploy_2_controller(self):
         self.deploy(self.cluster_name, 2)
@@ -94,9 +87,13 @@ class Test_Deployment_HA_Mode(TestCasePoteen):
     @attr(env=["fakeui"], set=["smoke", "regression", "full"])
     def test_deploy_3_controller_2_compute(self):
         self.deploy(self.cluster_name, 3, 2)
-        self.verify_success(self.cluster_name)
+        logger.info(Cluster_View().verify_successful_deployment_per_name(
+            self.cluster_name
+        ))
 
     @attr(env=["fakeui"], set=["smoke", "regression", "full"])
     def test_deploy_3_controller_4_compute(self):
         self.deploy(self.cluster_name, 3, 4)
-        self.verify_success(self.cluster_name)
+        logger.info(Cluster_View().verify_successful_deployment_per_name(
+            self.cluster_name
+        ))

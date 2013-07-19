@@ -66,11 +66,9 @@ class TestDeploymentSimpleMode(TestCasePoteen):
         logger.info(Cluster_View().wait_deployment_done(
             DEFAULT_DEPLOYMENT_TIMEOUT_UI
         ))
-        logger.info(Cluster_View().verify_success_message(
-            "Deployment of environment {name} is done."
-            " Access WebUI of OpenStack"
-            .format(name=cluster_name)
-        ))
+        logger.info(
+            Cluster_View().verify_successful_deployment_per_name(cluster_name)
+        )
 
     @attr(env=["fakeui"], set=["smoke", "regression", "full"])
     def test_deploy_no_ha_1_controller(self):
@@ -104,11 +102,9 @@ class TestDeploymentSimpleMode(TestCasePoteen):
         logger.info(Cluster_View().wait_deployment_done(
             DEFAULT_DEPLOYMENT_TIMEOUT_UI
         ))
-        logger.info(Cluster_View().verify_success_message(
-            "Deployment of environment {name} is done."
-            " Access WebUI of OpenStack"
-            .format(name=cluster_name)
-        ))
+        logger.info(
+            Cluster_View().verify_successful_deployment_per_name(cluster_name)
+        )
 
     @attr(env=["fakeui"], set=["smoke", "regression", "full"])
     def test_deploy_no_ha_1_compute(self):
@@ -186,11 +182,9 @@ class TestDeploymentSimpleMode(TestCasePoteen):
         logger.info(Cluster_View().wait_deployment_done(
             DEFAULT_DEPLOYMENT_TIMEOUT_UI
         ))
-        logger.info(Cluster_View().verify_success_message(
-            "Deployment of environment {name} is done."
-            " Access WebUI of OpenStack"
-            .format(name=cluster_name)
-        ))
+        logger.info(
+            Cluster_View().verify_successful_deployment_per_name(cluster_name)
+        )
 
     @attr(env=["fakeui"], set=["smoke", "regression", "full"])
     def test_deploy_no_ha_1_controller_4_compute(self):
@@ -231,11 +225,9 @@ class TestDeploymentSimpleMode(TestCasePoteen):
         logger.info(Cluster_View().wait_deployment_done(
             DEFAULT_DEPLOYMENT_TIMEOUT_UI
         ))
-        logger.info(Cluster_View().verify_success_message(
-            "Deployment of environment {name} is done."
-            " Access WebUI of OpenStack"
-            .format(name=cluster_name)
-        ))
+        logger.info(
+            Cluster_View().verify_successful_deployment_per_name(cluster_name)
+        )
 
     @attr(env=["fakeui"], set=["smoke", "regression", "full"])
     def test_deploy_no_ha_1_controller_2_compute_1_offline_compute(self):
@@ -276,11 +268,9 @@ class TestDeploymentSimpleMode(TestCasePoteen):
         logger.info(Cluster_View().wait_deployment_done(
             DEFAULT_DEPLOYMENT_TIMEOUT_UI
         ))
-        logger.info(Cluster_View().verify_success_message(
-            "Deployment of environment {name} is done."
-            " Access WebUI of OpenStack"
-            .format(name=cluster_name)
-        ))
+        logger.info(
+            Cluster_View().verify_successful_deployment_per_name(cluster_name)
+        )
         logger.info(Cluster_Nodes_View().click_add_compute())
         logger.info(Cluster_Nodes_ListView().click_nodes(
             "Supermicro X9SCD (offline)",
@@ -356,8 +346,8 @@ class TestDeploymentSimpleMode(TestCasePoteen):
             logger.info(Cluster_View().wait_deployment_done(
                 DEFAULT_DEPLOYMENT_TIMEOUT_UI
             ))
-            logger.info(Cluster_View().verify_success_message(
-                "Deployment of environment {name} is done."
-                " Access WebUI of OpenStack"
-                .format(name=cluster_info['name'])
-            ))
+            logger.info(
+                Cluster_View().verify_successful_deployment_per_name(
+                    cluster_info['name']
+                )
+            )

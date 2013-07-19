@@ -56,5 +56,12 @@ class Cluster_View(AbstractView):
     def verify_success_message(self, value):
         return self.successMessage.verify_value_contains(value)
 
+    def verify_successful_deployment_per_name(self, name):
+        return self.verify_success_message(
+            "Deployment of environment '{name}' is done."
+            " Access the OpenStack dashboard (Horizon) at"
+            .format(name=name)
+        )
+
     def verify_error_message(self, value):
         return self.errorMessage.verify_value_contains(value)

@@ -63,11 +63,9 @@ class Test_Deployment(TestCasePoteen):
         logger.info(Cluster_View().wait_deployment_done(
             DEFAULT_DEPLOYMENT_TIMEOUT_UI
         ))
-        logger.info(Cluster_View().verify_success_message(
-            "Deployment of environment {name} is done."
-            " Access WebUI of OpenStack"
-            .format(name=cluster_name)
-        ))
+        logger.info(
+            Cluster_View().verify_successful_deployment_per_name(cluster_name)
+        )
 
         logger.info(Main().navigate())
         logger.info(Cluster_BrowseView().remove("Test environment"))
@@ -118,11 +116,9 @@ class Test_Deployment(TestCasePoteen):
         logger.info(Cluster_View().wait_deployment_done(
             DEFAULT_DEPLOYMENT_TIMEOUT_UI
         ))
-        logger.info(Cluster_View().verify_success_message(
-            "Deployment of environment {name} is done."
-            " Access WebUI of OpenStack"
-            .format(name=cluster_name)
-        ))
+        logger.info(
+            Cluster_View().verify_successful_deployment_per_name(cluster_name)
+        )
 
         logger.info(Main().navigate())
         logger.info(Cluster_BrowseView().remove("Test environment"))

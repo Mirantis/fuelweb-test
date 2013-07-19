@@ -25,7 +25,7 @@ class TestDeploymentDisks(TestCasePoteen):
     @classmethod
     def setUpClass(cls):
         super(TestDeploymentDisks, cls).setUpClass()
-        PoteenLogger.add_test_suite("Cluster deployment")
+        PoteenLogger.add_test_suite("Cluster disks")
 
     @attr(env=["fakeui"], set=["smoke", "regression", "full"])
     def test_controller_disk(self):
