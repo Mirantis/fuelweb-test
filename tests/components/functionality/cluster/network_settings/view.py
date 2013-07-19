@@ -190,7 +190,8 @@ class NetworkSettingsView(AbstractView):
                                                   "End of VLAN ID range"))
         else:
             rl.push(VerifyBot().verify_visibility(NetworkSettingsView()
-                .vm_networks_vlan_id_range_start, value,"Start of VLAN ID range"))
+                .vm_networks_vlan_id_range_start, value,
+                                            "Start of VLAN ID range"))
             rl.push(VerifyBot().verify_visibility(NetworkSettingsView()
                 .vm_networks_vlan_id_range_end, value, "End of VLAN ID range"))
         return rl
