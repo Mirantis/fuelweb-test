@@ -132,17 +132,24 @@ class Test_Network_settings(TestCasePoteen):
         ))
         logger.info(Cluster_View().click_network_settings_tab())
         logger.info(NetworkSettingsView().set_VLAN_manager("on"))
-        logger.info(NetworkSettingsView().verify_error_amount(" ", False))
-        logger.info(NetworkSettingsView().verify_error_amount("-10", False))
-        logger.info(NetworkSettingsView().verify_error_amount("0", False))
+        amount_array = [
+            (" ", False),
+            ("-10", False),
+            ("0", False)
+            ]
+        for amount, valid in amount_array:
+            logger.info(NetworkSettingsView()
+            .verify_error_amount(amount, valid))
         logger.info(NetworkSettingsView()
         .verify_error_amount("2", False, "4094"))
-        logger.info(NetworkSettingsView()
-        .verify_error_amount("2", True, "4093", "4094"))
-        logger.info(NetworkSettingsView()
-        .verify_error_amount("4094", True, "1", "4094"))
-        logger.info(NetworkSettingsView()
-        .verify_error_amount("10", True, "250", "259"))
+        amount_array = [
+             ("2", True, "4093", "4094"),
+             ("4094", True, "1", "4094"),
+             ("10", True, "250", "259")
+             ]
+        for amount, valid, start_ip, end_ip in amount_array:
+            logger.info(NetworkSettingsView()
+            .verify_error_amount(amount, valid, start_ip, end_ip))
         logger.info(NetworkSettingsView()
         .verify_error_amount("1", True, "4094"))
 
@@ -169,30 +176,23 @@ class Test_Network_settings(TestCasePoteen):
             deploymentMode=Cluster.DEPLOYMENT_MODE_MULTI_NODE
         ))
         logger.info(Cluster_View().click_network_settings_tab())
-        logger.info(NetworkSettingsView().verify_cidr_vm_networks
-            (" ", False))
-        logger.info(NetworkSettingsView().verify_cidr_vm_networks
-            ("0.10.-1.255/15", False))
-        logger.info(NetworkSettingsView().verify_cidr_vm_networks
-            ("0.-100.240.255/15 ", False))
-        logger.info(NetworkSettingsView().verify_cidr_vm_networks
-            ("0.256.240.255/15", False))
-        logger.info(NetworkSettingsView().verify_cidr_vm_networks
-            ("0.750.240.255/15", False))
-        logger.info(NetworkSettingsView().verify_cidr_vm_networks
-            ("0.01.240.255/15", False))
-        logger.info(NetworkSettingsView().verify_cidr_vm_networks
-            ("0.000.240.255/15", False))
-        logger.info(NetworkSettingsView().verify_cidr_vm_networks
-            ("0.50.240.255.45/15", False))
-        logger.info(NetworkSettingsView().verify_cidr_vm_networks
-            ("0.240.255/15 ", False))
-        logger.info(NetworkSettingsView().verify_cidr_vm_networks
-            ("0.1000.240.255/15", False))
-        logger.info(NetworkSettingsView().verify_cidr_vm_networks
-            ("0..240.255/15", False))
-        logger.info(NetworkSettingsView().verify_cidr_vm_networks
-            ("0.10.100.255/15", True))
+        cidr_vm_networks = [
+            (" ", False),
+            ("0.10.-1.255/15", False),
+            ("0.-100.240.255/15 ", False),
+            ("0.256.240.255/15", False),
+            ("0.750.240.255/15", False),
+            ("0.01.240.255/15", False),
+            ("0.000.240.255/15", False),
+            ("0.50.240.255.45/15", False),
+            ("0.240.255/15 ", False),
+            ("0.1000.240.255/15", False),
+            ("0..240.255/15", False),
+            ("0.10.100.255/15", True)
+            ]
+        for cidr_vm_network, valid in cidr_vm_networks:
+            logger.info(NetworkSettingsView()
+            .verify_cidr_vm_networks(cidr_vm_network, valid))
 
     @attr(env=["fakeui"], set=["smoke", "regression", "full"])
     def test_check_cidr_prefix(self):
@@ -217,26 +217,21 @@ class Test_Network_settings(TestCasePoteen):
             deploymentMode=Cluster.DEPLOYMENT_MODE_MULTI_NODE
         ))
         logger.info(Cluster_View().click_network_settings_tab())
-        logger.info(NetworkSettingsView().verify_cidr_vm_networks
-            ("240.0.1.0/1", False))
-        logger.info(NetworkSettingsView().verify_cidr_vm_networks
-            ("240.0.1.0/-10", False))
-        logger.info(NetworkSettingsView().verify_cidr_vm_networks
-            ("240.0.1.0/0 ", False))
-        logger.info(NetworkSettingsView().verify_cidr_vm_networks
-            ("240.0.1.0/31", False))
-        logger.info(NetworkSettingsView().verify_cidr_vm_networks
-            ("240.0.1.0/75", False))
-        logger.info(NetworkSettingsView().verify_cidr_vm_networks
-            ("240.0.1.0/test", False))
-        logger.info(NetworkSettingsView().verify_cidr_vm_networks
-            ("240.0.1.0/", False))
-        logger.info(NetworkSettingsView().verify_cidr_vm_networks
-            ("240.0.1.0/2", True))
-        logger.info(NetworkSettingsView().verify_cidr_vm_networks
-            ("240.0.1.0/30", True))
-        logger.info(NetworkSettingsView().verify_cidr_vm_networks
-            ("240.0.1.0/15", True))
+        cidr_vm_networks = [
+            ("240.0.1.0/1", False),
+            ("240.0.1.0/-10", False),
+            ("240.0.1.0/0 ", False),
+            ("240.0.1.0/31", False),
+            ("240.0.1.0/75", False),
+            ("240.0.1.0/test", False),
+            ("240.0.1.0/", False),
+            ("240.0.1.0/2", True),
+            ("240.0.1.0/30", True),
+            ("240.0.1.0/15", True)
+            ]
+        for cidr_vm_network, valid in cidr_vm_networks:
+            logger.info(NetworkSettingsView()
+            .verify_cidr_vm_networks(cidr_vm_network, valid))
 
     @attr(env=["fakeui"], set=["smoke", "regression", "full"])
     def test_check_vlan_id_validation(self):
@@ -264,17 +259,15 @@ class Test_Network_settings(TestCasePoteen):
         logger.info(NetworkSettingsView().set_VLAN_manager("on"))
         logger.info(NetworkSettingsView()
         .verify_error_amount("10", True, "250", "259"))
-        logger.info(NetworkSettingsView()
-        .verify_vlan_id_range_start("0", False))
-        logger.info(NetworkSettingsView()
-        .verify_vlan_id_range_start("4095", False))
-        logger.info(NetworkSettingsView()
-        .verify_vlan_id_range_start("-100", False))
-        logger.info(NetworkSettingsView()
-        .verify_vlan_id_range_start("5000", False))
-        logger.info(NetworkSettingsView()
-        .verify_vlan_id_range_start("1", True))
-        logger.info(NetworkSettingsView()
-        .verify_vlan_id_range_start("4094", True))
-        logger.info(NetworkSettingsView()
-        .verify_vlan_id_range_start("2000", True))
+        vlan_id_range_start_array = [
+            ("0", False),
+            ("4095", False),
+            ("-100", False),
+            ("5000", False),
+            ("1", True),
+            ("4094", True),
+            ("2000", True)
+            ]
+        for vlan_id_range_start, valid in vlan_id_range_start_array:
+            logger.info(NetworkSettingsView()
+            .verify_vlan_id_range_start(vlan_id_range_start, valid))
