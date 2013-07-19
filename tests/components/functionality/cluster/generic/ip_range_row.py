@@ -4,6 +4,7 @@ from engine.poteen.elements.basic.input import Input
 
 from engine.poteen.log.resultList import ResultList
 
+
 class IpRangeRow(BasePage):
     def __init__(self, parent=None):
         self.ip_range_start = Input(
