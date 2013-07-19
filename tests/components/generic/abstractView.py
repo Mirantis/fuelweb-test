@@ -21,12 +21,3 @@ class AbstractView(BasePage):
 
     def cancel(self):
         return self.cancelButton.click_and_wait()
-
-    def verify_ability(self, obj, value):
-        rl = ResultList("Verify button {name} is able: {value}"
-        .format(name=obj.get_name, value=value))
-        if value:
-            rl.push(obj.verify_attribute("class", ""))
-        else:
-            rl.push(obj.verify_attribute("class", "error"))
-        return rl
