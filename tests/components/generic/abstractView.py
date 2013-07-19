@@ -1,6 +1,5 @@
 from engine.poteen.basePage import BasePage
 from engine.poteen.elements.basic.button import Button
-from engine.poteen.log.resultList import ResultList
 
 
 class AbstractView(BasePage):
