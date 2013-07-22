@@ -3,13 +3,13 @@ from engine.poteen.bots.verifyBot import VerifyBot
 from engine.poteen.elements.basic.button import Button
 from engine.poteen.elements.basic.htmlElement import HtmlElement
 from engine.poteen.elements.basic.input import Input
-from engine.poteen.elements.basic.radio import Radio
 from engine.poteen.elements.basic.select import Select
 from engine.poteen.log.result import Result
 from engine.poteen.log.resultList import ResultList
 from ....generic.abstractView import AbstractView
 from .....components.functionality.cluster.generic.ip_range_row \
     import IpRangeRow
+from .....components.elements.Radio import Radio
 
 
 class NetworkSettingsView(AbstractView):
