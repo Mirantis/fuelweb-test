@@ -9,7 +9,8 @@ class Radio(EngineRadio):
         self._type = "radiobutton"
 
     def get_value(self):
-        element = ActionBot().find_element(By.TAG_NAME, "input", self.get_element())
+        element = ActionBot().find_element(
+            By.TAG_NAME, "input", self.get_element())
         return self.VALUE_ON \
             if element.is_selected() \
             else self.VALUE_OFF
