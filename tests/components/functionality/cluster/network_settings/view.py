@@ -1,8 +1,12 @@
+from selenium.webdriver.common.by import By
+from engine.poteen.bots.verifyBot import VerifyBot
 from engine.poteen.elements.basic.button import Button
 from engine.poteen.elements.basic.htmlElement import HtmlElement
 from engine.poteen.elements.basic.input import Input
 from engine.poteen.elements.basic.radio import Radio
 from engine.poteen.elements.basic.select import Select
+from engine.poteen.log.result import Result
+from engine.poteen.log.resultList import ResultList
 from ....generic.abstractView import AbstractView
 from .....components.functionality.cluster.generic.ip_range_row \
     import IpRangeRow
@@ -23,11 +27,13 @@ class NetworkSettingsView(AbstractView):
             element_name="Verify networks")
 
         self.flat_dhcp_manager = Radio(
-            xpath=".//input[@value='FlatDHCPManager']",
+            xpath=".//div[@class='custom-tumbler' "
+                  "and input[@value='FlatDHCPManager']]",
             element_name="FlatDHCP Manager")
 
         self.vlan_manager = Radio(
-            xpath=".//input[@value='VlanManager']",
+            xpath=".//div[@class='custom-tumbler' "
+                  "and input[@value='VlanManager']]",
             element_name="Vlan Manager")
 
         self.ip_range_row = HtmlElement(
@@ -92,11 +98,11 @@ class NetworkSettingsView(AbstractView):
             element_name="Verify networks")
 
         self.cancel_changes = Button(
-            xpath=".//div[contains(@class, 'btn-revert-changes')]",
+            xpath=".//button[contains(@class, 'btn-revert-changes')]",
             element_name="Cancel changes"
         )
         self.save_settings = Button(
-            xpath=".//div[contains(@class, 'btn-success apply-btn')]",
+            xpath=".//button[contains(@class, 'btn-success apply-btn')]",
             element_name="Save settings"
         )
 
@@ -104,3 +110,88 @@ class NetworkSettingsView(AbstractView):
 
     def get_ip_range_row(self, name, num):
         return IpRangeRow(self.ip_range_row.find(name=name, num=num))
+
+    def verify_error(self, obj, args, value, error_class="error",
+                     simple_class=""):
+        rl = ResultList("Set '{args}' and verify validation"
+        .format(args=args)).push(obj.set_value(args))
+        if value:
+            rl.push(obj.verify_attribute("class", simple_class))
+        else:
+            rl.push(obj.verify_attribute("class", error_class))
+        return rl
+
+    def verify_cidr_vm_networks(self, args, value):
+        return self.verify_error(self.vm_networks_cidr, args, value)
+
+    def verify_amount(self, args, value):
+        return self.verify_error(self.vm_networks_number_of_networks,
+                                 args, value, "range error", "range")
+
+    def verify_vlan_id_range_start(self, args, value):
+        return self.verify_error(self.vm_networks_vlan_id_range_start,
+                                 args, value, "mini range error", "mini range")
+
+    def verify_error_amount(self, arg_number, value, arg_start_range=1,
+                            arg_end_range=None):
+        rl = ResultList("Verify validation of field number of networks"
+                        " with value '{args}'"
+        .format(args=arg_number))
+        rl.push(self.vm_networks_vlan_id_range_start.
+        set_value(arg_start_range))
+        rl.push(self.verify_amount(arg_number, value))
+        if arg_end_range is not None:
+            rl.push(self.vm_networks_vlan_id_range_end.
+            verify_value(arg_end_range))
+        return rl
+
+    def set_flatDHCP_manager(self, value):
+        return self.flat_dhcp_manager.set_value(value)
+
+    def set_VLAN_manager(self, value):
+        return self.vlan_manager.set_value(value)
+
+    def verify_flatDHCP_manager_value(self, value):
+        return self.flat_dhcp_manager.verify_value(value)
+
+    def verify_VLAN_manager_value(self, value):
+        return self.vlan_manager.verify_value(value)
+
+    def get_networks_blocks(self):
+        return self.get_action_bot().find_elements(
+            By.XPATH, ".//div/legend[@class='networks']")
+
+    def verify_amount_of_blocks(self, expected_amount):
+        status = len(self.get_networks_blocks()) == expected_amount
+        return Result(
+            "Amount of blocks is {amount}. Amount is equal "
+            "with expected: {status}".format(
+                amount=len(self.get_networks_blocks()),
+                status=status
+            ),
+            status
+        )
+
+    def verify_visibility_vlan_manager_fields(self, value):
+        rl = ResultList("Verify vlan manager fields "
+                        "are visible: {value}".format(value=value))
+        rl.push(VerifyBot().verify_visibility(NetworkSettingsView()
+        .vm_networks_number_of_networks.get_element(), value,
+                                              "Number of networks"))
+        rl.push(VerifyBot().verify_visibility(NetworkSettingsView()
+        .vm_networks_size_of_networks.get_element(), value,
+                                              "Size of networks"))
+        if value:
+            rl.push(VerifyBot().verify_visibility(NetworkSettingsView()
+                .vm_networks_vlan_id_range_start.get_element(), value,
+                                            "Start of VLAN ID range"))
+            rl.push(VerifyBot().verify_visibility(NetworkSettingsView()
+                .vm_networks_vlan_id_range_end.get_element(), value,
+                                                  "End of VLAN ID range"))
+        else:
+            rl.push(VerifyBot().verify_visibility(NetworkSettingsView()
+                .vm_networks_vlan_id_range_start, value,
+                                            "Start of VLAN ID range"))
+            rl.push(VerifyBot().verify_visibility(NetworkSettingsView()
+                .vm_networks_vlan_id_range_end, value, "End of VLAN ID range"))
+        return rl
