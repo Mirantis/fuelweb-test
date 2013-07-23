@@ -36,15 +36,16 @@ class Test_Network_settings(TestCasePoteen):
 
         logger.info(Main().navigate())
         logger.info(Cluster_BrowseView().remove_all())
-        logger.info(Cluster_BrowseView().
-        click_add_new_cluster(cluster_key))
+
+        # create cluster
+        logger.info(Cluster_BrowseView().click_add_new_cluster(cluster_key))
         logger.info(CreateEnvironmentDialog().populate(
             name=cluster_name,
             version=OPENSTACK_CURRENT_VERSION,
             submit=True
         ))
-        logger.info(Cluster_BrowseView().
-        select_by_key(cluster_key))
+        logger.info(Cluster_BrowseView().select_by_key(cluster_key))
+
         logger.info(Cluster_Nodes_View().select_environment_mode(
             deploymentMode=Cluster.DEPLOYMENT_MODE_MULTI_NODE
         ))
@@ -78,15 +79,16 @@ class Test_Network_settings(TestCasePoteen):
 
         logger.info(Main().navigate())
         logger.info(Cluster_BrowseView().remove_all())
-        logger.info(Cluster_BrowseView().
-        click_add_new_cluster(cluster_key))
+
+        # create cluster
+        logger.info(Cluster_BrowseView().click_add_new_cluster(cluster_key))
         logger.info(CreateEnvironmentDialog().populate(
             name=cluster_name,
             version=OPENSTACK_CURRENT_VERSION,
             submit=True
         ))
-        logger.info(Cluster_BrowseView().
-        select_by_key(cluster_key))
+        logger.info(Cluster_BrowseView().select_by_key(cluster_key))
+
         logger.info(Cluster_Nodes_View().select_environment_mode(
             deploymentMode=Cluster.DEPLOYMENT_MODE_MULTI_NODE
         ))
@@ -118,15 +120,16 @@ class Test_Network_settings(TestCasePoteen):
 
         logger.info(Main().navigate())
         logger.info(Cluster_BrowseView().remove_all())
-        logger.info(Cluster_BrowseView().
-        click_add_new_cluster(cluster_key))
+
+        # create cluster
+        logger.info(Cluster_BrowseView().click_add_new_cluster(cluster_key))
         logger.info(CreateEnvironmentDialog().populate(
             name=cluster_name,
             version=OPENSTACK_CURRENT_VERSION,
             submit=True
         ))
-        logger.info(Cluster_BrowseView().
-        select_by_key(cluster_key))
+        logger.info(Cluster_BrowseView().select_by_key(cluster_key))
+
         logger.info(Cluster_Nodes_View().select_environment_mode(
             deploymentMode=Cluster.DEPLOYMENT_MODE_MULTI_NODE
         ))
@@ -163,15 +166,16 @@ class Test_Network_settings(TestCasePoteen):
 
         logger.info(Main().navigate())
         logger.info(Cluster_BrowseView().remove_all())
-        logger.info(Cluster_BrowseView().
-        click_add_new_cluster(cluster_key))
+
+        # create cluster
+        logger.info(Cluster_BrowseView().click_add_new_cluster(cluster_key))
         logger.info(CreateEnvironmentDialog().populate(
             name=cluster_name,
             version=OPENSTACK_CURRENT_VERSION,
             submit=True
         ))
-        logger.info(Cluster_BrowseView().
-        select_by_key(cluster_key))
+        logger.info(Cluster_BrowseView().select_by_key(cluster_key))
+
         logger.info(Cluster_Nodes_View().select_environment_mode(
             deploymentMode=Cluster.DEPLOYMENT_MODE_MULTI_NODE
         ))
@@ -204,15 +208,16 @@ class Test_Network_settings(TestCasePoteen):
 
         logger.info(Main().navigate())
         logger.info(Cluster_BrowseView().remove_all())
-        logger.info(Cluster_BrowseView().
-        click_add_new_cluster(cluster_key))
+
+        # create cluster
+        logger.info(Cluster_BrowseView().click_add_new_cluster(cluster_key))
         logger.info(CreateEnvironmentDialog().populate(
             name=cluster_name,
             version=OPENSTACK_CURRENT_VERSION,
             submit=True
         ))
-        logger.info(Cluster_BrowseView().
-        select_by_key(cluster_key))
+        logger.info(Cluster_BrowseView().select_by_key(cluster_key))
+
         logger.info(Cluster_Nodes_View().select_environment_mode(
             deploymentMode=Cluster.DEPLOYMENT_MODE_MULTI_NODE
         ))
@@ -243,15 +248,16 @@ class Test_Network_settings(TestCasePoteen):
 
         logger.info(Main().navigate())
         logger.info(Cluster_BrowseView().remove_all())
-        logger.info(Cluster_BrowseView().
-        click_add_new_cluster(cluster_key))
+
+        # create cluster
+        logger.info(Cluster_BrowseView().click_add_new_cluster(cluster_key))
         logger.info(CreateEnvironmentDialog().populate(
             name=cluster_name,
             version=OPENSTACK_CURRENT_VERSION,
             submit=True
         ))
-        logger.info(Cluster_BrowseView().
-        select_by_key(cluster_key))
+        logger.info(Cluster_BrowseView().select_by_key(cluster_key))
+
         logger.info(Cluster_Nodes_View().select_environment_mode(
             deploymentMode=Cluster.DEPLOYMENT_MODE_MULTI_NODE
         ))

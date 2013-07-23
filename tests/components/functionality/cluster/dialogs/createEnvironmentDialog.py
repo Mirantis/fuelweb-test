@@ -39,6 +39,7 @@ class CreateEnvironmentDialog(AbstractDialog):
             WaitBot().wait_for_stop_resizing(By.XPATH, self.XPATH_DIALOG)
             WaitBot().wait_loading()
             rl.push(self.create())
+            WaitBot().wait_loading()
         return rl
 
     def verify_name_error(self, value):
