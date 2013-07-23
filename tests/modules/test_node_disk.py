@@ -67,9 +67,6 @@ class TestDeploymentDisks(TestCasePoteen):
         logger.info(ConfigureDisks().get_disk_box('sda').click_disk_map())
         logger.info(ConfigureDisks().get_disk_box(
             'sda').verify_volume_size_is_identical('Base System'))
-        logger.info(ConfigureDisks().get_disk_box(
-            'sda').make_bootable.find().verify_attribute(
-                'disabled', 'true'))
 
         # logger.info(ConfigureDisks().get_disk_box('sdb').click_disk_map())
         # logger.info(ConfigureDisks().get_disk_box(
@@ -125,9 +122,6 @@ class TestDeploymentDisks(TestCasePoteen):
             'sda').verify_volume_size_is_identical('Base System'))
         logger.info(ConfigureDisks().get_disk_box(
             'sda').verify_volume_size_is_identical('Virtual Storage'))
-        logger.info(ConfigureDisks().get_disk_box(
-            'sda').make_bootable.find().verify_attribute(
-                'disabled', 'true'))
 
         # logger.info(ConfigureDisks().get_disk_box('sdb').click_disk_map())
         # logger.info(ConfigureDisks().get_disk_box(
@@ -183,9 +177,6 @@ class TestDeploymentDisks(TestCasePoteen):
             'sda').verify_volume_size_is_identical('Base System'))
         logger.info(ConfigureDisks().get_disk_box(
             'sda').verify_volume_size_is_identical('Cinder'))
-        logger.info(ConfigureDisks().get_disk_box(
-            'sda').make_bootable.find().verify_attribute(
-                'disabled', 'true'))
 
         # logger.info(ConfigureDisks().get_disk_box('sdb').click_disk_map())
         # logger.info(ConfigureDisks().get_disk_box(

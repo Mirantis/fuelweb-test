@@ -54,10 +54,11 @@ class DiskBox(BasePage):
         BasePage.__init__(self, parent)
 
     def get_volume_group(self, name):
-        return VolumeGroup(self.volume_group.find(name=name))
+        return VolumeGroup(self.volume_group.find(name=name).get_element())
 
     def get_volume_group_box(self, name):
-        return VolumeGroupBox(self.volume_group_box.find(name=name))
+        return VolumeGroupBox(
+            self.volume_group_box.find(name=name).get_element())
 
     def click_disk_map(self):
         rl = ResultList("Click disk map")
@@ -69,6 +70,15 @@ class DiskBox(BasePage):
     def verify_volume_size_is_identical(self, name):
         rl = ResultList("Verify volume size is identical everywhere")
         group_box_size = self.get_volume_group_box(name).size.get_value()
-        rl.push(self.get_volume_group(name).size.verify_value_contains(
-            group_box_size))
+        group_box_size = group_box_size.encode().replace(' ', '')
+        group_box_size = group_box_size.encode().replace(',', '')
+        group_box_size = float(group_box_size)
+        if (group_box_size > 1024.0):
+            group_box_size = group_box_size / 1024.0
+            if (group_box_size > 256.0):
+                group_box_size = group_box_size / 1024.0
+        group_box_size = round(group_box_size, 1)
+        if self.get_volume_group(name).size.get_value().encode() != "":
+            rl.push(self.get_volume_group(name)
+            .size.verify_value_contains(str(group_box_size)))
         return rl
