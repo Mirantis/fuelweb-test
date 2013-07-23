@@ -31,27 +31,51 @@ class TestReleases(TestCasePoteen):
 
         logger.info(Main().navigate())
         logger.info(Cluster_BrowseView().click_add_new_cluster(cluster_key))
-        CreateEnvironmentDialog().verify_releases_list(
+        logger.info(CreateEnvironmentDialog().verify_releases_list(
             ['RHOS 3.0 for RHEL 6.4 (2013.1.2)',
-             'Grizzly on CentOS 6.4 (2013.1.2)'])
+             'Grizzly on CentOS 6.4 (2013.1.2)']))
 
 
 
     @attr(env=["fakeui"], set=["smoke", "regression", "full"])
-    def test_deploy_no_ha_1_controller_1_compute(self):
+    def test_release_downloading(self):
         PoteenLogger.add_test_case(
-            "Verify environment version")
+            "Release downloading")
 
         cluster_key = "cluster"
-        cluster_name = "Test environment"
 
         logger.info(Main().navigate())
-        logger.info(Cluster_BrowseView().remove_all())
         logger.info(Cluster_BrowseView().click_add_new_cluster(cluster_key))
-        logger.info(CreateEnvironmentDialog().populate(
-            name=cluster_name,
-            version=TestConstants.OPENSTACK_CURRENT_VERSION,
-            submit=True
-        ))
-        logger.info(Cluster_BrowseView().select_by_key(cluster_key))
-        logger.info(Cluster_Nodes_View().verify_version(TestConstants.OPENSTACK_CURRENT_VERSION))
+
+        # RHSM
+        logger.info(CreateEnvironmentDialog().license_type.find(
+            'rhsm').verify_value(True))
+        logger.info(
+            CreateEnvironmentDialog().red_hat_username.verify_visible(True))
+        logger.info(
+            CreateEnvironmentDialog().red_hat_password.verify_visible(True))
+        logger.info(CreateEnvironmentDialog().create())
+        logger.info(CreateEnvironmentDialog().alert_error.verify_attribute(
+            'style', 'display: block;'))
+        logger.info(CreateEnvironmentDialog().alert_error.verify_value(
+            'All fields are required'))
+
+        # RHN Satellite
+        logger.info(CreateEnvironmentDialog().license_type.find(
+            'rhn').click_and_wait())
+        logger.info(
+            CreateEnvironmentDialog().red_hat_username.verify_visible(True))
+        logger.info(
+            CreateEnvironmentDialog().red_hat_password.verify_visible(True))
+
+        logger.info(CreateEnvironmentDialog(
+        ).satellite_server_hostname.verify_visible(True))
+
+        logger.info(CreateEnvironmentDialog(
+        ).activation_key.verify_visible(True))
+
+        logger.info(CreateEnvironmentDialog().create())
+        logger.info(CreateEnvironmentDialog().alert_error.verify_attribute(
+            'style', 'display: block;'))
+        logger.info(CreateEnvironmentDialog().alert_error.verify_value(
+            'All fields are required'))

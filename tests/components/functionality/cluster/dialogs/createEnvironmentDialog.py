@@ -3,6 +3,7 @@ from engine.poteen.bots.actionBot import ActionBot
 from engine.poteen.bots.verifyBot import VerifyBot
 from engine.poteen.elements.basic.htmlElement import HtmlElement
 from engine.poteen.elements.basic.input import Input
+from engine.poteen.elements.basic.radio import Radio
 from engine.poteen.elements.basic.select import Select
 from engine.poteen.log.resultList import ResultList
 from engine.poteen.utils.storage import Storage
@@ -23,6 +24,37 @@ class CreateEnvironmentDialog(AbstractDialog):
         )
         self.version = Select(
             xpath=".//select[@name='release']", element_name="Version"
+        )
+
+        self.license_type = Radio(
+            xpath='.//div[@class="custom-tumbler" '
+                  'and input[@type="radio" and @value="{value}"]]',
+            element_name="License type"
+        )
+
+        self.red_hat_username = Input(
+            xpath='.//input[@name="username"]',
+            element_name="Red Hat username"
+        )
+
+        self.red_hat_password = Input(
+            xpath='.//input[@name="password"]',
+            element_name="Red Hat password"
+        )
+
+        self.satellite_server_hostname = Input(
+            xpath='.//input[@name="satellite"]',
+            element_name="Satellite server hostname"
+        )
+
+        self.activation_key = Input(
+            xpath='.//input[@name="activation_key"]',
+            element_name="Activation key"
+        )
+
+        self.alert_error = HtmlElement(
+            xpath='.//div[contains(@class,"alert alert-error")]',
+            element_name="Alert error"
         )
 
         AbstractDialog.__init__(self)
@@ -54,3 +86,6 @@ class CreateEnvironmentDialog(AbstractDialog):
         releases = [we.text for we in web_elements_releases]
         VerifyBot().verify_equal(set(expected_releases), set(releases), 'Releases')
         return  rl
+
+    def set_license_type(self, name, value):
+        return self.license_type.find(value=name).set_value(value)
