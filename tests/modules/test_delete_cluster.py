@@ -34,6 +34,8 @@ class Test_Deployment(TestCasePoteen):
 
         logger.info(Main().navigate())
         logger.info(Cluster_BrowseView().remove_all())
+
+        # create cluster
         logger.info(Cluster_BrowseView().click_add_new_cluster(cluster_key))
         logger.info(CreateEnvironmentDialog().populate(
             name=cluster_name,
@@ -41,6 +43,7 @@ class Test_Deployment(TestCasePoteen):
             submit=True
         ))
         logger.info(Cluster_BrowseView().select_by_key(cluster_key))
+
         logger.info(Cluster_Nodes_View().select_environment_mode(
             deploymentMode=Cluster.DEPLOYMENT_MODE_MULTI_NODE
         ))
@@ -81,6 +84,8 @@ class Test_Deployment(TestCasePoteen):
 
         logger.info(Main().navigate())
         logger.info(Cluster_BrowseView().remove_all())
+
+        # create cluster
         logger.info(Cluster_BrowseView().click_add_new_cluster(cluster_key))
         logger.info(CreateEnvironmentDialog().populate(
             name=cluster_name,
@@ -88,6 +93,7 @@ class Test_Deployment(TestCasePoteen):
             submit=True
         ))
         logger.info(Cluster_BrowseView().select_by_key(cluster_key))
+
         logger.info(Cluster_Nodes_View().select_environment_mode(
             deploymentMode=Cluster.DEPLOYMENT_MODE_MULTI_NODE
         ))
