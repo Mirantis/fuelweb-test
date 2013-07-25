@@ -33,11 +33,12 @@ class CreateEnvironmentDialog(AbstractDialog):
 
         rl = ResultList("Populate create new Environment dialog") \
             .push(self.name.set_value(name)) \
-            .push(self.version.set_value(version))
+            .push(WaitBot().wait_loading())\
+            .push(self.version.set_value(version))\
+            .push(self.name.click())
         if submit:
             WaitBot().wait_loading()
             WaitBot().wait_for_stop_resizing(By.XPATH, self.XPATH_DIALOG)
-            WaitBot().wait_loading()
             rl.push(self.create())
             WaitBot().wait_loading()
         return rl
