@@ -37,8 +37,6 @@ class TestDeploymentSimpleMode(BaseTestCase):
         cluster_key = "cluster"
         cluster_name = "Test environment"
 
-        self.bootstrap_nodes(self.ci().nodes().slaves[0:2])
-
         logger.info(Main().navigate())
         self.create_environment(cluster_name, cluster_key,
                                 Cluster.DEPLOYMENT_MODE_MULTI_NODE)
@@ -390,6 +388,8 @@ class TestDeploymentSimpleMode(BaseTestCase):
                 "computes": 1
             }
         }
+
+        self.bootstrap_nodes(self.ci().nodes().slaves[0:6])
 
         logger.info(Main().navigate())
         logger.info(Cluster_BrowseView().remove_all())
