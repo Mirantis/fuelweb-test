@@ -1,8 +1,5 @@
 from nose.plugins.attrib import attr
-
 from engine.poteen.poteenLogger import PoteenLogger
-from engine.poteen.testCasePoteen import TestCasePoteen
-
 from ..components.functionality.main import Main
 from ..components.settings import *
 from ..components.functionality.cluster.browseView \

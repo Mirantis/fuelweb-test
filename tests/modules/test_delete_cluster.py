@@ -1,12 +1,8 @@
 from nose.plugins.attrib import attr
 from engine.poteen.poteenLogger import PoteenLogger
-from engine.poteen.testCasePoteen import TestCasePoteen
-
 from ..components.functionality.main import Main
 from ..components.functionality.cluster.browseView import Cluster_BrowseView
 from ..components.functionality.cluster.cluster import Cluster
-from ..components.functionality.cluster.dialogs.createEnvironmentDialog \
-    import CreateEnvironmentDialog
 from ..components.functionality.cluster.dialogs.deployChangesDialog \
     import DeployChangesDialog
 from ..components.functionality.cluster.editView import Cluster_View
