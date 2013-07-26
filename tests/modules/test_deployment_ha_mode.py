@@ -57,7 +57,9 @@ class Test_Deployment_HA_Mode(BaseTestCase):
     def test_vm_deploy_3_controller_2_compute(self):
         self.bootstrap_nodes(self.ci().nodes().slaves[0:5])
         self.deploy(self.cluster_name, 3, 2)
-        self.verify_success(self.cluster_name)
+        logger.info(Cluster_View().verify_successful_deployment_per_name(
+            self.cluster_name
+        ))
 
     @attr(env=["fakeui"], set=["smoke", "regression", "full"])
     def test_deploy_3_controller_4_compute(self):
@@ -65,10 +67,14 @@ class Test_Deployment_HA_Mode(BaseTestCase):
         logger.info(Cluster_View().verify_successful_deployment_per_name(
             self.cluster_name
         ))
-        self.verify_success(self.cluster_name)
+        logger.info(Cluster_View().verify_successful_deployment_per_name(
+            self.cluster_name
+        ))
 
     @attr(env=["vm"], set=["smoke", "regression", "full"])
     def test_vm_deploy_3_controller_4_compute(self):
         self.bootstrap_nodes(self.ci().nodes().slaves[0:7])
         self.deploy(self.cluster_name, 3, 4)
-        self.verify_success(self.cluster_name)
+        logger.info(Cluster_View().verify_successful_deployment_per_name(
+            self.cluster_name
+        ))

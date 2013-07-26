@@ -42,11 +42,9 @@ class TestDeploymentSimpleMode(BaseTestCase):
                                 Cluster.DEPLOYMENT_MODE_MULTI_NODE)
         self.add_nodes(1, 1)
         self.deploy_changes()
-        logger.info(Cluster_View().verify_success_message(
-            "Deployment of environment {name} is done."
-            " Access WebUI of OpenStack"
-            .format(name=cluster_name)
-        ))
+        logger.info(
+            Cluster_View().verify_successful_deployment_per_name(cluster_name)
+        )
 
     @snapshot_errors
     @attr(env=["vm"], set=["smoke", "regression", "full"])
@@ -65,11 +63,9 @@ class TestDeploymentSimpleMode(BaseTestCase):
         self.add_nodes(1, 1)
         self.deploy_changes()
 
-        logger.info(Cluster_View().verify_success_message(
-            "Deployment of environment {name} is done."
-            " Access WebUI of OpenStack"
-            .format(name=cluster_name)
-        ))
+        logger.info(
+            Cluster_View().verify_successful_deployment_per_name(cluster_name)
+        )
 
     @snapshot_errors
     @attr(env=["fakeui"], set=["smoke", "regression", "full"])
@@ -85,11 +81,9 @@ class TestDeploymentSimpleMode(BaseTestCase):
                                 Cluster.DEPLOYMENT_MODE_MULTI_NODE)
         self.add_nodes(1)
         self.deploy_changes()
-        logger.info(Cluster_View().verify_success_message(
-            "Deployment of environment {name} is done."
-            " Access WebUI of OpenStack"
-            .format(name=cluster_name)
-        ))
+        logger.info(
+            Cluster_View().verify_successful_deployment_per_name(cluster_name)
+        )
 
     @snapshot_errors
     @attr(env=["vm"], set=["smoke", "regression", "full"])
@@ -107,11 +101,9 @@ class TestDeploymentSimpleMode(BaseTestCase):
                                 Cluster.DEPLOYMENT_MODE_MULTI_NODE)
         self.add_nodes(1)
         self.deploy_changes()
-        logger.info(Cluster_View().verify_success_message(
-            "Deployment of environment {name} is done."
-            " Access WebUI of OpenStack"
-            .format(name=cluster_name)
-        ))
+        logger.info(
+            Cluster_View().verify_successful_deployment_per_name(cluster_name)
+        )
 
     @snapshot_errors
     @attr(env=["fakeui"], set=["smoke", "regression", "full"])
@@ -168,11 +160,9 @@ class TestDeploymentSimpleMode(BaseTestCase):
                                 Cluster.DEPLOYMENT_MODE_MULTI_NODE)
         self.add_nodes(1, 3)
         self.deploy_changes()
-        logger.info(Cluster_View().verify_success_message(
-            "Deployment of environment {name} is done."
-            " Access WebUI of OpenStack"
-            .format(name=cluster_name)
-        ))
+        logger.info(
+            Cluster_View().verify_successful_deployment_per_name(cluster_name)
+        )
 
     @snapshot_errors
     @attr(env=["vm"], set=["smoke", "regression", "full"])
@@ -191,11 +181,9 @@ class TestDeploymentSimpleMode(BaseTestCase):
                                 Cluster.DEPLOYMENT_MODE_MULTI_NODE)
         self.add_nodes(1, 3)
         self.deploy_changes()
-        logger.info(Cluster_View().verify_success_message(
-            "Deployment of environment {name} is done."
-            " Access WebUI of OpenStack"
-            .format(name=cluster_name)
-        ))
+        logger.info(
+            Cluster_View().verify_successful_deployment_per_name(cluster_name)
+        )
 
     @snapshot_errors
     @attr(env=["fakeui"], set=["smoke", "regression", "full"])
@@ -211,11 +199,9 @@ class TestDeploymentSimpleMode(BaseTestCase):
                                 Cluster.DEPLOYMENT_MODE_MULTI_NODE)
         self.add_nodes(1, 4)
         self.deploy_changes()
-        logger.info(Cluster_View().verify_success_message(
-            "Deployment of environment {name} is done."
-            " Access WebUI of OpenStack"
-            .format(name=cluster_name)
-        ))
+        logger.info(
+            Cluster_View().verify_successful_deployment_per_name(cluster_name)
+        )
 
     @snapshot_errors
     @attr(env=["vm"], set=["smoke", "regression", "full"])
@@ -234,11 +220,9 @@ class TestDeploymentSimpleMode(BaseTestCase):
                                 Cluster.DEPLOYMENT_MODE_MULTI_NODE)
         self.add_nodes(1, 4)
         self.deploy_changes()
-        logger.info(Cluster_View().verify_success_message(
-            "Deployment of environment {name} is done."
-            " Access WebUI of OpenStack"
-            .format(name=cluster_name)
-        ))
+        logger.info(
+            Cluster_View().verify_successful_deployment_per_name(cluster_name)
+        )
 
     @snapshot_errors
     @attr(env=["fakeui"], set=["smoke", "regression", "full"])
@@ -359,11 +343,9 @@ class TestDeploymentSimpleMode(BaseTestCase):
             logger.info(Cluster_View().wait_deployment_done(
                 DEFAULT_DEPLOYMENT_TIMEOUT_UI
             ))
-            logger.info(Cluster_View().verify_success_message(
-                "Deployment of environment {name} is done."
-                " Access WebUI of OpenStack"
-                .format(name=cluster_info['name'])
-            ))
+            logger.info(
+                Cluster_View().verify_successful_deployment_per_name(cluster_info['name'])
+            )
 
     @snapshot_errors
     @attr(env=["vm"], set=["smoke", "regression", "full"])
