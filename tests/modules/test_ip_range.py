@@ -1,13 +1,11 @@
 from engine.poteen.bots.verifyBot import VerifyBot
-from tests.components.functionality.cluster.network_settings.view \
-    import NetworkSettingsView
-from tests.components.settings import OPENSTACK_CURRENT_VERSION
-
-__author__ = 'kcherchenko'
-
-from nose.plugins.attrib import attr
 from engine.poteen.poteenLogger import PoteenLogger
 from engine.poteen.testCasePoteen import TestCasePoteen
+from nose.plugins.attrib import attr
+
+from ..components.settings import OPENSTACK_CURRENT_VERSION
+from ..components.functionality.cluster.network_settings.view \
+    import NetworkSettingsView
 from ..components.functionality.main import Main
 from ..components.functionality.cluster.browseView \
     import Cluster_BrowseView
