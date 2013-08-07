@@ -29,7 +29,7 @@ class Test_Deployment_HA_Mode(TestCasePoteen):
         super(Test_Deployment_HA_Mode, cls).setUpClass()
         PoteenLogger.add_test_suite("Cluster HA mode deployment")
 
-    def deploy(self, cluster_name, controllers=0, computes=0):
+    def deploy(self, cluster_name, controllers=1, computes=0):
         PoteenLogger.add_test_case(
             "Deploy in mode with HA ({controllers} controllers + "
             "{computes} compute nodes)".format(
@@ -53,13 +53,12 @@ class Test_Deployment_HA_Mode(TestCasePoteen):
             deploymentMode=Cluster.DEPLOYMENT_MODE_MULTI_NODE_WITH_HA
         ))
 
-        if controllers > 0:
-            logger.info(Cluster_Nodes_View().click_add_controller())
-            available_nodes_names = Cluster_Nodes_ListView()\
-                .get_nodes_names_by_status('Discovered')
-            logger.info(Cluster_Nodes_ListView().select_nodes(
-                *available_nodes_names[:controllers]
-            ))
+        logger.info(Cluster_Nodes_View().click_add_controller())
+        available_nodes_names = Cluster_Nodes_ListView()\
+            .get_nodes_names_by_status('Discovered')
+        logger.info(Cluster_Nodes_ListView().select_nodes(
+            *available_nodes_names[:controllers]
+        ))
 
         if computes > 0:
             logger.info(Cluster_Nodes_View().click_add_compute())

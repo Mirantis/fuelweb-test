@@ -1,5 +1,4 @@
 from nose.plugins.attrib import attr
-
 from engine.poteen.poteenLogger import PoteenLogger
 from engine.poteen.testCasePoteen import TestCasePoteen
 
