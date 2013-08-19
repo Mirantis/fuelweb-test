@@ -73,44 +73,49 @@ class CiBase(object):
 
     # noinspection PyShadowingBuiltins
     def add_empty_volume(self, node, name, capacity=20 * 1024 * 1024 * 1024,
-                         device='disk', bus='virtio', format='qcow2'):
+                         device='disk', bus='virtio', format='qcow2', boot_order=None):
         self.manager.node_attach_volume(
             node=node,
             volume=self.manager.volume_create(
                 name=name, capacity=capacity,
                 environment=self.environment(),
                 format=format),
-            device=device, bus=bus)
+            device=device, bus=bus, boot_order=boot_order)
 
-    def add_node(self, memory, name, boot=None):
+    def add_node(self, memory, name):
         return self.manager.node_create(
             name=name,
             memory=memory,
-            environment=self.environment(),
-            boot=boot)
+            environment=self.environment())
 
-    def create_interfaces(self, networks, node):
+    def create_interfaces(self, networks, node, boot_order=None):
         for network in networks:
             if network.name == 'internal':
                 self.manager.interface_create(network, node=node)
                 self.manager.interface_create(network, node=node)
-            self.manager.interface_create(network, node=node)
+            self.manager.interface_create(network, node=node,
+                                          boot_order=boot_order)
+            if not(boot_order is None):
+                boot_order += 1
 
     def describe_admin_node(self, name, networks, memory=1024):
-        node = self.add_node(memory=memory, name=name, boot=['hd', 'cdrom'])
+        node = self.add_node(memory=memory, name=name)
         self.create_interfaces(networks, node)
-        self.add_empty_volume(node, name + '-system')
+        self.add_empty_volume(node, name + '-system', boot_order=1)
         self.add_empty_volume(
             node, name + '-iso', capacity=_get_file_size(ISO_PATH),
-            format='raw', device='cdrom', bus='ide')
+            format='raw', device='cdrom', bus='ide', boot_order=2)
         return node
 
     def describe_empty_node(self, name, networks, memory=1024):
         node = self.add_node(memory, name)
-        self.create_interfaces(networks, node)
-        self.add_empty_volume(node, name + '-system')
-        self.add_empty_volume(node, name + '-cinder')
-        self.add_empty_volume(node, name + '-swift')
+        self.add_empty_volume(node, name + '-system',
+                              boot_order=1)
+        self.add_empty_volume(node, name + '-cinder',
+                              boot_order=2)
+        self.add_empty_volume(node, name + '-swift',
+                              boot_order=3)
+        self.create_interfaces(networks, node, 4)
         return node
 
     @abstractmethod
