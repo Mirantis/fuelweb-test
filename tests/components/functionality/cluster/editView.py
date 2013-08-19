@@ -39,6 +39,10 @@ class Cluster_View(AbstractView):
         return ResultList("Click actions tab") \
             .push(self.tab.find("tab-actions-normal").click())
 
+    def click_logs_tab(self):
+        return ResultList("Click logs tab") \
+            .push(self.tab.find("tab-logs-normal").click())
+
     def click_network_settings_tab(self):
         return ResultList("Click network settings tab") \
             .push(self.tab.find("tab-network-normal").click())
