@@ -29,6 +29,11 @@ class AbstractMenu(AbstractView):
                   "//li[contains(.,'OpenStack Environments')]",
             element_name="OpenStack Environments"
         )
+        self.releases = Link(
+            xpath=".//div[@class='navigation-bar']"
+                  "//li[contains(.,'Releases')]/a",
+            element_name="Releases"
+        )
         self.supportLink = Link(
             xpath=".//div[@class='navigation-bar']"
                   "//li[contains(.,'OpenStack Support')]",
