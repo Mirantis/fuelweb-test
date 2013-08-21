@@ -1,7 +1,10 @@
+from engine.poteen.bots.verifyBot import VerifyBot
+from engine.poteen.bots.waitBot import WaitBot
 from engine.poteen.decorators import catch_stale_error
 from engine.poteen.elements.basic.button import Button
 from engine.poteen.elements.basic.htmlElement import HtmlElement
 from engine.poteen.elements.basic.link import Link
+from engine.poteen.error import ElementNotFoundException
 from engine.poteen.log.resultList import ResultList
 from engine.poteen.log.result import Result
 from ....generic.abstractView import AbstractView
@@ -138,6 +141,11 @@ class Cluster_Nodes_View(AbstractView):
             element_name="deployment mode dialog"
         )
 
+        self.progress_bar = HtmlElement(
+            xpath='.//div[@class="progress-bar-description"]',
+            element_name="progress bar"
+        )
+
         AbstractView.__init__(self, parent)
 
     def click_add_compute(self):
@@ -248,15 +256,15 @@ class Cluster_Nodes_View(AbstractView):
             result = Result(
                 "Verify if amount of {name} is {value}"
                 .format(name=elements_names, value=value),
-                (len(elements) if elements_names ==
-                                  "placeholders for controllers"
+                (len(elements)
+                 if elements_names == "placeholders for controllers"
                  else len(elements) / 2)
                 == value
             )
         except ElementNotFoundException:
             if value == 0:
-                result = Result("There are no {name}"
-                    .format(name=elements_names), True)
+                result = Result(
+                    "There are no {name}".format(name=elements_names), True)
         return result
 
     def verify_controllers_placeholders_amount(self,  value):
@@ -276,3 +284,10 @@ class Cluster_Nodes_View(AbstractView):
         return Result("String [{version}] contains [{expected_value}]".format(
             version=version, expected_value=expected_value),
             version.find(expected_value) != -1)
+
+    def wait_for_progress_bar_disappears(self):
+        res = WaitBot().wait_for_disappears(
+            self.progress_bar._by,
+            self.progress_bar._value,
+            self._parent, 20)
+        return Result("Wait for progress bar disappears", res)
