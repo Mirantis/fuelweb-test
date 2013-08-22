@@ -46,5 +46,3 @@ class Table(BasePage):
             "row: {row}, column: {column}".format(row=row, column=column),
             "table cell"
         )
-
-
