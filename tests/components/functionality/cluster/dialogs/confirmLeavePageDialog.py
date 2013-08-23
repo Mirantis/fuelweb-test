@@ -1,5 +1,5 @@
 from engine.poteen.elements.basic.button import Button
-from tests.components.generic.abstractDialog import AbstractDialog
+from ....generic.abstractDialog import AbstractDialog
 
 
 class ConfirmLeavePageDialog(AbstractDialog):
