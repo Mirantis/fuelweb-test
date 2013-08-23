@@ -44,59 +44,77 @@ class Test_OpenStack_settings(TestCasePoteen):
         logger.info(Cluster_BrowseView().select_by_key(cluster_key))
 
         logger.info(Cluster_View().click_openstack_settings_tab())
-        logger.info(VerifyBot().verify_disabled(OpenstackSettingsView()
-            .load_defaults.get_element(), None, "Load defaults button"))
-        logger.info(VerifyBot().verify_disabled(OpenstackSettingsView()
-            .cancel_changes.get_element(), 'true', "Cancel changes button"))
-        logger.info(VerifyBot().verify_disabled(OpenstackSettingsView()
-            .save_settings.get_element(), 'true', "Save settings button"))
+        logger.info(VerifyBot().verify_disabled(
+            OpenstackSettingsView().load_defaults.get_element(),
+            None, "Load defaults button"))
+        logger.info(VerifyBot().verify_disabled(
+            OpenstackSettingsView().cancel_changes.get_element(),
+            'true', "Cancel changes button"))
+        logger.info(VerifyBot().verify_disabled(
+            OpenstackSettingsView().save_settings.get_element(),
+            'true', "Save settings button"))
         logger.info(OpenstackSettingsView().show_password.click())
-        logger.info(VerifyBot().verify_disabled(OpenstackSettingsView()
-            .cancel_changes.get_element(), 'true', "Cancel changes button"))
-        logger.info(VerifyBot().verify_disabled(OpenstackSettingsView()
-            .save_settings.get_element(), 'true', "Save settings button"))
-        logger.info(VerifyBot().verify_disabled(OpenstackSettingsView()
-            .load_defaults.get_element(), None, "Load defaults button"))
-        logger.info(VerifyBot().verify_visibility(OpenstackSettingsView().
-            show_password_off.get_element(), True, "Show password button off"))
+        logger.info(VerifyBot().verify_disabled(
+            OpenstackSettingsView().cancel_changes.get_element(),
+            'true', "Cancel changes button"))
+        logger.info(VerifyBot().verify_disabled(
+            OpenstackSettingsView().save_settings.get_element(),
+            'true', "Save settings button"))
+        logger.info(VerifyBot().verify_disabled(
+            OpenstackSettingsView().load_defaults.get_element(),
+            None, "Load defaults button"))
+        logger.info(VerifyBot().verify_visibility(
+            OpenstackSettingsView().show_password_off.get_element(),
+            True, "Show password button off"))
         logger.info(OpenstackSettingsView().show_password.click())
-        logger.info(VerifyBot().verify_visibility(OpenstackSettingsView().
-            show_password_on.get_element(), True, "Show password button on"))
+        logger.info(VerifyBot().verify_visibility(
+            OpenstackSettingsView().show_password_on.get_element(),
+            True, "Show password button on"))
 
-        logger.info(OpenstackSettingsView().set_parameter_input("username",
-                                                                "test name"))
-        logger.info(VerifyBot().verify_disabled(OpenstackSettingsView()
-            .load_defaults.get_element(), None, "Load defaults button"))
-        logger.info(VerifyBot().verify_disabled(OpenstackSettingsView()
-            .save_settings.get_element(), None, "Save settings button"))
-        logger.info(VerifyBot().verify_disabled(OpenstackSettingsView()
-            .cancel_changes.get_element(), None, "Cancel changes button"))
+        logger.info(OpenstackSettingsView().set_parameter_input(
+            "username", "test name"))
+        logger.info(VerifyBot().verify_disabled(
+            OpenstackSettingsView().load_defaults.get_element(),
+            None, "Load defaults button"))
+        logger.info(VerifyBot().verify_disabled(
+            OpenstackSettingsView().save_settings.get_element(),
+            None, "Save settings button"))
+        logger.info(VerifyBot().verify_disabled(
+            OpenstackSettingsView().cancel_changes.get_element(),
+            None, "Cancel changes button"))
 
-        logger.info(OpenstackSettingsView().set_parameter_input("username",
-                                                                "admin"))
-        logger.info(VerifyBot().verify_disabled(OpenstackSettingsView()
-            .load_defaults.get_element(), None, "Load defaults button"))
-        logger.info(VerifyBot().verify_disabled(OpenstackSettingsView()
-            .save_settings.get_element(), 'true', "Save settings button"))
-        logger.info(VerifyBot().verify_disabled(OpenstackSettingsView()
-            .cancel_changes.get_element(), 'true', "Cancel changes button"))
-        logger.info(OpenstackSettingsView().set_parameter_input("username",
-                                                                "test name"))
+        logger.info(OpenstackSettingsView().set_parameter_input(
+            "username", "admin"))
+        logger.info(VerifyBot().verify_disabled(
+            OpenstackSettingsView().load_defaults.get_element(),
+            None, "Load defaults button"))
+        logger.info(VerifyBot().verify_disabled(
+            OpenstackSettingsView().save_settings.get_element(),
+            'true', "Save settings button"))
+        logger.info(VerifyBot().verify_disabled(
+            OpenstackSettingsView().cancel_changes.get_element(),
+            'true', "Cancel changes button"))
+        logger.info(OpenstackSettingsView().set_parameter_input(
+            "username", "test name"))
         logger.info(Cluster_View().click_network_settings_tab())
         logger.info(ConfirmLeavePageDialog().click_stay_on_page())
         ConfirmLeavePageDialog().wait_closing()
         logger.info(OpenstackSettingsView().cancel_changes.click_and_wait())
-        logger.info(VerifyBot().verify_disabled(OpenstackSettingsView()
-            .save_settings.get_element(), 'true', "Save settings button"))
+        logger.info(VerifyBot().verify_disabled(
+            OpenstackSettingsView().save_settings.get_element(),
+            'true', "Save settings button"))
 
-        logger.info(OpenstackSettingsView().set_parameter_input("username",
-                                                                "test name"))
+        logger.info(OpenstackSettingsView().set_parameter_input(
+            "username", "test name"))
         logger.info(OpenstackSettingsView().save_settings.click_and_wait())
-        logger.info(VerifyBot().verify_disabled(OpenstackSettingsView()
-            .cancel_changes.get_element(), 'true', "Cancel changes button"))
+        logger.info(VerifyBot().verify_disabled(
+            OpenstackSettingsView().cancel_changes.get_element(),
+            'true', "Cancel changes button"))
 
         logger.info(OpenstackSettingsView().load_defaults.click_and_wait())
-        logger.info(VerifyBot().verify_disabled(OpenstackSettingsView()
-            .cancel_changes.get_element(), None, "Cancel changes button"))
-        logger.info(VerifyBot().verify_disabled(OpenstackSettingsView()
-            .save_settings.get_element(), None, "Save settings button"))
+        logger.info(VerifyBot().verify_disabled(
+            OpenstackSettingsView().cancel_changes.get_element(),
+            None, "Cancel changes button"))
+        logger.info(VerifyBot().verify_disabled(
+            OpenstackSettingsView().save_settings.get_element(),
+            None, "Save settings button"))

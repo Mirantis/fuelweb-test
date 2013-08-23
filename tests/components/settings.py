@@ -14,4 +14,3 @@ RED_HAT = {
     "satellite server hostname": None,
     "activation key": None
 }
-
