@@ -1,5 +1,4 @@
 from engine.poteen.elements.basic.htmlElement import HtmlElement
-from engine.poteen.log.resultList import ResultList
 from .....components.generic.abstractDialog import AbstractDialog
 
 
