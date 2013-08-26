@@ -1,4 +1,5 @@
 from nose.plugins.attrib import attr
+from engine.poteen.bots.waitBot import WaitBot
 
 from engine.poteen.poteenLogger import PoteenLogger
 from engine.poteen.testCasePoteen import TestCasePoteen
@@ -47,4 +48,5 @@ class Test_Logs(TestCasePoteen):
             level="DEBUG"
         ))
         logger.info(Cluster_Logs_View().show_button.click())
+        logger.info(WaitBot().wait_loading())
         logger.info(Cluster_Logs_View().table_logs.verify_visible(True))
