@@ -144,7 +144,7 @@ class Test_Network_settings(TestCasePoteen):
             (" ", False),
             ("-10", False),
             ("0", False)
-            ]
+        ]
         for amount, valid in amount_array:
             logger.info(
                 NetworkSettingsView().verify_error_amount(amount, valid))
@@ -238,7 +238,7 @@ class Test_Network_settings(TestCasePoteen):
             ("240.0.1.0/2", True),
             ("240.0.1.0/30", True),
             ("240.0.1.0/15", True)
-            ]
+        ]
         for cidr_vm_network, valid in cidr_vm_networks:
             logger.info(
                 NetworkSettingsView().verify_cidr_vm_networks(
