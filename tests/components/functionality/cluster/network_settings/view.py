@@ -113,8 +113,9 @@ class NetworkSettingsView(AbstractView):
 
     def verify_error(self, obj, args, value, error_class="error",
                      simple_class=""):
-        rl = ResultList("Set '{args}' and verify validation"
-        .format(args=args)).push(obj.set_value(args))
+        rl = ResultList(
+            "Set '{args}' and verify validation".format(args=args)).\
+            push(obj.set_value(args))
         if value:
             rl.push(obj.verify_attribute("class", simple_class))
         else:
@@ -135,14 +136,13 @@ class NetworkSettingsView(AbstractView):
     def verify_error_amount(self, arg_number, value, arg_start_range=1,
                             arg_end_range=None):
         rl = ResultList("Verify validation of field number of networks"
-                        " with value '{args}'"
-        .format(args=arg_number))
-        rl.push(self.vm_networks_vlan_id_range_start.
-        set_value(arg_start_range))
+                        " with value '{args}'".format(args=arg_number))
+        rl.push(
+            self.vm_networks_vlan_id_range_start.set_value(arg_start_range))
         rl.push(self.verify_amount(arg_number, value))
         if arg_end_range is not None:
-            rl.push(self.vm_networks_vlan_id_range_end.
-            verify_value(arg_end_range))
+            rl.push(
+                self.vm_networks_vlan_id_range_end.verify_value(arg_end_range))
         return rl
 
     def set_flatDHCP_manager(self, value):
@@ -175,23 +175,24 @@ class NetworkSettingsView(AbstractView):
     def verify_visibility_vlan_manager_fields(self, value):
         rl = ResultList("Verify vlan manager fields "
                         "are visible: {value}".format(value=value))
-        rl.push(VerifyBot().verify_visibility(NetworkSettingsView()
-        .vm_networks_number_of_networks.get_element(), value,
-                                              "Number of networks"))
-        rl.push(VerifyBot().verify_visibility(NetworkSettingsView()
-        .vm_networks_size_of_networks.get_element(), value,
-                                              "Size of networks"))
+        rl.push(VerifyBot().verify_visibility(
+            NetworkSettingsView().vm_networks_number_of_networks
+            .get_element(), value, "Number of networks"))
+        rl.push(VerifyBot().verify_visibility(
+            NetworkSettingsView().vm_networks_size_of_networks
+            .get_element(), value, "Size of networks"))
         if value:
-            rl.push(VerifyBot().verify_visibility(NetworkSettingsView()
-                .vm_networks_vlan_id_range_start.get_element(), value,
-                                            "Start of VLAN ID range"))
-            rl.push(VerifyBot().verify_visibility(NetworkSettingsView()
-                .vm_networks_vlan_id_range_end.get_element(), value,
-                                                  "End of VLAN ID range"))
+            rl.push(VerifyBot().verify_visibility(
+                NetworkSettingsView().vm_networks_vlan_id_range_start
+                .get_element(), value, "Start of VLAN ID range"))
+            rl.push(VerifyBot().verify_visibility(
+                NetworkSettingsView().vm_networks_vlan_id_range_end
+                .get_element(), value, "End of VLAN ID range"))
         else:
-            rl.push(VerifyBot().verify_visibility(NetworkSettingsView()
-                .vm_networks_vlan_id_range_start, value,
-                                            "Start of VLAN ID range"))
-            rl.push(VerifyBot().verify_visibility(NetworkSettingsView()
-                .vm_networks_vlan_id_range_end, value, "End of VLAN ID range"))
+            rl.push(VerifyBot().verify_visibility(
+                NetworkSettingsView().vm_networks_vlan_id_range_start,
+                value, "Start of VLAN ID range"))
+            rl.push(VerifyBot().verify_visibility(
+                NetworkSettingsView().vm_networks_vlan_id_range_end,
+                value, "End of VLAN ID range"))
         return rl

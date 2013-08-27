@@ -79,6 +79,7 @@ class DiskBox(BasePage):
                 group_box_size = group_box_size / 1024.0
         group_box_size = round(group_box_size, 1)
         if self.get_volume_group(name).size.get_value().encode() != "":
-            rl.push(self.get_volume_group(name)
-            .size.verify_value_contains(str(group_box_size)))
+            rl.push(
+                self.get_volume_group(name).size.verify_value_contains(
+                    str(group_box_size)))
         return rl

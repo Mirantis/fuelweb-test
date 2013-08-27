@@ -37,15 +37,19 @@ class Cluster_View(AbstractView):
 
     def click_actions_tab(self):
         return ResultList("Click actions tab") \
-            .push(self.tab.find("tab-actions-normal").click())
+            .push(self.tab.find("tab-actions-normal").click_and_wait())
 
     def click_logs_tab(self):
         return ResultList("Click logs tab") \
-            .push(self.tab.find("tab-logs-normal").click())
+            .push(self.tab.find("tab-logs-normal").click_and_wait())
 
     def click_network_settings_tab(self):
         return ResultList("Click network settings tab") \
-            .push(self.tab.find("tab-network-normal").click())
+            .push(self.tab.find("tab-network-normal").click_and_wait())
+
+    def click_openstack_settings_tab(self):
+        return ResultList("Click OpenStack settings tab")\
+            .push(self.tab.find("tab-settings-normal").click_and_wait())
 
     def click_deploy_changes(self):
         return self.deployChanges.click()

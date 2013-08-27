@@ -37,15 +37,14 @@ class Test_Cluster_nodes(TestCasePoteen):
 
         logger.info(Main().navigate())
         logger.info(Cluster_BrowseView().remove_all())
-        logger.info(Cluster_BrowseView().
-        click_add_new_cluster(cluster_key))
+        logger.info(
+            Cluster_BrowseView().click_add_new_cluster(cluster_key))
         logger.info(CreateEnvironmentDialog().populate(
             name=cluster_name,
             version=OPENSTACK_CURRENT_VERSION,
             submit=True
         ))
-        logger.info(Cluster_BrowseView().
-        select_by_key(cluster_key))
+        logger.info(Cluster_BrowseView().select_by_key(cluster_key))
         logger.info(VerifyBot().verify_disabled(
             Cluster_Nodes_View().deploymentMode.get_element(),
             None, "Link deployment mode"))
@@ -58,8 +57,8 @@ class Test_Cluster_nodes(TestCasePoteen):
         logger.info(VerifyBot().verify_visibility(
             Cluster_Nodes_View().addCinder.get_element(),
             True, "Add cinder button"))
-        logger.info(Cluster_Nodes_View()
-            .verify_controllers_placeholders_amount(1))
+        logger.info(
+            Cluster_Nodes_View().verify_controllers_placeholders_amount(1))
         logger.info(Cluster_Nodes_View().verify_nodelists_visibility(True))
 
     @attr(env=["fakeui"], set=["smoke", "regression", "full"])
@@ -82,8 +81,8 @@ class Test_Cluster_nodes(TestCasePoteen):
         logger.info(Cluster_Nodes_View().select_environment_mode(
             deploymentMode=Cluster.DEPLOYMENT_MODE_MULTI_NODE_WITH_HA
         ))
-        logger.info(Cluster_Nodes_View()
-            .verify_controllers_placeholders_amount(3))
+        logger.info(
+            Cluster_Nodes_View().verify_controllers_placeholders_amount(3))
         logger.info(Cluster_Nodes_View().verify_nodelists_visibility(True))
         logger.info(Cluster_Nodes_View().select_environment_mode(
             deploymentMode=Cluster.DEPLOYMENT_MODE_MULTI_NODE
@@ -115,10 +114,9 @@ class Test_Cluster_nodes(TestCasePoteen):
         logger.info(Cluster_Nodes_ListView().select_nodes(
             *available_nodes_names[:1]
         ))
-        logger.info(Cluster_Nodes_View()
-            .verify_controllers_placeholders_amount(0))
-        logger.info(Cluster_Nodes_View()
-            .verify_controllers_amount(1))
+        logger.info(
+            Cluster_Nodes_View().verify_controllers_placeholders_amount(0))
+        logger.info(Cluster_Nodes_View().verify_controllers_amount(1))
 
     @attr(env=["fakeui"], set=["smoke", "regression", "full"])
     def test_addition_node_compute_role(self):
@@ -146,8 +144,7 @@ class Test_Cluster_nodes(TestCasePoteen):
         logger.info(Cluster_Nodes_ListView().select_nodes(
             *available_nodes_names[:1]
         ))
-        logger.info(Cluster_Nodes_View()
-            .verify_computes_amount(1))
+        logger.info(Cluster_Nodes_View().verify_computes_amount(1))
 
     @attr(env=["fakeui"], set=["smoke", "regression", "full"])
     def test_addition_node_cinder_role(self):
@@ -203,16 +200,14 @@ class Test_Cluster_nodes(TestCasePoteen):
         logger.info(Cluster_Nodes_ListView().select_nodes(
             *available_nodes_names[:1]
         ))
-        logger.info(Cluster_Nodes_View()
-            .verify_computes_amount(1))
+        logger.info(Cluster_Nodes_View().verify_computes_amount(1))
         logger.info(Cluster_Nodes_View().click_delete_compute())
         available_nodes_names = Cluster_Nodes_ListView()\
             .get_nodes_names_by_status('Pending Addition')
         logger.info(Cluster_Nodes_ListView().select_nodes(
             *available_nodes_names[:1]
         ))
-        logger.info(Cluster_Nodes_View()
-            .verify_computes_amount(0))
+        logger.info(Cluster_Nodes_View().verify_computes_amount(0))
 
     @attr(env=["fakeui"], set=["smoke", "regression", "full"])
     def test_testing_deployment(self):
@@ -242,24 +237,24 @@ class Test_Cluster_nodes(TestCasePoteen):
         ))
         logger.info(Cluster_View().click_deploy_changes())
         logger.info(DeployChangesDialog().deploy())
-        logger.info(VerifyBot().verify_visibility(Cluster_Nodes_View()
-                                .addControllerDisabled.get_element(),
-                                True, "Add controller disabled"))
-        logger.info(VerifyBot().verify_visibility(Cluster_Nodes_View()
-                                .addComputeDisabled.get_element(),
-                                True, "Add compute disabled"))
-        logger.info(VerifyBot().verify_visibility(Cluster_Nodes_View()
-                                .addCinderDisabled.get_element(),
-                                True, "Add cinder disabled"))
-        logger.info(VerifyBot().verify_visibility(Cluster_Nodes_View()
-                                .deleteControllerDisabled.get_element(),
-                                True, "Delete controller disabled"))
-        logger.info(VerifyBot().verify_visibility(Cluster_Nodes_View()
-                                .deleteComputeDisabled.get_element(),
-                                True, "Delete compute disabled"))
-        logger.info(VerifyBot().verify_visibility(Cluster_Nodes_View()
-                                .deleteCinderDisabled.get_element(),
-                                True, "Delete cinder disabled"))
+        logger.info(VerifyBot().verify_visibility(
+            Cluster_Nodes_View().addControllerDisabled.get_element(),
+            True, "Add controller disabled"))
+        logger.info(VerifyBot().verify_visibility(
+            Cluster_Nodes_View().addComputeDisabled.get_element(),
+            True, "Add compute disabled"))
+        logger.info(VerifyBot().verify_visibility(
+            Cluster_Nodes_View().addCinderDisabled.get_element(),
+            True, "Add cinder disabled"))
+        logger.info(VerifyBot().verify_visibility(
+            Cluster_Nodes_View().deleteControllerDisabled.get_element(),
+            True, "Delete controller disabled"))
+        logger.info(VerifyBot().verify_visibility(
+            Cluster_Nodes_View().deleteComputeDisabled.get_element(),
+            True, "Delete compute disabled"))
+        logger.info(VerifyBot().verify_visibility(
+            Cluster_Nodes_View().deleteCinderDisabled.get_element(),
+            True, "Delete cinder disabled"))
         logger.info(Cluster_View().wait_deployment_done(
             DEFAULT_DEPLOYMENT_TIMEOUT_UI
         ))
