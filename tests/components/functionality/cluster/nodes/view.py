@@ -241,19 +241,14 @@ class Cluster_Nodes_View(AbstractView):
                 elements = self.get_nodes_computes()
             elif elements_names == "cinders":
                 elements = self.get_nodes_cinders()
-
             result = Result(
                 "Verify if amount of {name} is {value}"
                 .format(name=elements_names, value=value),
-                (len(elements) if elements_names ==
-                                  "placeholders for controllers"
-                 else len(elements) / 2)
-                == value
-            )
+                len(elements) == value)
         except ElementNotFoundException:
             if value == 0:
-                result = Result("There are no {name}"
-                    .format(name=elements_names), True)
+                result = Result("There are no {name}".format(
+                    name=elements_names), True)
         return result
 
     def verify_controllers_placeholders_amount(self,  value):
