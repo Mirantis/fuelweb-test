@@ -26,7 +26,7 @@ class Cluster_Nodes_ListView(AbstractView):
 
     def _get_nodes(self, xpath):
         nodes = []
-        elements = ActionBot().find_elements(By.XPATH, xpath)
+        elements = ActionBot().find_elements(By.XPATH, xpath, self._parent)
         for i, element in enumerate(elements):
             nodes.append(Node(element))
         return nodes
@@ -39,7 +39,7 @@ class Cluster_Nodes_ListView(AbstractView):
         return nodes_names
 
     def get_nodes(self):
-        return self._get_nodes(".//div[contains(@class, 'nodebox')]")
+        return self._get_nodes(".//div[contains(@class,'span2 nodebox')]")
 
     def get_nodes_by_status(self, status):
         return self._get_nodes(
