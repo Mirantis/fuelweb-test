@@ -38,8 +38,8 @@ class Test_Cluster_creation(TestCasePoteen):
             name="Test environment",
             version=OPENSTACK_RHOS,
             downloadMode="rhn",
-            username=RED_HAT["username"],
-            password=RED_HAT["password"],
+            username="rheltest",
+            password="password",
             serverHostName=RED_HAT["satellite server hostname"],
             activationKey=RED_HAT["activation key"],
             submit=False
@@ -55,30 +55,30 @@ class Test_Cluster_creation(TestCasePoteen):
         logger.info(Main().navigate())
         logger.info(Cluster_BrowseView().remove_all())
         logger.info(Cluster_BrowseView().click_add_new_cluster(cluster_key))
-        logger.info(CreateEnvironmentDialog().name
-                    .set_value("Test environment"))
+        logger.info(
+            CreateEnvironmentDialog().name.set_value("Test environment"))
         logger.info(WaitBot().wait_loading())
-        logger.info(CreateEnvironmentDialog()
-            .version.set_value(OPENSTACK_GRIZZLY))
+        logger.info(
+            CreateEnvironmentDialog().version.set_value(OPENSTACK_GRIZZLY))
         logger.info(CreateEnvironmentDialog().name.click())
-        WaitBot().wait_for_stop_resizing(By.XPATH,
-                    CreateEnvironmentDialog().XPATH_DIALOG)
+        WaitBot().wait_for_stop_resizing(
+            By.XPATH, CreateEnvironmentDialog().XPATH_DIALOG)
         logger.info(VerifyBot().verify_visibility(
             CreateEnvironmentDialog().instruction.get_element(),
             False, "Instruction for RHOS"))
-        logger.info(CreateEnvironmentDialog().version
-        .set_value(OPENSTACK_RHOS))
+        logger.info(
+            CreateEnvironmentDialog().version.set_value(OPENSTACK_RHOS))
         logger.info(CreateEnvironmentDialog().name.click())
-        WaitBot().wait_for_stop_resizing(By.XPATH,
-            CreateEnvironmentDialog().XPATH_DIALOG)
+        WaitBot().wait_for_stop_resizing(
+            By.XPATH, CreateEnvironmentDialog().XPATH_DIALOG)
         logger.info(VerifyBot().verify_visibility(
             CreateEnvironmentDialog().instruction.get_element(),
             True, "Instruction for RHOS"))
-        logger.info(CreateEnvironmentDialog().version
-        .set_value(OPENSTACK_GRIZZLY))
+        logger.info(
+            CreateEnvironmentDialog().version.set_value(OPENSTACK_GRIZZLY))
         logger.info(CreateEnvironmentDialog().name.click())
-        WaitBot().wait_for_stop_resizing(By.XPATH,
-            CreateEnvironmentDialog().XPATH_DIALOG)
+        WaitBot().wait_for_stop_resizing(
+            By.XPATH, CreateEnvironmentDialog().XPATH_DIALOG)
         logger.info(VerifyBot().verify_visibility(
             CreateEnvironmentDialog().instruction.get_element(),
             False, "Instruction for RHOS"))

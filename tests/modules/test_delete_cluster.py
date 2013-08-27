@@ -77,7 +77,7 @@ class Test_Deployment(TestCasePoteen):
     @attr(env=["fakeui"], set=["smoke", "regression", "full"])
     def test_can_not_add_offline_node(self):
         PoteenLogger.add_test_case(
-            "Delete cluster with offline node")
+            "Can not add 'offline' node to environment")
 
         cluster_key = "cluster"
         cluster_name = "Test environment"
@@ -104,28 +104,12 @@ class Test_Deployment(TestCasePoteen):
         logger.info(Cluster_Nodes_ListView().select_nodes(
             "Supermicro X9DRW"
         ))
-        logger.info(Cluster_Nodes_View().click_add_compute())
-        logger.info(Cluster_Nodes_ListView().select_nodes(
-            "Dell Inspiron"
-        ))
         logger.info(Cluster_Nodes_View().verify_controller_nodes(
             "Supermicro X9DRW"
         ))
         logger.info(Cluster_Nodes_View().verify_controller_nodes_not_exist(
             "Supermicro X9SCD (offline)"
         ))
-        logger.info(Cluster_Nodes_View().verify_compute_nodes(
-            "Dell Inspiron"
-        ))
-        logger.info(Cluster_View().click_deploy_changes())
-        logger.info(DeployChangesDialog().deploy())
-        logger.info(Cluster_View().wait_deployment_done(
-            DEFAULT_DEPLOYMENT_TIMEOUT_UI
-        ))
-        logger.info(
-            Cluster_View().verify_successful_deployment_per_name(cluster_name)
-        )
-
         logger.info(Main().navigate())
         logger.info(Cluster_BrowseView().remove("Test environment"))
         logger.info(Cluster_BrowseView().verify_clusters_amount(0))

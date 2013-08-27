@@ -233,56 +233,6 @@ class TestDeploymentSimpleMode(TestCasePoteen):
         )
 
     @attr(env=["fakeui"], set=["smoke", "regression", "full"])
-    def test_deploy_no_ha_1_controller_2_compute_1_offline_compute(self):
-        PoteenLogger.add_test_case(
-            "Deploy without HA mode 1 controller 2 compute 1 offline compute")
-
-        cluster_key = "cluster"
-        cluster_name = "Test environment"
-
-        logger.info(Main().navigate())
-        logger.info(Cluster_BrowseView().remove_all())
-        logger.info(Cluster_BrowseView().click_add_new_cluster(cluster_key))
-        logger.info(CreateEnvironmentDialog().populate(
-            name=cluster_name,
-            version=OPENSTACK_CURRENT_VERSION,
-            submit=True
-        ))
-        logger.info(Cluster_BrowseView().select_by_key(cluster_key))
-        logger.info(Cluster_Nodes_View().select_environment_mode(
-            deploymentMode=Cluster.DEPLOYMENT_MODE_MULTI_NODE
-        ))
-        logger.info(Cluster_Nodes_View().click_add_controller())
-        logger.info(Cluster_Nodes_ListView().select_nodes(
-            "Supermicro X9DRW"
-        ))
-        logger.info(Cluster_Nodes_View().click_add_compute())
-        logger.info(Cluster_Nodes_ListView().select_nodes(
-            "Dell Inspiron", "Supermicro X9SCD",
-        ))
-        logger.info(Cluster_Nodes_View().verify_controller_nodes(
-            "Supermicro X9DRW"
-        ))
-        logger.info(Cluster_Nodes_View().verify_compute_nodes(
-            "Dell Inspiron", "Supermicro X9SCD",
-        ))
-        logger.info(Cluster_View().click_deploy_changes())
-        logger.info(DeployChangesDialog().deploy())
-        logger.info(Cluster_View().wait_deployment_done(
-            DEFAULT_DEPLOYMENT_TIMEOUT_UI
-        ))
-        logger.info(
-            Cluster_View().verify_successful_deployment_per_name(cluster_name)
-        )
-        logger.info(Cluster_Nodes_View().click_add_compute())
-        logger.info(Cluster_Nodes_ListView().click_nodes(
-            "Supermicro X9SCD (offline)",
-        ))
-        logger.info(Cluster_Nodes_ListView().applyButton.verify_attribute(
-            'disabled', 'true'
-        ))
-
-    @attr(env=["fakeui"], set=["smoke", "regression", "full"])
     def test_deploy_concurrent_deployment_3_environments(self):
         PoteenLogger.add_test_case(
             "Concurrent simple deployment 3 environments")
