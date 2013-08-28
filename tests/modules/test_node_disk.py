@@ -26,7 +26,7 @@ class TestDeploymentDisks(TestCasePoteen):
         super(TestDeploymentDisks, cls).setUpClass()
         PoteenLogger.add_test_suite("Cluster disks")
 
-    @attr(env=["fakeui"], set=["smoke", "regression", "full"])
+    @attr(set=["regression"])
     def test_controller_disk(self):
         PoteenLogger.add_test_case(
             "Controller disk")
@@ -79,7 +79,7 @@ class TestDeploymentDisks(TestCasePoteen):
         # logger.info(ConfigureDisks().get_disk_box(
         #     'sdc').make_bootable.find().verify_attribute('disabled', None))
 
-    @attr(env=["fakeui"], set=["smoke", "regression", "full"])
+    @attr(set=["smoke", "regression"])
     def test_compute_disk(self):
         PoteenLogger.add_test_case(
             "Compute disk")
@@ -134,7 +134,7 @@ class TestDeploymentDisks(TestCasePoteen):
         # logger.info(ConfigureDisks().get_disk_box(
         #     'sdc').make_bootable.find().verify_attribute('disabled', None))
 
-    @attr(env=["fakeui"], set=["smoke", "regression", "full"])
+    @attr(set=["regression"])
     def test_cinder_disk(self):
         PoteenLogger.add_test_case(
             "Cinder disk")

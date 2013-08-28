@@ -27,7 +27,7 @@ class TestDeploymentSimpleMode(TestCasePoteen):
         super(TestDeploymentSimpleMode, cls).setUpClass()
         PoteenLogger.add_test_suite("Cluster deployment")
 
-    @attr(env=["fakeui"], set=["smoke", "regression", "full"])
+    @attr(set=["smoke", "regression"])
     def test_deploy_no_ha_1_controller_1_compute(self):
         PoteenLogger.add_test_case(
             "Deploy without HA mode 1 controller 1 compute")
@@ -73,7 +73,7 @@ class TestDeploymentSimpleMode(TestCasePoteen):
             Cluster_View().verify_successful_deployment_per_name(cluster_name)
         )
 
-    @attr(env=["fakeui"], set=["smoke", "regression", "full"])
+    @attr(set=["regression"])
     def test_deploy_no_ha_1_controller(self):
         PoteenLogger.add_test_case(
             "Deploy without HA mode 1 controller")
@@ -109,7 +109,7 @@ class TestDeploymentSimpleMode(TestCasePoteen):
             Cluster_View().verify_successful_deployment_per_name(cluster_name)
         )
 
-    @attr(env=["fakeui"], set=["smoke", "regression", "full"])
+    @attr(set=["regression"])
     def test_deploy_no_ha_1_compute(self):
         PoteenLogger.add_test_case(
             "Deploy without HA mode 1 compute")
@@ -146,7 +146,7 @@ class TestDeploymentSimpleMode(TestCasePoteen):
             "multinode mode requires at least 1 controller"
         ))
 
-    @attr(env=["fakeui"], set=["smoke", "regression", "full"])
+    @attr(set=["regression"])
     def test_deploy_no_ha_1_controller_3_compute(self):
         PoteenLogger.add_test_case(
             "Deploy without HA mode 1 controller 3 compute")
@@ -189,7 +189,7 @@ class TestDeploymentSimpleMode(TestCasePoteen):
             Cluster_View().verify_successful_deployment_per_name(cluster_name)
         )
 
-    @attr(env=["fakeui"], set=["smoke", "regression", "full"])
+    @attr(set=["regression"])
     def test_deploy_no_ha_1_controller_4_compute(self):
         PoteenLogger.add_test_case(
             "Deploy without HA mode 1 controller 4 compute")
@@ -232,7 +232,7 @@ class TestDeploymentSimpleMode(TestCasePoteen):
             Cluster_View().verify_successful_deployment_per_name(cluster_name)
         )
 
-    @attr(env=["fakeui"], set=["smoke", "regression", "full"])
+    @attr(set=["regression"])
     def test_deploy_concurrent_deployment_3_environments(self):
         PoteenLogger.add_test_case(
             "Concurrent simple deployment 3 environments")

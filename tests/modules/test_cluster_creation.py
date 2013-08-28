@@ -22,7 +22,7 @@ class Test_Cluster_creation(TestCasePoteen):
         super(Test_Cluster_creation, cls).setUpClass()
         PoteenLogger.add_test_suite("Network validation")
 
-    @attr(env=["fakeui"], set=["smoke", "regression", "full"])
+    @attr(set=["smoke", "regression"])
     def test_form(self):
         PoteenLogger.add_test_case(
             "Check network settings page")
@@ -45,7 +45,7 @@ class Test_Cluster_creation(TestCasePoteen):
             submit=False
         ))
 
-    @attr(env=["fakeui"], set=["smoke", "regression", "full"])
+    @attr(set=["smoke", "regression"])
     def test_form_creation_with_grizzly(self):
         PoteenLogger.add_test_case(
             "Check network settings page")

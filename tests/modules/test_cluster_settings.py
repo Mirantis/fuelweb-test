@@ -24,7 +24,7 @@ class Test_OpenStack_settings(TestCasePoteen):
         super(Test_OpenStack_settings, cls).setUpClass()
         PoteenLogger.add_test_suite("OpenStack settings validation")
 
-    @attr(env=["fakeui"], set=["smoke", "regression", "full"])
+    @attr(set=["smoke", "regression"])
     def test_form(self):
         PoteenLogger.add_test_case(
             "Check openstack settings page")

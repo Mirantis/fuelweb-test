@@ -22,7 +22,7 @@ class Test_Logs(TestCasePoteen):
         super(Test_Logs, cls).setUpClass()
         PoteenLogger.add_test_suite("Logs validation")
 
-    @attr("up", env=["fakeui"], set=["smoke", "regression", "full"])
+    @attr(set=["smoke", "regression"])
     def test_show_logs(self):
         PoteenLogger.add_test_case(
             "Test show logs")
