@@ -86,3 +86,9 @@ class Cluster_Nodes_ListView(AbstractView):
                 self.node.find(name=name).is_not_found()
             ))
         return rl
+
+    def verify_amount_nodes_in_status(self, status, value):
+        return Result(
+            "Verify if amount of nodes in {status} is {value}".format(
+                status=status, value=value),
+            len(self.get_nodes_names_by_status(status)) == value)
