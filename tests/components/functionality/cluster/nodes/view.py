@@ -201,8 +201,7 @@ class Cluster_Nodes_View(AbstractView):
             .get_nodes()
 
     def get_controllers_placeholders(self):
-        return Cluster_Nodes_ListView(
-            self.controller_placeholder.get_element()).get_nodes()
+        return Cluster_Nodes_ListView(self.controller_placeholder).get_nodes()
 
     def verify_controller_nodes_not_exist(self, *args):
         return Cluster_Nodes_ListView(
