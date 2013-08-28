@@ -40,8 +40,8 @@ class Test_Cluster_creation(TestCasePoteen):
             downloadMode="rhn",
             username="rheltest",
             password="password",
-            serverHostName=RED_HAT["satellite server hostname"],
-            activationKey=RED_HAT["activation key"],
+            serverHostName="satellite server hostname",
+            activationKey="activation key",
             submit=False
         ))
 
