@@ -1,9 +1,6 @@
 from optparse import OptionGroup
 from nose.plugins import Plugin
-from engine.poteen.contextHolder import ContextHolder
 from ..settings import RED_HAT
-
-logger = ContextHolder.get_logger()
 
 
 class CredentialsParserPlugin(Plugin):
