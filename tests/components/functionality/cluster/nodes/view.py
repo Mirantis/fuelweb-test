@@ -30,7 +30,7 @@ class Cluster_Nodes_View(AbstractView):
             xpath="//div[@id='tab-nodes']"
                   "//div[contains(@class, 'node-list-cinder')]"
                   "//a[contains(@class, 'btn-add-nodes')]",
-            element_name="Add controller"
+            element_name="Add cinder"
         )
         self.addComputeDisabled = Link(
             xpath="//div[@id='tab-nodes']"
