@@ -27,7 +27,7 @@ class Test_Deployment_With_Cinder(TestCasePoteen):
         super(Test_Deployment_With_Cinder, cls).setUpClass()
         PoteenLogger.add_test_suite("Deployment with cinder")
 
-    @attr(env=["fakeui"], set=["smoke", "regression", "full"])
+    @attr(set=["regression"])
     def test_deploy_no_ha_1_cinder(self):
         PoteenLogger.add_test_case(
             "Deploy without HA mode 1 controller 1 compute 1 cinder")
@@ -79,7 +79,7 @@ class Test_Deployment_With_Cinder(TestCasePoteen):
         logger.info(Cluster_Nodes_ListView().verify_amount_nodes_in_status(
             "Ready", 3))
 
-    @attr(env=["fakeui"], set=["smoke", "regression", "full"])
+    @attr(set=["regression"])
     def test_deploy_HA_1_cinder(self):
         PoteenLogger.add_test_case(
             "Deploy HA mode 3 controllers 1 compute 1 cinder")

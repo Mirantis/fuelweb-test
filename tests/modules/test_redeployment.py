@@ -28,7 +28,7 @@ class TestRedeployment(TestCasePoteen):
         super(TestRedeployment, cls).setUpClass()
         PoteenLogger.add_test_suite("Cluster deployment")
 
-    @attr(env=["fakeui"], set=["smoke", "regression", "full"])
+    @attr(set=["regression"])
     def test_redeployment_after_addition_new_compute_node(self):
         PoteenLogger.add_test_case(
             "Redeployment after addition new compute node")
@@ -95,7 +95,7 @@ class TestRedeployment(TestCasePoteen):
         logger.info(Cluster_Nodes_ListView().verify_amount_nodes_in_status(
             'Ready', 3))
 
-    @attr(env=["fakeui"], set=["smoke", "regression", "full"])
+    @attr(set=["regression"])
     def test_redeployment_after_deletion_node(self):
         PoteenLogger.add_test_case(
             "Redeployment after deletion node")
