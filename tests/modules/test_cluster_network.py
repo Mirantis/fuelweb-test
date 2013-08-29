@@ -24,7 +24,7 @@ class Test_Network_settings(TestCasePoteen):
         super(Test_Network_settings, cls).setUpClass()
         PoteenLogger.add_test_suite("Network validation")
 
-    @attr(env=["fakeui"], set=["smoke", "regression", "full"])
+    @attr(set=["smoke", "regression"])
     def test_form(self):
         PoteenLogger.add_test_case(
             "Check network settings page")
@@ -72,7 +72,7 @@ class Test_Network_settings(TestCasePoteen):
             NetworkSettingsView().save_settings.get_element(),
             'true', "Save settings button"))
 
-    @attr(env=["fakeui"], set=["smoke", "regression", "full"])
+    @attr(set=["smoke", "regression"])
     def test_change_network(self):
         PoteenLogger.add_test_case(
             "Change network manager")
@@ -115,7 +115,7 @@ class Test_Network_settings(TestCasePoteen):
         logger.info(
             NetworkSettingsView().verify_visibility_vlan_manager_fields(False))
 
-    @attr(env=["fakeui"], set=["smoke", "regression", "full"])
+    @attr(set=["smoke", "regression"])
     def test_amount_field_validation(self):
         PoteenLogger.add_test_case(
             "Check Amount field validation")
@@ -161,7 +161,7 @@ class Test_Network_settings(TestCasePoteen):
         logger.info(
             NetworkSettingsView().verify_error_amount("1", True, "4094"))
 
-    @attr(env=["fakeui"], set=["smoke", "regression", "full"])
+    @attr(set=["smoke", "regression"])
     def test_verify_start_ip(self):
         PoteenLogger.add_test_case(
             "Check CIDR field validation")
@@ -203,7 +203,7 @@ class Test_Network_settings(TestCasePoteen):
                 NetworkSettingsView().verify_cidr_vm_networks(
                     cidr_vm_network, valid))
 
-    @attr(env=["fakeui"], set=["smoke", "regression", "full"])
+    @attr(set=["smoke", "regression"])
     def test_check_cidr_prefix(self):
         PoteenLogger.add_test_case(
             "Check CIDR prefix")
@@ -244,7 +244,7 @@ class Test_Network_settings(TestCasePoteen):
                 NetworkSettingsView().verify_cidr_vm_networks(
                     cidr_vm_network, valid))
 
-    @attr(env=["fakeui"], set=["smoke", "regression", "full"])
+    @attr(set=["smoke", "regression"])
     def test_check_vlan_id_validation(self):
         PoteenLogger.add_test_case(
             "Check VlanID field validation")

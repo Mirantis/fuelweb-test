@@ -20,7 +20,7 @@ class Test_Releases(TestCasePoteen):
         super(Test_Releases, cls).setUpClass()
         PoteenLogger.add_test_suite("Test releases functionality")
 
-    @attr(env=["fakeui"], set=["smoke", "regression", "full"])
+    @attr(set=["smoke", "regression"])
     def test_releases(self):
         PoteenLogger.add_test_case(
             "Test releases page")
