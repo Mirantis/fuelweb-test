@@ -189,15 +189,15 @@ class Cluster_Nodes_View(AbstractView):
         ).verify_nodes(*args)
 
     def get_nodes_controllers(self):
-        return Cluster_Nodes_ListView(self.controllers.get_element())\
+        return Cluster_Nodes_ListView(self.controllers.get_element()) \
             .get_nodes()
 
     def get_nodes_computes(self):
-        return Cluster_Nodes_ListView(self.computes.get_element())\
+        return Cluster_Nodes_ListView(self.computes.get_element()) \
             .get_nodes()
 
     def get_nodes_cinders(self):
-        return Cluster_Nodes_ListView(self.cinders.get_element())\
+        return Cluster_Nodes_ListView(self.cinders.get_element()) \
             .get_nodes()
 
     def get_controllers_placeholders(self):
@@ -240,24 +240,33 @@ class Cluster_Nodes_View(AbstractView):
                 elements = self.get_nodes_computes()
             elif elements_names == "cinders":
                 elements = self.get_nodes_cinders()
-            result = Result(
-                "Verify if amount of {name} is {value}"
-                .format(name=elements_names, value=value),
-                len(elements) == value)
+
+            if value == 0:
+                result = Result(
+                    "Verify if amount of {name} is 0".format(
+                        name=elements_names, value=value),
+                    VerifyBot().verify_visibility(
+                        elements, False, elements_names).i_passed())
+            else:
+                result = Result(
+                    "Verify if amount of {name} is {value}".format(
+                        name=elements_names, value=value),
+                    len(elements) == value)
+
         except ElementNotFoundException:
             if value == 0:
                 result = Result("There are no {name}".format(
                     name=elements_names), True)
         return result
 
-    def verify_controllers_placeholders_amount(self,  value):
+    def verify_controllers_placeholders_amount(self, value):
         return self.verify_amount("placeholders for controllers", value)
 
-    def verify_controllers_amount(self,  value):
+    def verify_controllers_amount(self, value):
         return self.verify_amount("controllers", value)
 
-    def verify_computes_amount(self,  value):
+    def verify_computes_amount(self, value):
         return self.verify_amount("computes", value)
 
-    def verify_cinders_amount(self,  value):
+    def verify_cinders_amount(self, value):
         return self.verify_amount("cinders", value)
