@@ -82,14 +82,16 @@ class CreateEnvironmentDialog(AbstractDialog):
             .push(self.populate(name, version))
         WaitBot().wait_loading()
         WaitBot().wait_for_stop_resizing(By.XPATH, self.XPATH_DIALOG)
-        rl.push(self.select_download_mode(downloadMode))
-        rl.push(VerifyBot().verify_visibility(
-                self.instruction.get_element(), True, "instruction"))
-        rl.push(self.username.set_value(username))
-        rl.push(self.password.set_value(password))
-        if downloadMode == 'rhn':
-            rl.push(self.serverHostname.set_value(serverHostName))
-            rl.push(self.activationKey.set_value(activationKey))
+        if VerifyBot().is_element_displayed(self.downloadType.find(
+                type=downloadMode)):
+            rl.push(self.select_download_mode(downloadMode))
+            rl.push(VerifyBot().verify_visibility(
+                    self.instruction.get_element(), True, "instruction"))
+            rl.push(self.username.set_value(username))
+            rl.push(self.password.set_value(password))
+            if downloadMode == 'rhn':
+                rl.push(self.serverHostname.set_value(serverHostName))
+                rl.push(self.activationKey.set_value(activationKey))
         if submit:
             WaitBot().wait_loading()
             WaitBot().wait_for_stop_resizing(By.XPATH, self.XPATH_DIALOG)
