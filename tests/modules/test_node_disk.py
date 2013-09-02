@@ -167,7 +167,7 @@ class TestDeploymentDisks(TestCasePoteen):
 
         # navigate to disks configuration page
         logger.info(
-            Cluster_Nodes_View().get_nodes_computes()[-1].click_hardware())
+            Cluster_Nodes_View().get_nodes_cinders()[-1].click_hardware())
         logger.info(NodeHardwareDialog().click_disk_configuration())
 
         # verify default disks settings
