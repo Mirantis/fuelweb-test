@@ -50,6 +50,10 @@ class CreateEnvironmentDialog(AbstractDialog):
             xpath=".//div[@class='alert alert-info rhel-license hide']",
             element_name="Instruction to deploy RHOS"
         )
+        self.releaseDescription = HtmlElement(
+            xpath=".//div[@class='release-description help-block']",
+            element_name="Release description"
+        )
 
         AbstractDialog.__init__(self)
 
@@ -73,6 +77,9 @@ class CreateEnvironmentDialog(AbstractDialog):
     def verify_name_error(self, value):
         return self.nameErrorMessage.verify_value(value)
 
+    def verify_release_description(self, value):
+        return self.releaseDescription.verify_value_contains(value)
+
     def select_download_mode(self, value):
         return self.downloadType.find(type=value).set_value("on")
 
@@ -82,14 +89,16 @@ class CreateEnvironmentDialog(AbstractDialog):
             .push(self.populate(name, version))
         WaitBot().wait_loading()
         WaitBot().wait_for_stop_resizing(By.XPATH, self.XPATH_DIALOG)
-        rl.push(self.select_download_mode(downloadMode))
-        rl.push(VerifyBot().verify_visibility(
-                self.instruction.get_element(), True, "instruction"))
-        rl.push(self.username.set_value(username))
-        rl.push(self.password.set_value(password))
-        if downloadMode == 'rhn':
-            rl.push(self.serverHostname.set_value(serverHostName))
-            rl.push(self.activationKey.set_value(activationKey))
+        if VerifyBot().is_element_displayed(self.downloadType.find(
+                type=downloadMode)):
+            rl.push(self.select_download_mode(downloadMode))
+            rl.push(VerifyBot().verify_visibility(
+                    self.instruction.get_element(), True, "instruction"))
+            rl.push(self.username.set_value(username))
+            rl.push(self.password.set_value(password))
+            if downloadMode == 'rhn':
+                rl.push(self.serverHostname.set_value(serverHostName))
+                rl.push(self.activationKey.set_value(activationKey))
         if submit:
             WaitBot().wait_loading()
             WaitBot().wait_for_stop_resizing(By.XPATH, self.XPATH_DIALOG)

@@ -6,7 +6,7 @@ from engine.poteen.testCasePoteen import TestCasePoteen
 from nose.plugins.attrib import attr
 
 from ..components.settings \
-    import OPENSTACK_RHOS, OPENSTACK_GRIZZLY, RED_HAT
+    import OPENSTACK_RHOS, OPENSTACK_GRIZZLY
 from ..components.functionality.main import Main
 from ..components.functionality.cluster.browseView \
     import Cluster_BrowseView
@@ -25,7 +25,7 @@ class Test_Cluster_creation(TestCasePoteen):
     @attr(set=["smoke", "regression"])
     def test_form(self):
         PoteenLogger.add_test_case(
-            "Check network settings page")
+            "Check environment creation page")
 
         cluster_key = "cluster"
 
@@ -48,7 +48,7 @@ class Test_Cluster_creation(TestCasePoteen):
     @attr(set=["smoke", "regression"])
     def test_form_creation_with_grizzly(self):
         PoteenLogger.add_test_case(
-            "Check network settings page")
+            "Check creation page with grizzly")
 
         cluster_key = "cluster"
 
@@ -66,19 +66,30 @@ class Test_Cluster_creation(TestCasePoteen):
         logger.info(VerifyBot().verify_visibility(
             CreateEnvironmentDialog().instruction.get_element(),
             False, "Instruction for RHOS"))
+        logger.info(CreateEnvironmentDialog().verify_release_description(
+            "OpenStack Grizzly packages using CentOS as a base operating "
+            "system"))
         logger.info(
             CreateEnvironmentDialog().version.set_value(OPENSTACK_RHOS))
         logger.info(CreateEnvironmentDialog().name.click())
         WaitBot().wait_for_stop_resizing(
             By.XPATH, CreateEnvironmentDialog().XPATH_DIALOG)
-        logger.info(VerifyBot().verify_visibility(
-            CreateEnvironmentDialog().instruction.get_element(),
-            True, "Instruction for RHOS"))
+        logger.info(CreateEnvironmentDialog().verify_release_description(
+            "Red Hat Enterprise Linux OpenStack Platform using RHEL as a base "
+            "operating system"))
+        if VerifyBot().is_element_displayed(
+                CreateEnvironmentDialog().username):
+            logger.info(VerifyBot().verify_visibility(
+                CreateEnvironmentDialog().instruction.get_element(),
+                True, "Instruction for RHOS"))
         logger.info(
             CreateEnvironmentDialog().version.set_value(OPENSTACK_GRIZZLY))
         logger.info(CreateEnvironmentDialog().name.click())
         WaitBot().wait_for_stop_resizing(
             By.XPATH, CreateEnvironmentDialog().XPATH_DIALOG)
+        logger.info(CreateEnvironmentDialog().verify_release_description(
+            "OpenStack Grizzly packages using CentOS as a base operating "
+            "system"))
         logger.info(VerifyBot().verify_visibility(
             CreateEnvironmentDialog().instruction.get_element(),
             False, "Instruction for RHOS"))
