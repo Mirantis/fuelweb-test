@@ -6,7 +6,7 @@ from engine.poteen.testCasePoteen import TestCasePoteen
 from nose.plugins.attrib import attr
 
 from ..components.settings \
-    import OPENSTACK_RHOS, OPENSTACK_GRIZZLY, RED_HAT
+    import OPENSTACK_RHOS, OPENSTACK_GRIZZLY
 from ..components.functionality.main import Main
 from ..components.functionality.cluster.browseView \
     import Cluster_BrowseView
@@ -25,7 +25,7 @@ class Test_Cluster_creation(TestCasePoteen):
     @attr(set=["smoke", "regression"])
     def test_form(self):
         PoteenLogger.add_test_case(
-            "Check network settings page")
+            "Check environment creation page")
 
         cluster_key = "cluster"
 
@@ -48,7 +48,7 @@ class Test_Cluster_creation(TestCasePoteen):
     @attr(set=["smoke", "regression"])
     def test_form_creation_with_grizzly(self):
         PoteenLogger.add_test_case(
-            "Check network settings page")
+            "Check creation page with grizzly")
 
         cluster_key = "cluster"
 
