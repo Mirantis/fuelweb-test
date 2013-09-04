@@ -28,6 +28,7 @@ class TestDeploymentSimpleMode(TestCasePoteen):
         PoteenLogger.add_test_suite("Cluster deployment")
 
     @attr(set=["smoke", "regression"])
+    @attr("skip")
     def test_deploy_no_ha_1_controller_1_compute(self):
         PoteenLogger.add_test_case(
             "Deploy without HA mode 1 controller 1 compute")
@@ -74,6 +75,7 @@ class TestDeploymentSimpleMode(TestCasePoteen):
         )
 
     @attr(set=["regression"])
+    @attr("skip")
     def test_deploy_no_ha_1_controller(self):
         PoteenLogger.add_test_case(
             "Deploy without HA mode 1 controller")
@@ -110,6 +112,7 @@ class TestDeploymentSimpleMode(TestCasePoteen):
         )
 
     @attr(set=["regression"])
+    @attr("skip")
     def test_deploy_no_ha_1_compute(self):
         PoteenLogger.add_test_case(
             "Deploy without HA mode 1 compute")
@@ -147,6 +150,7 @@ class TestDeploymentSimpleMode(TestCasePoteen):
         ))
 
     @attr(set=["regression"])
+    @attr("skip")
     def test_deploy_no_ha_1_controller_3_compute(self):
         PoteenLogger.add_test_case(
             "Deploy without HA mode 1 controller 3 compute")
@@ -190,6 +194,7 @@ class TestDeploymentSimpleMode(TestCasePoteen):
         )
 
     @attr(set=["regression"])
+    @attr("skip")
     def test_deploy_no_ha_1_controller_4_compute(self):
         PoteenLogger.add_test_case(
             "Deploy without HA mode 1 controller 4 compute")
@@ -233,6 +238,7 @@ class TestDeploymentSimpleMode(TestCasePoteen):
         )
 
     @attr(set=["regression"])
+    @attr("skip")
     def test_deploy_concurrent_deployment_3_environments(self):
         PoteenLogger.add_test_case(
             "Concurrent simple deployment 3 environments")

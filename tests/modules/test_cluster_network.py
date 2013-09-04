@@ -25,6 +25,7 @@ class Test_Network_settings(TestCasePoteen):
         PoteenLogger.add_test_suite("Network validation")
 
     @attr(set=["smoke", "regression"])
+    @attr("skip")
     def test_form(self):
         PoteenLogger.add_test_case(
             "Check network settings page")
@@ -73,6 +74,7 @@ class Test_Network_settings(TestCasePoteen):
             'true', "Save settings button"))
 
     @attr(set=["smoke", "regression"])
+    @attr("skip")
     def test_change_network(self):
         PoteenLogger.add_test_case(
             "Change network manager")
@@ -116,6 +118,7 @@ class Test_Network_settings(TestCasePoteen):
             NetworkSettingsView().verify_visibility_vlan_manager_fields(False))
 
     @attr(set=["smoke", "regression"])
+    @attr("skip")
     def test_amount_field_validation(self):
         PoteenLogger.add_test_case(
             "Check Amount field validation")
@@ -162,6 +165,7 @@ class Test_Network_settings(TestCasePoteen):
             NetworkSettingsView().verify_error_amount("1", True, "4094"))
 
     @attr(set=["smoke", "regression"])
+    @attr("skip")
     def test_verify_start_ip(self):
         PoteenLogger.add_test_case(
             "Check CIDR field validation")
@@ -204,6 +208,7 @@ class Test_Network_settings(TestCasePoteen):
                     cidr_vm_network, valid))
 
     @attr(set=["smoke", "regression"])
+    @attr("skip")
     def test_check_cidr_prefix(self):
         PoteenLogger.add_test_case(
             "Check CIDR prefix")
@@ -245,6 +250,7 @@ class Test_Network_settings(TestCasePoteen):
                     cidr_vm_network, valid))
 
     @attr(set=["smoke", "regression"])
+    @attr("skip")
     def test_check_vlan_id_validation(self):
         PoteenLogger.add_test_case(
             "Check VlanID field validation")

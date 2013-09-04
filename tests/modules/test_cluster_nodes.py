@@ -28,6 +28,7 @@ class Test_Cluster_nodes(TestCasePoteen):
         PoteenLogger.add_test_suite("Cluster nodes testing")
 
     @attr(set=["smoke", "regression"])
+    @attr("skip")
     def test_form(self):
         PoteenLogger.add_test_case(
             "Testing cluster page")
@@ -62,6 +63,7 @@ class Test_Cluster_nodes(TestCasePoteen):
         logger.info(Cluster_Nodes_View().verify_nodelists_visibility(True))
 
     @attr(set=["smoke", "regression"])
+    @attr("skip")
     def test_cluster_deployment_mode_dialog(self):
         PoteenLogger.add_test_case(
             "Testing cluster deployment mode dialog")
@@ -89,6 +91,7 @@ class Test_Cluster_nodes(TestCasePoteen):
         ))
 
     @attr(set=["smoke", "regression"])
+    @attr("skip")
     def test_addition_node_controller_role(self):
         PoteenLogger.add_test_case(
             "Testing node addition to controller role")
@@ -119,6 +122,7 @@ class Test_Cluster_nodes(TestCasePoteen):
         logger.info(Cluster_Nodes_View().verify_controllers_amount(1))
 
     @attr(set=["smoke", "regression"])
+    @attr("skip")
     def test_addition_node_compute_role(self):
         PoteenLogger.add_test_case(
             "Testing node addition to compute role")
@@ -147,6 +151,7 @@ class Test_Cluster_nodes(TestCasePoteen):
         logger.info(Cluster_Nodes_View().verify_computes_amount(1))
 
     @attr(set=["smoke", "regression"])
+    @attr("skip")
     def test_addition_node_cinder_role(self):
         PoteenLogger.add_test_case(
             "Testing node addition to cinder role")
@@ -175,6 +180,7 @@ class Test_Cluster_nodes(TestCasePoteen):
         logger.info(Cluster_Nodes_View().verify_cinders_amount(1))
 
     @attr(set=["smoke", "regression"])
+    @attr("skip")
     def test_deletion_node_scheduled_for_addition(self):
         PoteenLogger.add_test_case(
             "Testing deletion of compute node, scheduled for addition")
@@ -210,6 +216,7 @@ class Test_Cluster_nodes(TestCasePoteen):
         logger.info(Cluster_Nodes_View().verify_computes_amount(0))
 
     @attr(set=["smoke", "regression"])
+    @attr("skip")
     def test_testing_deployment(self):
         PoteenLogger.add_test_case(
             "Testing deployment")
@@ -260,6 +267,7 @@ class Test_Cluster_nodes(TestCasePoteen):
         ))
 
     @attr(set=["regression"])
+    @attr("skip")
     def test_delete_node_add_node_and_deploy(self):
         PoteenLogger.add_test_case(
             "Delete one node from environment after successful deployment. "

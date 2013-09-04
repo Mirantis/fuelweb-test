@@ -80,6 +80,7 @@ class Test_Deployment_HA_Mode(TestCasePoteen):
         ))
 
     @attr(set=["regression"])
+    @attr("skip")
     def test_deploy_2_controller(self):
         self.deploy(self.cluster_name, 2)
         logger.info(Cluster_View().verify_error_message(
@@ -87,6 +88,7 @@ class Test_Deployment_HA_Mode(TestCasePoteen):
         ))
 
     @attr(set=["regression"])
+    @attr("skip")
     def test_deploy_3_controller_2_compute(self):
         self.deploy(self.cluster_name, 3, 2)
         logger.info(Cluster_View().verify_successful_deployment_per_name(
@@ -94,6 +96,7 @@ class Test_Deployment_HA_Mode(TestCasePoteen):
         ))
 
     @attr(set=["regression"])
+    @attr("skip")
     def test_deploy_3_controller_4_compute(self):
         self.deploy(self.cluster_name, 3, 4)
         logger.info(Cluster_View().verify_successful_deployment_per_name(
