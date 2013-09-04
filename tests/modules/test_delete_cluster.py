@@ -25,6 +25,7 @@ class Test_Deployment(TestCasePoteen):
         PoteenLogger.add_test_suite("Delete cluster")
 
     @attr(set=["regression"])
+    @attr("skip")
     def test_delete_cluster_after_successful_deployment(self):
         PoteenLogger.add_test_case(
             "Delete cluster after successful deployment")
@@ -75,6 +76,7 @@ class Test_Deployment(TestCasePoteen):
         logger.info(Cluster_BrowseView().verify_clusters_amount(0))
 
     @attr(set=["regression"])
+    @attr("skip")
     def test_can_not_add_offline_node(self):
         PoteenLogger.add_test_case(
             "Can not add 'offline' node to environment")
