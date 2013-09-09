@@ -51,17 +51,14 @@ class Test_Cluster_nodes(TestCasePoteen):
             Cluster_Nodes_View().deploymentMode.get_element(),
             None, "Link deployment mode"))
         logger.info(VerifyBot().verify_visibility(
-            Cluster_Nodes_View().addCompute.get_element(),
-            True, "Add compute button"))
-        logger.info(VerifyBot().verify_visibility(
-            Cluster_Nodes_View().addController.get_element(),
-            True, "Add controller button"))
-        logger.info(VerifyBot().verify_visibility(
-            Cluster_Nodes_View().addCinder.get_element(),
-            True, "Add cinder button"))
-        logger.info(
-            Cluster_Nodes_View().verify_controllers_placeholders_amount(1))
-        logger.info(Cluster_Nodes_View().verify_nodelists_visibility(True))
+            Cluster_Nodes_View().addNodes.get_element(),
+            True, "Add nodes button"))
+        logger.info(VerifyBot().verify_disabled(
+            Cluster_Nodes_View().deleteNodes.get_element(),
+            'true', "Delete nodes button"))
+        logger.info(VerifyBot().verify_disabled(
+            Cluster_Nodes_View().reassignRoles.get_element(),
+            'true', "Reassign roles"))
 
     @attr(set=["smoke", "regression"])
     @attr("skip")

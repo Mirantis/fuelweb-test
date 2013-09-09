@@ -14,81 +14,95 @@ from ..dialogs.environmentDeploymentModeDialog \
 
 class Cluster_Nodes_View(AbstractView):
     def __init__(self, parent=None):
-        self.addCompute = Link(
-            xpath="//div[@id='tab-nodes']"
-                  "//div[contains(@class, 'node-list-compute')]"
-                  "//a[contains(@class, 'btn-add-nodes')]",
-            element_name="Add compute"
+        self.addNodes = Link(
+            xpath="//div//a[@class='span2 btn btn-link btn-add-nodes']",
+            element_name="Add nodes"
         )
-        self.addController = Link(
-            xpath="//div[@id='tab-nodes']"
-                  "//div[contains(@class, 'node-list-controller')]"
-                  "//a[contains(@class, 'btn-add-nodes')]",
-            element_name="Add controller"
+        self.deleteNodes = Button(
+            xpath="//button[contains(@class,'btn-delete-nodes')]",
+            element_name="Delete nodes"
         )
-        self.addCinder = Link(
-            xpath="//div[@id='tab-nodes']"
-                  "//div[contains(@class, 'node-list-cinder')]"
-                  "//a[contains(@class, 'btn-add-nodes')]",
-            element_name="Add cinder"
+        self.reassignRoles = Button(
+            xpath="//button[contains(@class, 'btn-assign-roles')]",
+            element_name="Reassign roles"
         )
-        self.addComputeDisabled = Link(
-            xpath="//div[@id='tab-nodes']"
-                  "//div[contains(@class, 'node-list-compute')]"
-                  "//*[contains(@class, 'disabled') and  contains(.,'Add')]",
-            element_name="Add compute disabled"
-        )
-        self.addControllerDisabled = Link(
-            xpath="//div[@id='tab-nodes']"
-                  "//div[contains(@class, 'node-list-controller')]"
-                  "//*[contains(@class, 'disabled') and  contains(.,'Add')]",
-            element_name="Add controller disabled"
-        )
-        self.addCinderDisabled = Link(
-            xpath="//div[@id='tab-nodes']"
-                  "//div[contains(@class, 'node-list-cinder')]"
-                  "//*[contains(@class, 'disabled') and  contains(.,'Add')]",
-            element_name="Add controller disabled"
-        )
-        self.deleteCompute = Link(
-            xpath="//div[@id='tab-nodes']"
-                  "//div[contains(@class, 'node-list-compute')]"
-                  "//a[contains(@class, 'btn-delete-nodes')]",
-            element_name="Delete compute"
-        )
-        self.deleteController = Link(
-            xpath="//div[@id='tab-nodes']"
-                  "//div[contains(@class, 'node-list-controller')]"
-                  "//a[contains(@class, 'btn-delete-nodes')]",
-            element_name="Delete controller"
-        )
-        self.deleteCinder = Link(
-            xpath="//div[@id='tab-nodes']"
-                  "//div[contains(@class, 'node-list-cinder')]"
-                  "//a[contains(@class, 'btn-delete-nodes')]",
-            element_name="Delete cinder"
-        )
-        self.deleteComputeDisabled = Link(
-            xpath="//div[@id='tab-nodes']"
-                  "//div[contains(@class, 'node-list-compute')]"
-                  "//*[contains(@class, 'disabled') "
-                  "and  contains(.,'Delete')]",
-            element_name="Delete controller disabled"
-        )
-        self.deleteControllerDisabled = Link(
-            xpath="//div[@id='tab-nodes']"
-                  "//div[contains(@class, 'node-list-controller')]"
-                  "//*[contains(@class, 'disabled') "
-                  "and  contains(.,'Delete')]",
-            element_name="Delete controller disabled"
-        )
-        self.deleteCinderDisabled = Link(
-            xpath="//div[@id='tab-nodes']"
-                  "//div[contains(@class, 'node-list-cinder')]"
-                  "//*[contains(@class, 'disabled') "
-                  "and  contains(.,'Delete')]",
-            element_name="Delete controller disabled"
-        )
+
+        #
+        # self.addCompute = Link(
+        #     xpath="//div[@id='tab-nodes']"
+        #           "//div[contains(@class, 'node-list-compute')]"
+        #           "//a[contains(@class, 'btn-add-nodes')]",
+        #     element_name="Add compute"
+        # )
+        # self.addController = Link(
+        #     xpath="//div[@id='tab-nodes']"
+        #           "//div[contains(@class, 'node-list-controller')]"
+        #           "//a[contains(@class, 'btn-add-nodes')]",
+        #     element_name="Add controller"
+        # )
+        # self.addCinder = Link(
+        #     xpath="//div[@id='tab-nodes']"
+        #           "//div[contains(@class, 'node-list-cinder')]"
+        #           "//a[contains(@class, 'btn-add-nodes')]",
+        #     element_name="Add controller"
+        # )
+        # self.addComputeDisabled = Link(
+        #     xpath="//div[@id='tab-nodes']"
+        #           "//div[contains(@class, 'node-list-compute')]"
+        #           "//*[contains(@class, 'disabled') and  contains(.,'Add')]",
+        #     element_name="Add compute disabled"
+        # )
+        # self.addControllerDisabled = Link(
+        #     xpath="//div[@id='tab-nodes']"
+        #           "//div[contains(@class, 'node-list-controller')]"
+        #           "//*[contains(@class, 'disabled') and  contains(.,'Add')]",
+        #     element_name="Add controller disabled"
+        # )
+        # self.addCinderDisabled = Link(
+        #     xpath="//div[@id='tab-nodes']"
+        #           "//div[contains(@class, 'node-list-cinder')]"
+        #           "//*[contains(@class, 'disabled') and  contains(.,'Add')]",
+        #     element_name="Add controller disabled"
+        # )
+        # self.deleteCompute = Link(
+        #     xpath="//div[@id='tab-nodes']"
+        #           "//div[contains(@class, 'node-list-compute')]"
+        #           "//a[contains(@class, 'btn-delete-nodes')]",
+        #     element_name="Delete compute"
+        # )
+        # self.deleteController = Link(
+        #     xpath="//div[@id='tab-nodes']"
+        #           "//div[contains(@class, 'node-list-controller')]"
+        #           "//a[contains(@class, 'btn-delete-nodes')]",
+        #     element_name="Delete controller"
+        # )
+        # self.deleteCinder = Link(
+        #     xpath="//div[@id='tab-nodes']"
+        #           "//div[contains(@class, 'node-list-cinder')]"
+        #           "//a[contains(@class, 'btn-delete-nodes')]",
+        #     element_name="Delete cinder"
+        # )
+        # self.deleteComputeDisabled = Link(
+        #     xpath="//div[@id='tab-nodes']"
+        #           "//div[contains(@class, 'node-list-compute')]"
+        #           "//*[contains(@class, 'disabled') "
+        #           "and  contains(.,'Delete')]",
+        #     element_name="Delete controller disabled"
+        # )
+        # self.deleteControllerDisabled = Link(
+        #     xpath="//div[@id='tab-nodes']"
+        #           "//div[contains(@class, 'node-list-controller')]"
+        #           "//*[contains(@class, 'disabled') "
+        #           "and  contains(.,'Delete')]",
+        #     element_name="Delete controller disabled"
+        # )
+        # self.deleteCinderDisabled = Link(
+        #     xpath="//div[@id='tab-nodes']"
+        #           "//div[contains(@class, 'node-list-cinder')]"
+        #           "//*[contains(@class, 'disabled') "
+        #           "and  contains(.,'Delete')]",
+        #     element_name="Delete controller disabled"
+        # )
         self.computes = Button(
             xpath="//div[@id='tab-nodes']"
                   "//div[contains(@class, 'node-list-compute')]",
@@ -104,8 +118,8 @@ class Cluster_Nodes_View(AbstractView):
                   "//div[contains(@class, 'node-list-cinder')]",
             element_name="cinders"
         )
-        self.deploymentMode = Link(
-            xpath="//li[contains(@class, 'change-cluster-mode-btn')]",
+        self.deploymentMode = Button(
+            xpath="//button[contains(@class,'btn btn-cluster-actions')]",
             element_name="Deployment mode"
         )
         self.alertError = HtmlElement(
@@ -137,23 +151,25 @@ class Cluster_Nodes_View(AbstractView):
 
         AbstractView.__init__(self, parent)
 
-    def click_add_compute(self):
-        return self.addCompute.click_and_wait()
 
-    def click_add_controller(self):
-        return self.addController.click_and_wait()
 
-    def click_add_cinder(self):
-        return self.addCinder.click_and_wait()
-
-    def click_delete_compute(self):
-        return self.deleteCompute.click_and_wait()
-
-    def click_delete_controller(self):
-        return self.deleteController.click_and_wait()
-
-    def click_delete_cinder(self):
-        return self.deleteCinder.click_and_wait()
+    # def click_add_compute(self):
+    #     return self.addCompute.click_and_wait()
+    #
+    # def click_add_controller(self):
+    #     return self.addController.click_and_wait()
+    #
+    # def click_add_cinder(self):
+    #     return self.addCinder.click_and_wait()
+    #
+    # def click_delete_compute(self):
+    #     return self.deleteCompute.click_and_wait()
+    #
+    # def click_delete_controller(self):
+    #     return self.deleteController.click_and_wait()
+    #
+    # def click_delete_cinder(self):
+    #     return self.deleteCinder.click_and_wait()
 
     def click_deployment_mode(self):
         return self.deploymentMode.click()
