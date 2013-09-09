@@ -6,7 +6,7 @@ from ..components.functionality.main import Main
 from ..components.functionality.releases.tables.releasesTable \
     import Releases_Table
 from ..components.navigation.mainMenu import Main_Menu
-from ..components.settings import RELEASE_RHOS
+from ..components.settings import RELEASE_RHOSRELEASE_GRIZZLY_CENTOSRELEASE_GRIZZLY_CENTOSRELEASE_RHOSRELEASE_GRIZZLY_CENTOSRELEASE_GRIZZLY_UBUNTURELEASE_RHOS
 from tests.components.functionality.releases.dialogs.configureReleaseDialog\
     import Configure_Release_Dialog
 
@@ -27,7 +27,11 @@ class Test_Releases(TestCasePoteen):
 
         logger.info(Main().navigate())
         logger.info(Main_Menu().releases.click())
-        logger.info(Releases_Table().verify_releases_count(2))
+        logger.info(Releases_Table().verify_releases_count(3))
+        logger.info(Releases_Table().verify_release_status(
+            RELEASE_GRIZZLY_CENTOS, "Active"))
+        logger.info(Releases_Table().verify_release_status(
+            RELEASE_GRIZZLY_UBUNTU, "Active"))
         logger.info(Releases_Table().verify_release_status(
             RELEASE_RHOS, "Not available"))
         logger.info(Releases_Table().click_configure(RELEASE_RHOS))
