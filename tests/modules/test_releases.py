@@ -6,7 +6,8 @@ from ..components.functionality.main import Main
 from ..components.functionality.releases.tables.releasesTable \
     import Releases_Table
 from ..components.navigation.mainMenu import Main_Menu
-from ..components.settings import RELEASE_RHOSRELEASE_GRIZZLY_CENTOSRELEASE_GRIZZLY_CENTOSRELEASE_RHOSRELEASE_GRIZZLY_CENTOSRELEASE_GRIZZLY_UBUNTURELEASE_RHOS
+from ..components.settings \
+    import RELEASE_RHOS, RELEASE_GRIZZLY_CENTOS, RELEASE_GRIZZLY_UBUNTU
 from tests.components.functionality.releases.dialogs.configureReleaseDialog\
     import Configure_Release_Dialog
 
@@ -32,25 +33,27 @@ class Test_Releases(TestCasePoteen):
             RELEASE_GRIZZLY_CENTOS, "Active"))
         logger.info(Releases_Table().verify_release_status(
             RELEASE_GRIZZLY_UBUNTU, "Active"))
-        logger.info(Releases_Table().verify_release_status(
-            RELEASE_RHOS, "Not available"))
-        logger.info(Releases_Table().click_configure(RELEASE_RHOS))
-
-        logger.info(Configure_Release_Dialog().licence_rhn.click())
-        logger.info(Configure_Release_Dialog().licence_rhn.verify_value(True))
-        logger.info(
-            Configure_Release_Dialog().verify_controls_presence("RHN")
-        )
-
-        logger.info(Configure_Release_Dialog().licence_rhsm.click())
-        logger.info(Configure_Release_Dialog().licence_rhsm.verify_value(True))
-        logger.info(
-            Configure_Release_Dialog().verify_controls_presence("RHSM")
-        )
-
-        logger.info(Configure_Release_Dialog().populate(
-            "rheltest", "password"))
-        logger.info(Configure_Release_Dialog().download())
-        logger.info(Releases_Table().wait_downloading(RELEASE_RHOS))
-        logger.info(Releases_Table().verify_release_status(
-            RELEASE_RHOS, "Active"))
+        if Releases_Table().verify_release_status(
+                RELEASE_RHOS, "Not available").i_passed():
+            logger.info(Releases_Table().click_configure(RELEASE_RHOS))
+            logger.info(Configure_Release_Dialog().licence_rhn.click())
+            logger.info(
+                Configure_Release_Dialog().licence_rhn.verify_value(True))
+            logger.info(
+                Configure_Release_Dialog().verify_controls_presence("RHN")
+            )
+            logger.info(Configure_Release_Dialog().licence_rhsm.click())
+            logger.info(
+                Configure_Release_Dialog().licence_rhsm.verify_value(True))
+            logger.info(
+                Configure_Release_Dialog().verify_controls_presence("RHSM")
+            )
+            logger.info(Configure_Release_Dialog().populate(
+                "rheltest", "password"))
+            logger.info(Configure_Release_Dialog().download())
+            logger.info(Releases_Table().wait_downloading(RELEASE_RHOS))
+            logger.info(Releases_Table().verify_release_status(
+                RELEASE_RHOS, "Active"))
+        else:
+            logger.info(Releases_Table().verify_release_status(
+                RELEASE_RHOS, "Active"))
