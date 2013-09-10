@@ -28,6 +28,7 @@ class Test_Deployment_With_Cinder(TestCasePoteen):
         PoteenLogger.add_test_suite("Deployment with cinder")
 
     @attr(set=["regression"])
+    @attr("skip")
     def test_deploy_no_ha_1_cinder(self):
         PoteenLogger.add_test_case(
             "Deploy without HA mode 1 controller 1 compute 1 cinder")
@@ -80,6 +81,7 @@ class Test_Deployment_With_Cinder(TestCasePoteen):
             "Ready", 3))
 
     @attr(set=["regression"])
+    @attr("skip")
     def test_deploy_HA_1_cinder(self):
         PoteenLogger.add_test_case(
             "Deploy HA mode 3 controllers 1 compute 1 cinder")
