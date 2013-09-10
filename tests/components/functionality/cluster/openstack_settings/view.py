@@ -2,7 +2,7 @@ from engine.poteen.elements.basic.button import Button
 from engine.poteen.elements.basic.checkbox import Checkbox
 from engine.poteen.elements.basic.input import Input
 from ....generic.abstractView import AbstractView
-from tests.components.elements.Radio import Radio
+from ....elements.Radio import Radio
 
 
 class OpenstackSettingsView(AbstractView):

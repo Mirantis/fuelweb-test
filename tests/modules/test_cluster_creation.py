@@ -12,7 +12,7 @@ from ..components.functionality.cluster.browseView \
     import Cluster_BrowseView
 from ..components.functionality.cluster.dialogs.createEnvironmentDialog \
     import CreateEnvironmentDialog
-from tests.components.functionality.cluster.cluster import Cluster
+from ..components.functionality.cluster.cluster import Cluster
 
 logger = PoteenLogger
 
@@ -35,7 +35,7 @@ class Test_Cluster_creation(TestCasePoteen):
 
         # create cluster
         logger.info(Cluster_BrowseView().click_add_new_cluster(cluster_key))
-        logger.info(CreateEnvironmentDialog().createEnvironmentRHOS(
+        logger.info(CreateEnvironmentDialog().create_environment_RHOS(
             name="Test environment",
             version=OPENSTACK_RHOS,
             downloadMode="rhn",
