@@ -10,6 +10,7 @@ from ..components.functionality.cluster.browseView \
 from ..components.functionality.cluster.dialogs.createEnvironmentDialog \
     import CreateEnvironmentDialog
 from ..components.functionality.cluster.editView import Cluster_View
+from tests.components.functionality.cluster.cluster import Cluster
 from tests.components.functionality.cluster.logs.view import Cluster_Logs_View
 
 
@@ -35,10 +36,11 @@ class Test_Logs(TestCasePoteen):
 
         # create cluster
         logger.info(Cluster_BrowseView().click_add_new_cluster(cluster_key))
-        logger.info(CreateEnvironmentDialog().populate(
+        logger.info(CreateEnvironmentDialog().createEnvironment(
             name=cluster_name,
             version=OPENSTACK_CURRENT_VERSION,
-            submit=True
+            deploymentMode=Cluster.DEPLOYMENT_MODE_MULTI_NODE,
+            computeType='qemu'
         ))
         logger.info(Cluster_BrowseView().select_by_key(cluster_key))
         logger.info(Cluster_View().click_logs_tab())

@@ -40,10 +40,11 @@ class Test_Cluster_nodes(TestCasePoteen):
         logger.info(Cluster_BrowseView().remove_all())
         logger.info(
             Cluster_BrowseView().click_add_new_cluster(cluster_key))
-        logger.info(CreateEnvironmentDialog().populate(
+        logger.info(CreateEnvironmentDialog().createEnvironment(
             name=cluster_name,
             version=OPENSTACK_CURRENT_VERSION,
-            submit=True
+            deploymentMode=Cluster.DEPLOYMENT_MODE_MULTI_NODE,
+            computeType='qemu'
         ))
         logger.info(Cluster_BrowseView().select_by_key(cluster_key))
         logger.info(VerifyBot().verify_disabled(
@@ -74,21 +75,16 @@ class Test_Cluster_nodes(TestCasePoteen):
         logger.info(Main().navigate())
         logger.info(Cluster_BrowseView().remove_all())
         logger.info(Cluster_BrowseView().click_add_new_cluster(cluster_key))
-        logger.info(CreateEnvironmentDialog().populate(
+        logger.info(CreateEnvironmentDialog().createEnvironment(
             name=cluster_name,
             version=OPENSTACK_CURRENT_VERSION,
-            submit=True
+            deploymentMode=Cluster.DEPLOYMENT_MODE_MULTI_NODE,
+            computeType='qemu'
         ))
         logger.info(Cluster_BrowseView().select_by_key(cluster_key))
-        logger.info(Cluster_Nodes_View().select_environment_mode(
-            deploymentMode=Cluster.DEPLOYMENT_MODE_MULTI_NODE_WITH_HA
-        ))
         logger.info(
             Cluster_Nodes_View().verify_controllers_placeholders_amount(3))
         logger.info(Cluster_Nodes_View().verify_nodelists_visibility(True))
-        logger.info(Cluster_Nodes_View().select_environment_mode(
-            deploymentMode=Cluster.DEPLOYMENT_MODE_MULTI_NODE
-        ))
 
     @attr(set=["smoke", "regression"])
     @attr("skip")
@@ -102,15 +98,13 @@ class Test_Cluster_nodes(TestCasePoteen):
         logger.info(Main().navigate())
         logger.info(Cluster_BrowseView().remove_all())
         logger.info(Cluster_BrowseView().click_add_new_cluster(cluster_key))
-        logger.info(CreateEnvironmentDialog().populate(
+        logger.info(CreateEnvironmentDialog().createEnvironment(
             name=cluster_name,
             version=OPENSTACK_CURRENT_VERSION,
-            submit=True
+            deploymentMode=Cluster.DEPLOYMENT_MODE_MULTI_NODE,
+            computeType='qemu'
         ))
         logger.info(Cluster_BrowseView().select_by_key(cluster_key))
-        logger.info(Cluster_Nodes_View().select_environment_mode(
-            deploymentMode=Cluster.DEPLOYMENT_MODE_MULTI_NODE
-        ))
         logger.info(Cluster_Nodes_View().click_add_controller())
         available_nodes_names = Cluster_Nodes_ListView()\
             .get_nodes_names_by_status('Discovered')
@@ -133,15 +127,13 @@ class Test_Cluster_nodes(TestCasePoteen):
         logger.info(Main().navigate())
         logger.info(Cluster_BrowseView().remove_all())
         logger.info(Cluster_BrowseView().click_add_new_cluster(cluster_key))
-        logger.info(CreateEnvironmentDialog().populate(
+        logger.info(CreateEnvironmentDialog().createEnvironment(
             name=cluster_name,
             version=OPENSTACK_CURRENT_VERSION,
-            submit=True
+            deploymentMode=Cluster.DEPLOYMENT_MODE_MULTI_NODE,
+            computeType='qemu'
         ))
         logger.info(Cluster_BrowseView().select_by_key(cluster_key))
-        logger.info(Cluster_Nodes_View().select_environment_mode(
-            deploymentMode=Cluster.DEPLOYMENT_MODE_MULTI_NODE
-        ))
         logger.info(Cluster_Nodes_View().click_add_compute())
         available_nodes_names = Cluster_Nodes_ListView()\
             .get_nodes_names_by_status('Discovered')
@@ -162,15 +154,13 @@ class Test_Cluster_nodes(TestCasePoteen):
         logger.info(Main().navigate())
         logger.info(Cluster_BrowseView().remove_all())
         logger.info(Cluster_BrowseView().click_add_new_cluster(cluster_key))
-        logger.info(CreateEnvironmentDialog().populate(
+        logger.info(CreateEnvironmentDialog().createEnvironment(
             name=cluster_name,
             version=OPENSTACK_CURRENT_VERSION,
-            submit=True
+            deploymentMode=Cluster.DEPLOYMENT_MODE_MULTI_NODE,
+            computeType='qemu'
         ))
         logger.info(Cluster_BrowseView().select_by_key(cluster_key))
-        logger.info(Cluster_Nodes_View().select_environment_mode(
-            deploymentMode=Cluster.DEPLOYMENT_MODE_MULTI_NODE
-        ))
         logger.info(Cluster_Nodes_View().click_add_cinder())
         available_nodes_names = Cluster_Nodes_ListView()\
             .get_nodes_names_by_status('Discovered')
@@ -191,15 +181,13 @@ class Test_Cluster_nodes(TestCasePoteen):
         logger.info(Main().navigate())
         logger.info(Cluster_BrowseView().remove_all())
         logger.info(Cluster_BrowseView().click_add_new_cluster(cluster_key))
-        logger.info(CreateEnvironmentDialog().populate(
+        logger.info(CreateEnvironmentDialog().createEnvironment(
             name=cluster_name,
             version=OPENSTACK_CURRENT_VERSION,
-            submit=True
+            deploymentMode=Cluster.DEPLOYMENT_MODE_MULTI_NODE,
+            computeType='qemu'
         ))
         logger.info(Cluster_BrowseView().select_by_key(cluster_key))
-        logger.info(Cluster_Nodes_View().select_environment_mode(
-            deploymentMode=Cluster.DEPLOYMENT_MODE_MULTI_NODE
-        ))
         logger.info(Cluster_Nodes_View().click_add_compute())
         available_nodes_names = Cluster_Nodes_ListView()\
             .get_nodes_names_by_status('Discovered')
@@ -227,15 +215,13 @@ class Test_Cluster_nodes(TestCasePoteen):
         logger.info(Main().navigate())
         logger.info(Cluster_BrowseView().remove_all())
         logger.info(Cluster_BrowseView().click_add_new_cluster(cluster_key))
-        logger.info(CreateEnvironmentDialog().populate(
+        logger.info(CreateEnvironmentDialog().createEnvironment(
             name=cluster_name,
             version=OPENSTACK_CURRENT_VERSION,
-            submit=True
+            deploymentMode=Cluster.DEPLOYMENT_MODE_MULTI_NODE,
+            computeType='qemu'
         ))
         logger.info(Cluster_BrowseView().select_by_key(cluster_key))
-        logger.info(Cluster_Nodes_View().select_environment_mode(
-            deploymentMode=Cluster.DEPLOYMENT_MODE_MULTI_NODE
-        ))
         logger.info(Cluster_Nodes_View().click_add_controller())
         available_nodes_names = Cluster_Nodes_ListView()\
             .get_nodes_names_by_status('Discovered')
@@ -279,15 +265,13 @@ class Test_Cluster_nodes(TestCasePoteen):
         logger.info(Main().navigate())
         logger.info(Cluster_BrowseView().remove_all())
         logger.info(Cluster_BrowseView().click_add_new_cluster(cluster_key))
-        logger.info(CreateEnvironmentDialog().populate(
+        logger.info(CreateEnvironmentDialog().createEnvironment(
             name=cluster_name,
             version=OPENSTACK_CURRENT_VERSION,
-            submit=True
+            deploymentMode=Cluster.DEPLOYMENT_MODE_MULTI_NODE,
+            computeType='qemu'
         ))
         logger.info(Cluster_BrowseView().select_by_key(cluster_key))
-        logger.info(Cluster_Nodes_View().select_environment_mode(
-            deploymentMode=Cluster.DEPLOYMENT_MODE_MULTI_NODE
-        ))
         logger.info(Cluster_Nodes_View().click_add_controller())
         available_nodes_names = Cluster_Nodes_ListView()\
             .get_nodes_names_by_status('Discovered')

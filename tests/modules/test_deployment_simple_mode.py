@@ -41,16 +41,14 @@ class TestDeploymentSimpleMode(TestCasePoteen):
 
         # create cluster
         logger.info(Cluster_BrowseView().click_add_new_cluster(cluster_key))
-        logger.info(CreateEnvironmentDialog().populate(
+        logger.info(CreateEnvironmentDialog().createEnvironment(
             name=cluster_name,
             version=OPENSTACK_CURRENT_VERSION,
-            submit=True
+            deploymentMode=Cluster.DEPLOYMENT_MODE_MULTI_NODE,
+            computeType='qemu'
         ))
         logger.info(Cluster_BrowseView().select_by_key(cluster_key))
 
-        logger.info(Cluster_Nodes_View().select_environment_mode(
-            deploymentMode=Cluster.DEPLOYMENT_MODE_MULTI_NODE
-        ))
         logger.info(Cluster_Nodes_View().click_add_controller())
         logger.info(Cluster_Nodes_ListView().select_nodes(
             "Supermicro X9DRW"
@@ -85,16 +83,17 @@ class TestDeploymentSimpleMode(TestCasePoteen):
 
         logger.info(Main().navigate())
         logger.info(Cluster_BrowseView().remove_all())
+
+         # create cluster
         logger.info(Cluster_BrowseView().click_add_new_cluster(cluster_key))
-        logger.info(CreateEnvironmentDialog().populate(
+        logger.info(CreateEnvironmentDialog().createEnvironment(
             name=cluster_name,
             version=OPENSTACK_CURRENT_VERSION,
-            submit=True
+            deploymentMode=Cluster.DEPLOYMENT_MODE_MULTI_NODE,
+            computeType='qemu'
         ))
         logger.info(Cluster_BrowseView().select_by_key(cluster_key))
-        logger.info(Cluster_Nodes_View().select_environment_mode(
-            deploymentMode=Cluster.DEPLOYMENT_MODE_MULTI_NODE
-        ))
+
         logger.info(Cluster_Nodes_View().click_add_controller())
         logger.info(Cluster_Nodes_ListView().select_nodes(
             "Supermicro X9DRW"
@@ -122,16 +121,17 @@ class TestDeploymentSimpleMode(TestCasePoteen):
 
         logger.info(Main().navigate())
         logger.info(Cluster_BrowseView().remove_all())
+
+        # create cluster
         logger.info(Cluster_BrowseView().click_add_new_cluster(cluster_key))
-        logger.info(CreateEnvironmentDialog().populate(
+        logger.info(CreateEnvironmentDialog().createEnvironment(
             name=cluster_name,
             version=OPENSTACK_CURRENT_VERSION,
-            submit=True
+            deploymentMode=Cluster.DEPLOYMENT_MODE_MULTI_NODE,
+            computeType='qemu'
         ))
         logger.info(Cluster_BrowseView().select_by_key(cluster_key))
-        logger.info(Cluster_Nodes_View().select_environment_mode(
-            deploymentMode=Cluster.DEPLOYMENT_MODE_MULTI_NODE
-        ))
+
         logger.info(Cluster_Nodes_View().click_add_compute())
         logger.info(Cluster_Nodes_ListView().select_nodes(
             "Dell Inspiron"
@@ -160,16 +160,17 @@ class TestDeploymentSimpleMode(TestCasePoteen):
 
         logger.info(Main().navigate())
         logger.info(Cluster_BrowseView().remove_all())
+
+        # create cluster
         logger.info(Cluster_BrowseView().click_add_new_cluster(cluster_key))
-        logger.info(CreateEnvironmentDialog().populate(
+        logger.info(CreateEnvironmentDialog().createEnvironment(
             name=cluster_name,
             version=OPENSTACK_CURRENT_VERSION,
-            submit=True
+            deploymentMode=Cluster.DEPLOYMENT_MODE_MULTI_NODE,
+            computeType='qemu'
         ))
         logger.info(Cluster_BrowseView().select_by_key(cluster_key))
-        logger.info(Cluster_Nodes_View().select_environment_mode(
-            deploymentMode=Cluster.DEPLOYMENT_MODE_MULTI_NODE
-        ))
+
         logger.info(Cluster_Nodes_View().click_add_controller())
         logger.info(Cluster_Nodes_ListView().select_nodes(
             "Supermicro X9DRW"
@@ -204,16 +205,17 @@ class TestDeploymentSimpleMode(TestCasePoteen):
 
         logger.info(Main().navigate())
         logger.info(Cluster_BrowseView().remove_all())
+
+        # create cluster
         logger.info(Cluster_BrowseView().click_add_new_cluster(cluster_key))
-        logger.info(CreateEnvironmentDialog().populate(
+        logger.info(CreateEnvironmentDialog().createEnvironment(
             name=cluster_name,
             version=OPENSTACK_CURRENT_VERSION,
-            submit=True
+            deploymentMode=Cluster.DEPLOYMENT_MODE_MULTI_NODE,
+            computeType='qemu'
         ))
         logger.info(Cluster_BrowseView().select_by_key(cluster_key))
-        logger.info(Cluster_Nodes_View().select_environment_mode(
-            deploymentMode=Cluster.DEPLOYMENT_MODE_MULTI_NODE
-        ))
+
         logger.info(Cluster_Nodes_View().click_add_controller())
         logger.info(Cluster_Nodes_ListView().select_nodes(
             "Supermicro X9DRW"
@@ -266,18 +268,18 @@ class TestDeploymentSimpleMode(TestCasePoteen):
 
         for cluster_key, cluster_info in clusters.iteritems():
             logger.info(Main().navigate())
-            logger.info(
-                Cluster_BrowseView().click_add_new_cluster(cluster_key)
-            )
-            logger.info(CreateEnvironmentDialog().populate(
+
+            # create cluster
+            logger.info(Cluster_BrowseView().click_add_new_cluster(
+                cluster_key))
+            logger.info(CreateEnvironmentDialog().createEnvironment(
                 name=cluster_info['name'],
                 version=OPENSTACK_CURRENT_VERSION,
-                submit=True
+                deploymentMode=Cluster.DEPLOYMENT_MODE_MULTI_NODE,
+                computeType='qemu'
             ))
             logger.info(Cluster_BrowseView().select_by_key(cluster_key))
-            logger.info(Cluster_Nodes_View().select_environment_mode(
-                deploymentMode=Cluster.DEPLOYMENT_MODE_MULTI_NODE
-            ))
+
             logger.info(Cluster_Nodes_View().click_add_controller())
             logger.info(Cluster_Nodes_ListView().select_nodes(
                 *cluster_info['controllers']

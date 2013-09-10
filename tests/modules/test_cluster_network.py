@@ -12,6 +12,8 @@ from ..components.functionality.cluster.browseView \
 from ..components.functionality.cluster.dialogs.createEnvironmentDialog \
     import CreateEnvironmentDialog
 from ..components.functionality.cluster.editView import Cluster_View
+from tests.components.functionality.cluster.cluster import Cluster
+
 
 logger = PoteenLogger
 
@@ -38,7 +40,7 @@ class Test_Network_settings(TestCasePoteen):
         logger.info(CreateEnvironmentDialog().createEnvironment(
             name=cluster_name,
             version=OPENSTACK_CURRENT_VERSION,
-            deploymentMode='Multi-node',
+            deploymentMode=Cluster.DEPLOYMENT_MODE_MULTI_NODE,
             computeType='qemu'
         ))
         logger.info(Cluster_BrowseView().select_by_key(cluster_key))
@@ -84,7 +86,7 @@ class Test_Network_settings(TestCasePoteen):
         logger.info(CreateEnvironmentDialog().createEnvironment(
             name=cluster_name,
             version=OPENSTACK_CURRENT_VERSION,
-            deploymentMode='Multi-node',
+            deploymentMode=Cluster.DEPLOYMENT_MODE_MULTI_NODE,
             computeType='qemu'
         ))
         logger.info(Cluster_BrowseView().select_by_key(cluster_key))
@@ -125,7 +127,7 @@ class Test_Network_settings(TestCasePoteen):
         logger.info(CreateEnvironmentDialog().createEnvironment(
             name=cluster_name,
             version=OPENSTACK_CURRENT_VERSION,
-            deploymentMode='Multi-node',
+            deploymentMode=Cluster.DEPLOYMENT_MODE_MULTI_NODE,
             computeType='qemu'
         ))
         logger.info(Cluster_BrowseView().select_by_key(cluster_key))
@@ -169,7 +171,7 @@ class Test_Network_settings(TestCasePoteen):
         logger.info(CreateEnvironmentDialog().createEnvironment(
             name=cluster_name,
             version=OPENSTACK_CURRENT_VERSION,
-            deploymentMode='Multi-node',
+            deploymentMode=Cluster.DEPLOYMENT_MODE_MULTI_NODE,
             computeType='qemu'
         ))
         logger.info(Cluster_BrowseView().select_by_key(cluster_key))
@@ -209,7 +211,7 @@ class Test_Network_settings(TestCasePoteen):
         logger.info(CreateEnvironmentDialog().createEnvironment(
             name=cluster_name,
             version=OPENSTACK_CURRENT_VERSION,
-            deploymentMode='Multi-node',
+            deploymentMode=Cluster.DEPLOYMENT_MODE_MULTI_NODE,
             computeType='qemu'
         ))
         logger.info(Cluster_BrowseView().select_by_key(cluster_key))
@@ -248,7 +250,7 @@ class Test_Network_settings(TestCasePoteen):
         logger.info(CreateEnvironmentDialog().createEnvironment(
             name=cluster_name,
             version=OPENSTACK_CURRENT_VERSION,
-            deploymentMode='Multi-node',
+            deploymentMode=Cluster.DEPLOYMENT_MODE_MULTI_NODE,
             computeType='qemu'
         ))
         logger.info(Cluster_BrowseView().select_by_key(cluster_key))
