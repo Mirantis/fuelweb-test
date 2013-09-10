@@ -9,11 +9,9 @@ from ..components.functionality.cluster.network_settings.view \
 from ..components.functionality.main import Main
 from ..components.functionality.cluster.browseView \
     import Cluster_BrowseView
-from ..components.functionality.cluster.cluster import Cluster
 from ..components.functionality.cluster.dialogs.createEnvironmentDialog \
     import CreateEnvironmentDialog
 from ..components.functionality.cluster.editView import Cluster_View
-from ..components.functionality.cluster.nodes.view import Cluster_Nodes_View
 
 logger = PoteenLogger
 
@@ -25,7 +23,6 @@ class Test_Network_settings(TestCasePoteen):
         PoteenLogger.add_test_suite("Network validation")
 
     @attr(set=["smoke", "regression"])
-    @attr("skip")
     def test_form(self):
         PoteenLogger.add_test_case(
             "Check network settings page")
@@ -38,16 +35,14 @@ class Test_Network_settings(TestCasePoteen):
 
         # create cluster
         logger.info(Cluster_BrowseView().click_add_new_cluster(cluster_key))
-        logger.info(CreateEnvironmentDialog().populate(
+        logger.info(CreateEnvironmentDialog().createEnvironment(
             name=cluster_name,
             version=OPENSTACK_CURRENT_VERSION,
-            submit=True
+            deploymentMode='Multi-node',
+            computeType='qemu'
         ))
         logger.info(Cluster_BrowseView().select_by_key(cluster_key))
 
-        logger.info(Cluster_Nodes_View().select_environment_mode(
-            deploymentMode=Cluster.DEPLOYMENT_MODE_MULTI_NODE
-        ))
         logger.info(Cluster_View().click_network_settings_tab())
         logger.info(NetworkSettingsView().verify_flatDHCP_manager_value("on"))
         logger.info(NetworkSettingsView().verify_VLAN_manager_value("off"))
@@ -74,7 +69,6 @@ class Test_Network_settings(TestCasePoteen):
             'true', "Save settings button"))
 
     @attr(set=["smoke", "regression"])
-    @attr("skip")
     def test_change_network(self):
         PoteenLogger.add_test_case(
             "Change network manager")
@@ -87,16 +81,14 @@ class Test_Network_settings(TestCasePoteen):
 
         # create cluster
         logger.info(Cluster_BrowseView().click_add_new_cluster(cluster_key))
-        logger.info(CreateEnvironmentDialog().populate(
+        logger.info(CreateEnvironmentDialog().createEnvironment(
             name=cluster_name,
             version=OPENSTACK_CURRENT_VERSION,
-            submit=True
+            deploymentMode='Multi-node',
+            computeType='qemu'
         ))
         logger.info(Cluster_BrowseView().select_by_key(cluster_key))
 
-        logger.info(Cluster_Nodes_View().select_environment_mode(
-            deploymentMode=Cluster.DEPLOYMENT_MODE_MULTI_NODE
-        ))
         logger.info(Cluster_View().click_network_settings_tab())
         logger.info(NetworkSettingsView().verify_flatDHCP_manager_value("on"))
         logger.info(NetworkSettingsView().verify_VLAN_manager_value("off"))
@@ -118,7 +110,6 @@ class Test_Network_settings(TestCasePoteen):
             NetworkSettingsView().verify_visibility_vlan_manager_fields(False))
 
     @attr(set=["smoke", "regression"])
-    @attr("skip")
     def test_amount_field_validation(self):
         PoteenLogger.add_test_case(
             "Check Amount field validation")
@@ -131,16 +122,14 @@ class Test_Network_settings(TestCasePoteen):
 
         # create cluster
         logger.info(Cluster_BrowseView().click_add_new_cluster(cluster_key))
-        logger.info(CreateEnvironmentDialog().populate(
+        logger.info(CreateEnvironmentDialog().createEnvironment(
             name=cluster_name,
             version=OPENSTACK_CURRENT_VERSION,
-            submit=True
+            deploymentMode='Multi-node',
+            computeType='qemu'
         ))
         logger.info(Cluster_BrowseView().select_by_key(cluster_key))
 
-        logger.info(Cluster_Nodes_View().select_environment_mode(
-            deploymentMode=Cluster.DEPLOYMENT_MODE_MULTI_NODE
-        ))
         logger.info(Cluster_View().click_network_settings_tab())
         logger.info(NetworkSettingsView().set_VLAN_manager("on"))
         amount_array = [
@@ -165,7 +154,6 @@ class Test_Network_settings(TestCasePoteen):
             NetworkSettingsView().verify_error_amount("1", True, "4094"))
 
     @attr(set=["smoke", "regression"])
-    @attr("skip")
     def test_verify_start_ip(self):
         PoteenLogger.add_test_case(
             "Check CIDR field validation")
@@ -178,16 +166,14 @@ class Test_Network_settings(TestCasePoteen):
 
         # create cluster
         logger.info(Cluster_BrowseView().click_add_new_cluster(cluster_key))
-        logger.info(CreateEnvironmentDialog().populate(
+        logger.info(CreateEnvironmentDialog().createEnvironment(
             name=cluster_name,
             version=OPENSTACK_CURRENT_VERSION,
-            submit=True
+            deploymentMode='Multi-node',
+            computeType='qemu'
         ))
         logger.info(Cluster_BrowseView().select_by_key(cluster_key))
 
-        logger.info(Cluster_Nodes_View().select_environment_mode(
-            deploymentMode=Cluster.DEPLOYMENT_MODE_MULTI_NODE
-        ))
         logger.info(Cluster_View().click_network_settings_tab())
         cidr_vm_networks = [
             (" ", False),
@@ -208,7 +194,6 @@ class Test_Network_settings(TestCasePoteen):
                     cidr_vm_network, valid))
 
     @attr(set=["smoke", "regression"])
-    @attr("skip")
     def test_check_cidr_prefix(self):
         PoteenLogger.add_test_case(
             "Check CIDR prefix")
@@ -221,16 +206,14 @@ class Test_Network_settings(TestCasePoteen):
 
         # create cluster
         logger.info(Cluster_BrowseView().click_add_new_cluster(cluster_key))
-        logger.info(CreateEnvironmentDialog().populate(
+        logger.info(CreateEnvironmentDialog().createEnvironment(
             name=cluster_name,
             version=OPENSTACK_CURRENT_VERSION,
-            submit=True
+            deploymentMode='Multi-node',
+            computeType='qemu'
         ))
         logger.info(Cluster_BrowseView().select_by_key(cluster_key))
 
-        logger.info(Cluster_Nodes_View().select_environment_mode(
-            deploymentMode=Cluster.DEPLOYMENT_MODE_MULTI_NODE
-        ))
         logger.info(Cluster_View().click_network_settings_tab())
         cidr_vm_networks = [
             ("240.0.1.0/1", False),
@@ -250,7 +233,6 @@ class Test_Network_settings(TestCasePoteen):
                     cidr_vm_network, valid))
 
     @attr(set=["smoke", "regression"])
-    @attr("skip")
     def test_check_vlan_id_validation(self):
         PoteenLogger.add_test_case(
             "Check VlanID field validation")
@@ -263,16 +245,13 @@ class Test_Network_settings(TestCasePoteen):
 
         # create cluster
         logger.info(Cluster_BrowseView().click_add_new_cluster(cluster_key))
-        logger.info(CreateEnvironmentDialog().populate(
+        logger.info(CreateEnvironmentDialog().createEnvironment(
             name=cluster_name,
             version=OPENSTACK_CURRENT_VERSION,
-            submit=True
+            deploymentMode='Multi-node',
+            computeType='qemu'
         ))
         logger.info(Cluster_BrowseView().select_by_key(cluster_key))
-
-        logger.info(Cluster_Nodes_View().select_environment_mode(
-            deploymentMode=Cluster.DEPLOYMENT_MODE_MULTI_NODE
-        ))
         logger.info(Cluster_View().click_network_settings_tab())
         logger.info(NetworkSettingsView().set_VLAN_manager("on"))
         logger.info(
