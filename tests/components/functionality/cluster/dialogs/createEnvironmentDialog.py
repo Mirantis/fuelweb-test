@@ -28,7 +28,7 @@ class CreateEnvironmentDialog(AbstractDialog):
             xpath=".//select[@name='release']", element_name="Version"
         )
         self.downloadType = Radio(
-            xpath=".//div[contains(@class, 'custom-tumbler') "
+            xpath="//div[contains(@class, 'custom-tumbler') "
                   "and input[@type='radio' and @value='{type}']]",
             element_name="Download type [{type}]")
 
@@ -111,7 +111,7 @@ class CreateEnvironmentDialog(AbstractDialog):
             WaitBot().wait_loading()
         return rl
 
-    def create_environment(self, name, version, deploymentMode, computeType):
+    def createEnvironment(self, name, version, deploymentMode, computeType):
         rl = ResultList("Create new environment") \
             .push(self.populate(name, version, True))
         rl.push(EnvironmentDeploymentModeDialog().populate(
@@ -125,9 +125,9 @@ class CreateEnvironmentDialog(AbstractDialog):
         rl.push(self.create())
         return rl
 
-    def create_environment_RHOS(self, name, version, downloadMode, username,
-                                password, serverHostName, activationKey,
-                                deploymentMode, computeType):
+    def createEnvironmentRHOS(self, name, version, downloadMode, username,
+                              password, serverHostName, activationKey,
+                              deploymentMode, computeType):
         rl = ResultList("Create new environment") \
             .push(self.populateRHOS(name, version, downloadMode, username,
                                     password, serverHostName, activationKey,
