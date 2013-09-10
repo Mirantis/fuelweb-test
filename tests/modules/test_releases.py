@@ -8,7 +8,7 @@ from ..components.functionality.releases.tables.releasesTable \
 from ..components.navigation.mainMenu import Main_Menu
 from ..components.settings \
     import RELEASE_RHOS, RELEASE_GRIZZLY_CENTOS, RELEASE_GRIZZLY_UBUNTU
-from tests.components.functionality.releases.dialogs.configureReleaseDialog\
+from ..components.functionality.releases.dialogs.configureReleaseDialog\
     import Configure_Release_Dialog
 
 

@@ -12,6 +12,7 @@ from ..components.functionality.cluster.browseView \
     import Cluster_BrowseView
 from ..components.functionality.cluster.dialogs.createEnvironmentDialog \
     import CreateEnvironmentDialog
+from ..components.functionality.cluster.cluster import Cluster
 
 logger = PoteenLogger
 
@@ -25,7 +26,7 @@ class Test_Cluster_creation(TestCasePoteen):
     @attr(set=["smoke", "regression"])
     def test_form(self):
         PoteenLogger.add_test_case(
-            "Check environment creation page")
+            "Check environment creation page with RHOS")
 
         cluster_key = "cluster"
 
@@ -34,15 +35,16 @@ class Test_Cluster_creation(TestCasePoteen):
 
         # create cluster
         logger.info(Cluster_BrowseView().click_add_new_cluster(cluster_key))
-        logger.info(CreateEnvironmentDialog().populateRHOS(
+        logger.info(CreateEnvironmentDialog().create_environment_RHOS(
             name="Test environment",
             version=OPENSTACK_RHOS,
             downloadMode="rhn",
             username="rheltest",
             password="password",
-            serverHostName="satellite server hostname",
-            activationKey="activation key",
-            submit=False
+            serverHostName="satellite.server.host.name",
+            activationKey="activationKey",
+            deploymentMode=Cluster.DEPLOYMENT_MODE_MULTI_NODE,
+            computeType="kvm"
         ))
 
     @attr(set=["smoke", "regression"])

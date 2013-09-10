@@ -1,6 +1,8 @@
 from engine.poteen.elements.basic.button import Button
+from engine.poteen.elements.basic.checkbox import Checkbox
 from engine.poteen.elements.basic.input import Input
 from ....generic.abstractView import AbstractView
+from ....elements.Radio import Radio
 
 
 class OpenstackSettingsView(AbstractView):
@@ -23,13 +25,12 @@ class OpenstackSettingsView(AbstractView):
                   "input[@type='text']",
             element_name="Parameter {name}")
 
-        self.parameter_radio = Input(
+        self.parameter_radio = Radio(
             xpath=".//label[contains(@class,'parameter-box') and "
-                  "div[contains(@class,'parameter-name')]='{name}']//"
-                  "input[@type='radio']",
+                  "div[contains(@class,'parameter-name')]='{name}']",
             element_name="Parameter {name}")
 
-        self.parameter_checkbox = Input(
+        self.parameter_checkbox = Checkbox(
             xpath=".//label[contains(@class,'parameter-box') and "
                   "div[contains(@class,'parameter-name')]='{name}']//"
                   "input[@type='checkbox']",

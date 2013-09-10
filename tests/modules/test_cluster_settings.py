@@ -10,9 +10,10 @@ from ..components.functionality.cluster.browseView \
 from ..components.functionality.cluster.dialogs.createEnvironmentDialog \
     import CreateEnvironmentDialog
 from ..components.functionality.cluster.editView import Cluster_View
-from tests.components.functionality.cluster.dialogs.confirmLeavePageDialog \
+from ..components.functionality.cluster.cluster import Cluster
+from ..components.functionality.cluster.dialogs.confirmLeavePageDialog \
     import ConfirmLeavePageDialog
-from tests.components.functionality.cluster.openstack_settings.view \
+from ..components.functionality.cluster.openstack_settings.view \
     import OpenstackSettingsView
 
 logger = PoteenLogger
@@ -36,10 +37,11 @@ class Test_OpenStack_settings(TestCasePoteen):
 
         # create cluster
         logger.info(Cluster_BrowseView().click_add_new_cluster(cluster_key))
-        logger.info(CreateEnvironmentDialog().populate(
-            name="Test environment",
+        logger.info(CreateEnvironmentDialog().create_environment(
+            name='Test environment',
             version=OPENSTACK_CURRENT_VERSION,
-            submit=True
+            deploymentMode=Cluster.DEPLOYMENT_MODE_MULTI_NODE,
+            computeType='qemu'
         ))
         logger.info(Cluster_BrowseView().select_by_key(cluster_key))
 

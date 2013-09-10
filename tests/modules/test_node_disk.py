@@ -16,6 +16,7 @@ from ..components.functionality.cluster.dialogs.node_hardware_dialog \
     import NodeHardwareDialog
 from ..components.functionality.cluster.nodes.configure_disks \
     import ConfigureDisks
+from ..components.functionality.cluster.cluster import Cluster
 
 logger = PoteenLogger
 
@@ -40,10 +41,11 @@ class TestDeploymentDisks(TestCasePoteen):
 
         # create cluster
         logger.info(Cluster_BrowseView().click_add_new_cluster(cluster_key))
-        logger.info(CreateEnvironmentDialog().populate(
+        logger.info(CreateEnvironmentDialog().create_environment(
             name=cluster_name,
             version=OPENSTACK_CURRENT_VERSION,
-            submit=True
+            deploymentMode=Cluster.DEPLOYMENT_MODE_MULTI_NODE,
+            computeType='qemu'
         ))
         logger.info(Cluster_BrowseView().select_by_key(cluster_key))
 
@@ -94,10 +96,11 @@ class TestDeploymentDisks(TestCasePoteen):
 
         # create cluster
         logger.info(Cluster_BrowseView().click_add_new_cluster(cluster_key))
-        logger.info(CreateEnvironmentDialog().populate(
+        logger.info(CreateEnvironmentDialog().create_environment(
             name=cluster_name,
             version=OPENSTACK_CURRENT_VERSION,
-            submit=True
+            deploymentMode=Cluster.DEPLOYMENT_MODE_MULTI_NODE,
+            computeType='qemu'
         ))
         logger.info(Cluster_BrowseView().select_by_key(cluster_key))
 
@@ -150,10 +153,11 @@ class TestDeploymentDisks(TestCasePoteen):
 
         # create cluster
         logger.info(Cluster_BrowseView().click_add_new_cluster(cluster_key))
-        logger.info(CreateEnvironmentDialog().populate(
+        logger.info(CreateEnvironmentDialog().create_environment(
             name=cluster_name,
             version=OPENSTACK_CURRENT_VERSION,
-            submit=True
+            deploymentMode=Cluster.DEPLOYMENT_MODE_MULTI_NODE,
+            computeType='qemu'
         ))
         logger.info(Cluster_BrowseView().select_by_key(cluster_key))
 
