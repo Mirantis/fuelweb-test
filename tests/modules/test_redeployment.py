@@ -29,6 +29,7 @@ class TestRedeployment(TestCasePoteen):
         PoteenLogger.add_test_suite("Cluster deployment")
 
     @attr(set=["regression"])
+    @attr("skip")
     def test_redeployment_after_addition_new_compute_node(self):
         PoteenLogger.add_test_case(
             "Redeployment after addition new compute node")
@@ -96,6 +97,7 @@ class TestRedeployment(TestCasePoteen):
             'Ready', 3))
 
     @attr(set=["regression"])
+    @attr("skip")
     def test_redeployment_after_deletion_node(self):
         PoteenLogger.add_test_case(
             "Redeployment after deletion node")
