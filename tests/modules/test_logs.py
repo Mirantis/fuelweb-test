@@ -36,7 +36,7 @@ class Test_Logs(TestCasePoteen):
 
         # create cluster
         logger.info(Cluster_BrowseView().click_add_new_cluster(cluster_key))
-        logger.info(CreateEnvironmentDialog().create_environment(
+        logger.info(CreateEnvironmentDialog().createEnvironment(
             name=cluster_name,
             version=OPENSTACK_CURRENT_VERSION,
             deploymentMode=Cluster.DEPLOYMENT_MODE_MULTI_NODE,
