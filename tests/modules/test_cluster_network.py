@@ -12,7 +12,7 @@ from ..components.functionality.cluster.browseView \
 from ..components.functionality.cluster.dialogs.createEnvironmentDialog \
     import CreateEnvironmentDialog
 from ..components.functionality.cluster.editView import Cluster_View
-from tests.components.functionality.cluster.cluster import Cluster
+from ..components.functionality.cluster.cluster import Cluster
 
 
 
@@ -38,7 +38,7 @@ class Test_Network_settings(TestCasePoteen):
 
         # create cluster
         logger.info(Cluster_BrowseView().click_add_new_cluster(cluster_key))
-        logger.info(CreateEnvironmentDialog().createEnvironment(
+        logger.info(CreateEnvironmentDialog().create_environment(
             name=cluster_name,
             version=OPENSTACK_CURRENT_VERSION,
             deploymentMode=Cluster.DEPLOYMENT_MODE_MULTI_NODE,
@@ -84,7 +84,7 @@ class Test_Network_settings(TestCasePoteen):
 
         # create cluster
         logger.info(Cluster_BrowseView().click_add_new_cluster(cluster_key))
-        logger.info(CreateEnvironmentDialog().createEnvironment(
+        logger.info(CreateEnvironmentDialog().create_environment(
             name=cluster_name,
             version=OPENSTACK_CURRENT_VERSION,
             deploymentMode=Cluster.DEPLOYMENT_MODE_MULTI_NODE,
@@ -125,7 +125,7 @@ class Test_Network_settings(TestCasePoteen):
 
         # create cluster
         logger.info(Cluster_BrowseView().click_add_new_cluster(cluster_key))
-        logger.info(CreateEnvironmentDialog().createEnvironment(
+        logger.info(CreateEnvironmentDialog().create_environment(
             name=cluster_name,
             version=OPENSTACK_CURRENT_VERSION,
             deploymentMode=Cluster.DEPLOYMENT_MODE_MULTI_NODE,
@@ -169,7 +169,7 @@ class Test_Network_settings(TestCasePoteen):
 
         # create cluster
         logger.info(Cluster_BrowseView().click_add_new_cluster(cluster_key))
-        logger.info(CreateEnvironmentDialog().createEnvironment(
+        logger.info(CreateEnvironmentDialog().create_environment(
             name=cluster_name,
             version=OPENSTACK_CURRENT_VERSION,
             deploymentMode=Cluster.DEPLOYMENT_MODE_MULTI_NODE,
@@ -209,7 +209,7 @@ class Test_Network_settings(TestCasePoteen):
 
         # create cluster
         logger.info(Cluster_BrowseView().click_add_new_cluster(cluster_key))
-        logger.info(CreateEnvironmentDialog().createEnvironment(
+        logger.info(CreateEnvironmentDialog().create_environment(
             name=cluster_name,
             version=OPENSTACK_CURRENT_VERSION,
             deploymentMode=Cluster.DEPLOYMENT_MODE_MULTI_NODE,
@@ -248,7 +248,7 @@ class Test_Network_settings(TestCasePoteen):
 
         # create cluster
         logger.info(Cluster_BrowseView().click_add_new_cluster(cluster_key))
-        logger.info(CreateEnvironmentDialog().createEnvironment(
+        logger.info(CreateEnvironmentDialog().create_environment(
             name=cluster_name,
             version=OPENSTACK_CURRENT_VERSION,
             deploymentMode=Cluster.DEPLOYMENT_MODE_MULTI_NODE,
