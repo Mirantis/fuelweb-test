@@ -201,7 +201,6 @@ class Cluster_Nodes_View(AbstractView):
         ActionBot().wait_for_time(2)
         WaitBot().wait_for_web_element_displays(
             Cluster_Nodes_View().environment_status)
-        ActionBot().wait_for_time(2)
         return rl
 
     def select_nodes_2_roles(self, role1, role2, *args):
