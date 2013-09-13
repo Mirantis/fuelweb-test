@@ -15,7 +15,6 @@ from ..components.functionality.cluster.editView import Cluster_View
 from ..components.functionality.cluster.cluster import Cluster
 
 
-
 logger = PoteenLogger
 
 
