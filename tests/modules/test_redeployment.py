@@ -29,7 +29,6 @@ class TestRedeployment(TestCasePoteen):
         PoteenLogger.add_test_suite("Cluster deployment")
 
     @attr(set=["regression"])
-    @attr("skip")
     def test_redeployment_after_addition_new_compute_node(self):
         PoteenLogger.add_test_case(
             "Redeployment after addition new compute node")
@@ -49,17 +48,17 @@ class TestRedeployment(TestCasePoteen):
         ))
         logger.info(Cluster_BrowseView().select_by_key(cluster_key))
 
-        logger.info(Cluster_Nodes_View().click_add_controller())
+        logger.info(Cluster_Nodes_View().addNodes.click_and_wait())
         available_nodes_names = Cluster_Nodes_ListView()\
             .get_nodes_names_by_status('Discovered')
-        logger.info(Cluster_Nodes_ListView().select_nodes(
-            *available_nodes_names[:1]
+        logger.info(Cluster_Nodes_View().select_nodes_assign_role(
+            'controller', *available_nodes_names[:1]
         ))
-        logger.info(Cluster_Nodes_View().click_add_compute())
+        logger.info(Cluster_Nodes_View().addNodes.click_and_wait())
         available_nodes_names = Cluster_Nodes_ListView()\
             .get_nodes_names_by_status('Discovered')
-        logger.info(Cluster_Nodes_ListView().select_nodes(
-            *available_nodes_names[:1]
+        logger.info(Cluster_Nodes_View().select_nodes_assign_role(
+            'compute', *available_nodes_names[:1]
         ))
         logger.info(Cluster_View().click_deploy_changes())
         logger.info(DeployChangesDialog().deploy())
@@ -68,15 +67,15 @@ class TestRedeployment(TestCasePoteen):
         ))
         logger.info(
             Cluster_View().verify_successful_deployment_per_name(
-                "Test simple deployment")
+                "Test environment")
         )
         logger.info(Cluster_Nodes_ListView().verify_amount_nodes_in_status(
             'Ready', 2))
-        logger.info(Cluster_Nodes_View().click_add_compute())
+        logger.info(Cluster_Nodes_View().addNodes.click_and_wait())
         available_nodes_names = Cluster_Nodes_ListView()\
             .get_nodes_names_by_status('Discovered')
-        logger.info(Cluster_Nodes_ListView().select_nodes(
-            *available_nodes_names[:1]
+        logger.info(Cluster_Nodes_View().select_nodes_assign_role(
+            'compute', *available_nodes_names[:1]
         ))
         logger.info(Cluster_Nodes_ListView().verify_amount_nodes_in_status(
             'Pending Addition', 1))
@@ -89,13 +88,12 @@ class TestRedeployment(TestCasePoteen):
         ))
         logger.info(
             Cluster_View().verify_successful_deployment_per_name(
-                "Test simple deployment")
+                "Test environment")
         )
         logger.info(Cluster_Nodes_ListView().verify_amount_nodes_in_status(
             'Ready', 3))
 
     @attr(set=["regression"])
-    @attr("skip")
     def test_redeployment_after_deletion_node(self):
         PoteenLogger.add_test_case(
             "Redeployment after deletion node")
@@ -116,17 +114,17 @@ class TestRedeployment(TestCasePoteen):
         ))
         logger.info(Cluster_BrowseView().select_by_key(cluster_key))
 
-        logger.info(Cluster_Nodes_View().click_add_controller())
+        logger.info(Cluster_Nodes_View().addNodes.click_and_wait())
         available_nodes_names = Cluster_Nodes_ListView()\
             .get_nodes_names_by_status('Discovered')
-        logger.info(Cluster_Nodes_ListView().select_nodes(
-            *available_nodes_names[:1]
+        logger.info(Cluster_Nodes_View().select_nodes_assign_role(
+            'controller', *available_nodes_names[:1]
         ))
-        logger.info(Cluster_Nodes_View().click_add_compute())
+        logger.info(Cluster_Nodes_View().addNodes.click_and_wait())
         available_nodes_names = Cluster_Nodes_ListView()\
             .get_nodes_names_by_status('Discovered')
-        logger.info(Cluster_Nodes_ListView().select_nodes(
-            *available_nodes_names[:2]
+        logger.info(Cluster_Nodes_View().select_nodes_assign_role(
+            'compute', *available_nodes_names[:2]
         ))
         logger.info(Cluster_View().click_deploy_changes())
         logger.info(DeployChangesDialog().deploy())
@@ -138,12 +136,10 @@ class TestRedeployment(TestCasePoteen):
         )
         logger.info(Cluster_Nodes_ListView().verify_amount_nodes_in_status(
             'Ready', 3))
-        logger.info(Cluster_Nodes_View().click_delete_compute())
         available_nodes_names = Cluster_Nodes_ListView()\
             .get_nodes_names_by_status('Ready')
-        logger.info(Cluster_Nodes_ListView().select_nodes(
-            *available_nodes_names[:1]
-        ))
+        logger.info(
+            Cluster_Nodes_View().delete_nodes(*available_nodes_names[:1]))
         logger.info(Cluster_Nodes_ListView().verify_amount_nodes_in_status(
             'Pending Deletion', 1))
         logger.info(Cluster_View().click_deploy_changes())
