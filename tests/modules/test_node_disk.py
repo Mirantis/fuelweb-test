@@ -28,7 +28,6 @@ class TestDeploymentDisks(TestCasePoteen):
         PoteenLogger.add_test_suite("Cluster disks")
 
     @attr(set=["regression"])
-    @attr("skip")
     def test_controller_disk(self):
         PoteenLogger.add_test_case(
             "Controller disk")
@@ -50,11 +49,11 @@ class TestDeploymentDisks(TestCasePoteen):
         logger.info(Cluster_BrowseView().select_by_key(cluster_key))
 
         # add controller node
-        logger.info(Cluster_Nodes_View().click_add_controller())
+        logger.info(Cluster_Nodes_View().addNodes.click_and_wait())
         available_nodes_names = Cluster_Nodes_ListView()\
             .get_nodes_names_by_status('Discovered')
-        logger.info(Cluster_Nodes_ListView().select_nodes(
-            available_nodes_names[-1]
+        logger.info(Cluster_Nodes_View().select_nodes_assign_role(
+            'controller', available_nodes_names[-1]
         ))
         logger.info(Cluster_Nodes_View().verify_controller_nodes(
             available_nodes_names[-1]
@@ -83,7 +82,6 @@ class TestDeploymentDisks(TestCasePoteen):
         #     'sdc').make_bootable.find().verify_attribute('disabled', None))
 
     @attr(set=["smoke", "regression"])
-    @attr("skip")
     def test_compute_disk(self):
         PoteenLogger.add_test_case(
             "Compute disk")
@@ -105,11 +103,11 @@ class TestDeploymentDisks(TestCasePoteen):
         logger.info(Cluster_BrowseView().select_by_key(cluster_key))
 
         # add compute node
-        logger.info(Cluster_Nodes_View().click_add_compute())
+        logger.info(Cluster_Nodes_View().addNodes.click_and_wait())
         available_nodes_names = Cluster_Nodes_ListView()\
             .get_nodes_names_by_status('Discovered')
-        logger.info(Cluster_Nodes_ListView().select_nodes(
-            available_nodes_names[-1]
+        logger.info(Cluster_Nodes_View().select_nodes_assign_role(
+            'compute', available_nodes_names[-1]
         ))
         logger.info(Cluster_Nodes_View().verify_compute_nodes(
             available_nodes_names[-1]
@@ -162,11 +160,11 @@ class TestDeploymentDisks(TestCasePoteen):
         logger.info(Cluster_BrowseView().select_by_key(cluster_key))
 
         # add cinder node
-        logger.info(Cluster_Nodes_View().click_add_cinder())
+        logger.info(Cluster_Nodes_View().addNodes.click_and_wait())
         available_nodes_names = Cluster_Nodes_ListView()\
             .get_nodes_names_by_status('Discovered')
-        logger.info(Cluster_Nodes_ListView().select_nodes(
-            available_nodes_names[-1]
+        logger.info(Cluster_Nodes_View().select_nodes_assign_role(
+            'cinder', available_nodes_names[-1]
         ))
         logger.info(Cluster_Nodes_View().verify_cinder_nodes(
             available_nodes_names[-1]
