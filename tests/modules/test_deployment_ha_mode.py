@@ -1,4 +1,5 @@
 from nose.plugins.attrib import attr
+from engine.poteen.bots.verifyBot import VerifyBot
 from engine.poteen.poteenLogger import PoteenLogger
 from engine.poteen.testCasePoteen import TestCasePoteen
 
@@ -45,30 +46,32 @@ class Test_Deployment_HA_Mode(TestCasePoteen):
         logger.info(CreateEnvironmentDialog().create_environment(
             name=cluster_name,
             version=OPENSTACK_CURRENT_VERSION,
-            deploymentMode=Cluster.DEPLOYMENT_MODE_MULTI_NODE,
+            deploymentMode=Cluster.DEPLOYMENT_MODE_MULTI_NODE_WITH_HA,
             computeType='qemu'
         ))
         logger.info(Cluster_BrowseView().select_by_key(cluster_key))
 
-        logger.info(Cluster_Nodes_View().click_add_controller())
+        logger.info(Cluster_Nodes_View().addNodes.click_and_wait())
         available_nodes_names = Cluster_Nodes_ListView()\
             .get_nodes_names_by_status('Discovered')
-        logger.info(Cluster_Nodes_ListView().select_nodes(
-            *available_nodes_names[:controllers]
+        logger.info(Cluster_Nodes_View().select_nodes_assign_role(
+            'controller', *available_nodes_names[:controllers]
         ))
 
         if computes > 0:
-            logger.info(Cluster_Nodes_View().click_add_compute())
-            logger.info(Cluster_Nodes_ListView().select_nodes(
+            logger.info(Cluster_Nodes_View().addNodes.click_and_wait())
+            logger.info(Cluster_Nodes_View().select_nodes_assign_role(
+                'compute',
                 *available_nodes_names[controllers:controllers + computes]
             ))
 
         logger.info(Cluster_Nodes_View().verify_controller_nodes(
             *available_nodes_names[:controllers]
         ))
-        logger.info(Cluster_Nodes_View().verify_compute_nodes(
-            *available_nodes_names[controllers:controllers + computes]
-        ))
+        if computes > 0:
+            logger.info(Cluster_Nodes_View().verify_compute_nodes(
+                *available_nodes_names[controllers:controllers + computes]
+            ))
 
         logger.info(Cluster_View().click_deploy_changes())
         logger.info(DeployChangesDialog().deploy())
@@ -77,15 +80,47 @@ class Test_Deployment_HA_Mode(TestCasePoteen):
         ))
 
     @attr(set=["regression"])
-    @attr("skip")
     def test_deploy_2_controller(self):
-        self.deploy(self.cluster_name, 2)
-        logger.info(Cluster_View().verify_error_message(
-            "Not enough controllers, ha mode requires at least 3 controllers"
+        PoteenLogger.add_test_case(
+            "Deploy in mode with HA ({controllers} controllers + "
+            "{computes} compute nodes)".format(
+                controllers=2, computes=0))
+
+        cluster_key = "cluster"
+
+        logger.info(Main().navigate())
+        logger.info(Cluster_BrowseView().remove_all())
+
+        # create cluster
+        logger.info(Cluster_BrowseView().click_add_new_cluster(cluster_key))
+        logger.info(CreateEnvironmentDialog().create_environment(
+            name=self.cluster_name,
+            version=OPENSTACK_CURRENT_VERSION,
+            deploymentMode=Cluster.DEPLOYMENT_MODE_MULTI_NODE_WITH_HA,
+            computeType='qemu'
+        ))
+        logger.info(Cluster_BrowseView().select_by_key(cluster_key))
+
+        logger.info(Cluster_Nodes_View().addNodes.click_and_wait())
+        available_nodes_names = Cluster_Nodes_ListView()\
+            .get_nodes_names_by_status('Discovered')
+        logger.info(Cluster_Nodes_View().select_nodes_assign_role(
+            'controller', *available_nodes_names[:2]
         ))
 
+        logger.info(Cluster_Nodes_View().verify_controller_nodes(
+            *available_nodes_names[:2]
+        ))
+
+        logger.info(Cluster_View().click_deploy_changes())
+        logger.info(VerifyBot().verify_visibility(
+            DeployChangesDialog().alert_message.get_element(),
+            True, 'Alert message'))
+        logger.info(VerifyBot().verify_visibility(
+            DeployChangesDialog().disabled_deploy_btn.get_element(),
+            True, 'Deploy button is disabled'))
+
     @attr(set=["regression"])
-    @attr("skip")
     def test_deploy_3_controller_2_compute(self):
         self.deploy(self.cluster_name, 3, 2)
         logger.info(Cluster_View().verify_successful_deployment_per_name(
@@ -93,7 +128,6 @@ class Test_Deployment_HA_Mode(TestCasePoteen):
         ))
 
     @attr(set=["regression"])
-    @attr("skip")
     def test_deploy_3_controller_4_compute(self):
         self.deploy(self.cluster_name, 3, 4)
         logger.info(Cluster_View().verify_successful_deployment_per_name(
