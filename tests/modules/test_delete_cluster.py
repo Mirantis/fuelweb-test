@@ -10,8 +10,6 @@ from ..components.functionality.cluster.dialogs.createEnvironmentDialog \
 from ..components.functionality.cluster.dialogs.deployChangesDialog \
     import DeployChangesDialog
 from ..components.functionality.cluster.editView import Cluster_View
-from ..components.functionality.cluster.nodes.listView \
-    import Cluster_Nodes_ListView
 from ..components.functionality.cluster.nodes.view import Cluster_Nodes_View
 from ..components.settings import *
 
@@ -25,7 +23,6 @@ class Test_Deployment(TestCasePoteen):
         PoteenLogger.add_test_suite("Delete cluster")
 
     @attr(set=["regression"])
-    @attr("skip")
     def test_delete_cluster_after_successful_deployment(self):
         PoteenLogger.add_test_case(
             "Delete cluster after successful deployment")
@@ -46,13 +43,13 @@ class Test_Deployment(TestCasePoteen):
         ))
         logger.info(Cluster_BrowseView().select_by_key(cluster_key))
 
-        logger.info(Cluster_Nodes_View().click_add_controller())
-        logger.info(Cluster_Nodes_ListView().select_nodes(
-            "Supermicro X9DRW"
+        logger.info(Cluster_Nodes_View().addNodes.click_and_wait())
+        logger.info(Cluster_Nodes_View().select_nodes_assign_role(
+            'controller', "Supermicro X9DRW"
         ))
-        logger.info(Cluster_Nodes_View().click_add_compute())
-        logger.info(Cluster_Nodes_ListView().select_nodes(
-            "Dell Inspiron"
+        logger.info(Cluster_Nodes_View().addNodes.click_and_wait())
+        logger.info(Cluster_Nodes_View().select_nodes_assign_role(
+            'compute', "Dell Inspiron"
         ))
         logger.info(Cluster_Nodes_View().verify_controller_nodes(
             "Supermicro X9DRW"
@@ -95,12 +92,9 @@ class Test_Deployment(TestCasePoteen):
         ))
         logger.info(Cluster_BrowseView().select_by_key(cluster_key))
 
-        logger.info(Cluster_Nodes_View().click_add_controller())
-        logger.info(Cluster_Nodes_ListView().click_nodes(
-            "Supermicro X9SCD (offline)"
-        ))
-        logger.info(Cluster_Nodes_ListView().select_nodes(
-            "Supermicro X9DRW"
+        logger.info(Cluster_Nodes_View().addNodes.click_and_wait())
+        logger.info(Cluster_Nodes_View().select_nodes_assign_role(
+            'controller', "Supermicro X9SCD (offline)", "Supermicro X9DRW"
         ))
         logger.info(Cluster_Nodes_View().verify_controller_nodes(
             "Supermicro X9DRW"
@@ -108,6 +102,3 @@ class Test_Deployment(TestCasePoteen):
         logger.info(Cluster_Nodes_View().verify_controller_nodes_not_exist(
             "Supermicro X9SCD (offline)"
         ))
-        logger.info(Main().navigate())
-        logger.info(Cluster_BrowseView().remove("Test environment"))
-        logger.info(Cluster_BrowseView().verify_clusters_amount(0))
