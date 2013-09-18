@@ -28,7 +28,6 @@ class Test_Deployment_With_Cinder(TestCasePoteen):
         PoteenLogger.add_test_suite("Deployment with cinder")
 
     @attr(set=["regression"])
-    @attr("skip")
     def test_deploy_no_ha_1_cinder(self):
         PoteenLogger.add_test_case(
             "Deploy without HA mode 1 controller 1 compute 1 cinder")
@@ -49,23 +48,23 @@ class Test_Deployment_With_Cinder(TestCasePoteen):
         ))
         logger.info(Cluster_BrowseView().select_by_key(cluster_key))
 
-        logger.info(Cluster_Nodes_View().click_add_controller())
+        logger.info(Cluster_Nodes_View().addNodes.click_and_wait())
         available_nodes_names = Cluster_Nodes_ListView()\
             .get_nodes_names_by_status('Discovered')
-        logger.info(Cluster_Nodes_ListView().select_nodes(
-            *available_nodes_names[:1]
+        logger.info(Cluster_Nodes_View().select_nodes_assign_role(
+            'controller', *available_nodes_names[:1]
         ))
-        logger.info(Cluster_Nodes_View().click_add_compute())
+        logger.info(Cluster_Nodes_View().addNodes.click_and_wait())
         available_nodes_names = Cluster_Nodes_ListView()\
             .get_nodes_names_by_status('Discovered')
-        logger.info(Cluster_Nodes_ListView().select_nodes(
-            *available_nodes_names[:1]
+        logger.info(Cluster_Nodes_View().select_nodes_assign_role(
+            'compute', *available_nodes_names[:1]
         ))
-        logger.info(Cluster_Nodes_View().click_add_cinder())
+        logger.info(Cluster_Nodes_View().addNodes.click_and_wait())
         available_nodes_names = Cluster_Nodes_ListView()\
             .get_nodes_names_by_status('Discovered')
-        logger.info(Cluster_Nodes_ListView().select_nodes(
-            *available_nodes_names[:1]
+        logger.info(Cluster_Nodes_View().select_nodes_assign_role(
+            'cinder', *available_nodes_names[:1]
         ))
         logger.info(Cluster_View().click_deploy_changes())
         logger.info(DeployChangesDialog().deploy())
@@ -79,7 +78,6 @@ class Test_Deployment_With_Cinder(TestCasePoteen):
             "Ready", 3))
 
     @attr(set=["regression"])
-    @attr("skip")
     def test_deploy_HA_1_cinder(self):
         PoteenLogger.add_test_case(
             "Deploy HA mode 3 controllers 1 compute 1 cinder")
@@ -95,28 +93,28 @@ class Test_Deployment_With_Cinder(TestCasePoteen):
         logger.info(CreateEnvironmentDialog().create_environment(
             name=cluster_name,
             version=OPENSTACK_CURRENT_VERSION,
-            deploymentMode=Cluster.DEPLOYMENT_MODE_MULTI_NODE,
+            deploymentMode=Cluster.DEPLOYMENT_MODE_MULTI_NODE_WITH_HA,
             computeType='qemu'
         ))
         logger.info(Cluster_BrowseView().select_by_key(cluster_key))
 
-        logger.info(Cluster_Nodes_View().click_add_controller())
+        logger.info(Cluster_Nodes_View().addNodes.click_and_wait())
         available_nodes_names = Cluster_Nodes_ListView()\
             .get_nodes_names_by_status('Discovered')
-        logger.info(Cluster_Nodes_ListView().select_nodes(
-            *available_nodes_names[:3]
+        logger.info(Cluster_Nodes_View().select_nodes_assign_role(
+            'controller', *available_nodes_names[:3]
         ))
-        logger.info(Cluster_Nodes_View().click_add_compute())
+        logger.info(Cluster_Nodes_View().addNodes.click_and_wait())
         available_nodes_names = Cluster_Nodes_ListView()\
             .get_nodes_names_by_status('Discovered')
-        logger.info(Cluster_Nodes_ListView().select_nodes(
-            *available_nodes_names[:1]
+        logger.info(Cluster_Nodes_View().select_nodes_assign_role(
+            'compute', *available_nodes_names[:1]
         ))
-        logger.info(Cluster_Nodes_View().click_add_cinder())
+        logger.info(Cluster_Nodes_View().addNodes.click_and_wait())
         available_nodes_names = Cluster_Nodes_ListView()\
             .get_nodes_names_by_status('Discovered')
-        logger.info(Cluster_Nodes_ListView().select_nodes(
-            *available_nodes_names[:1]
+        logger.info(Cluster_Nodes_View().select_nodes_assign_role(
+            'cinder', *available_nodes_names[:1]
         ))
         logger.info(Cluster_View().click_deploy_changes())
         logger.info(DeployChangesDialog().deploy())
