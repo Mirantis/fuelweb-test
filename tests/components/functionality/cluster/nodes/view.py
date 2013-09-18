@@ -15,6 +15,7 @@ from ..dialogs.environmentDeploymentModeDialog \
 from .listView import Cluster_Nodes_ListView
 from ...cluster.generic.node import Node
 from ...cluster.nodes.rolesPanel import RolesPanel
+from ...cluster.dialogs.deleteNodeDialog import DeleteNodeDialog
 
 
 class Cluster_Nodes_View(AbstractView):
@@ -36,7 +37,7 @@ class Cluster_Nodes_View(AbstractView):
             xpath="//button[contains("
                   "@class, 'btn btn-success btn-assign-roles') "
                   "and contains(text(),'Assign Roles')]",
-            element_name="Reassign roles"
+            element_name="Assign roles"
         )
         self.environment_status = HtmlElement(
             xpath="//div[@class='environment-status']",
@@ -129,7 +130,7 @@ class Cluster_Nodes_View(AbstractView):
 
     def verify_controller_nodes_not_exist(self, *args):
         return Cluster_Nodes_ListView(
-            self.compute_nodelist.get_element()
+            self.controller_nodelist.get_element()
         ).verify_nodes_not_exist(*args)
 
     def verify_error_contains(self, *args):
@@ -190,46 +191,47 @@ class Cluster_Nodes_View(AbstractView):
     def verify_cinders_amount(self, value):
         return self.verify_amount("cinders", value)
 
-    def select_nodes(self, role, *args):
+    def select_nodes(self, *args):
         rl = ResultList("Select nodes")
         for name in args:
             node = Node(Cluster_Nodes_ListView().node.find(
                 name=name).get_element())
             rl.push(node.select())
+        return rl
+
+    def select_roles(self, *roles):
+        rl = ResultList("Select roles")
+        for role in roles:
+            rl.push(RolesPanel().checkbox_role.find(role=role).set_value('on'))
+        return rl
+
+    def select_nodes_assign_role(self, role, *args):
+        rl = ResultList("Select nodes and assign roles")
+        rl.push(self.select_nodes(*args))
         rl.push(RolesPanel().checkbox_role.find(role=role).set_value('on'))
         rl.push(self.apply())
         ActionBot().wait_for_time(2)
-        WaitBot().wait_for_web_element_displays(
-            Cluster_Nodes_View().environment_status)
         return rl
 
     def select_nodes_2_roles(self, role1, role2, *args):
-        rl = ResultList("Select nodes")
-        for name in args:
-            node = Node(Cluster_Nodes_ListView().node.find(
-                name=name).get_element())
-            rl.push(node.select())
-        rl.push(RolesPanel().checkbox_role.find(role=role1).set_value('on'))
-        rl.push(RolesPanel().checkbox_role.find(role=role2).set_value('on'))
+        rl = ResultList("Select nodes and assign 2 roles")
+        rl.push(self.select_nodes(*args))
+        rl.push(self.select_roles(role1, role2))
         rl.push(self.apply())
-        ActionBot().wait_for_time(2)
-        WaitBot().wait_for_web_element_displays(
-            Cluster_Nodes_View().environment_status)
         ActionBot().wait_for_time(2)
         return rl
 
     def select_nodes_3_roles(self, role1, role2, role3, *args):
         rl = ResultList("Select nodes")
-        for name in args:
-            node = Node(Cluster_Nodes_ListView().node.find(
-                name=name).get_element())
-            rl.push(node.select())
-        rl.push(RolesPanel().checkbox_role.find(role=role1).set_value('on'))
-        rl.push(RolesPanel().checkbox_role.find(role=role2).set_value('on'))
-        rl.push(RolesPanel().checkbox_role.find(role=role3).set_value('on'))
+        rl.push(self.select_nodes(*args))
+        rl.push(self.select_roles(role1, role2, role3))
         rl.push(self.apply())
         ActionBot().wait_for_time(2)
-        WaitBot().wait_for_web_element_displays(
-            Cluster_Nodes_View().environment_status)
-        ActionBot().wait_for_time(2)
+        return rl
+
+    def delete_nodes(self, *args):
+        rl = ResultList("Delete nodes")
+        rl.push(self.select_nodes(*args))
+        rl.push(self.deleteNodes.click_and_wait())
+        rl.push(DeleteNodeDialog().delete())
         return rl
