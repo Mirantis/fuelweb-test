@@ -52,19 +52,19 @@ class Test_Deployment_With_Cinder(TestCasePoteen):
         available_nodes_names = Cluster_Nodes_ListView()\
             .get_nodes_names_by_status('Discovered')
         logger.info(Cluster_Nodes_View().select_nodes_assign_role(
-            'controller', *available_nodes_names[:1]
+            ['controller'], available_nodes_names[:1]
         ))
         logger.info(Cluster_Nodes_View().addNodes.click_and_wait())
         available_nodes_names = Cluster_Nodes_ListView()\
             .get_nodes_names_by_status('Discovered')
         logger.info(Cluster_Nodes_View().select_nodes_assign_role(
-            'compute', *available_nodes_names[:1]
+            ['compute'], available_nodes_names[:1]
         ))
         logger.info(Cluster_Nodes_View().addNodes.click_and_wait())
         available_nodes_names = Cluster_Nodes_ListView()\
             .get_nodes_names_by_status('Discovered')
         logger.info(Cluster_Nodes_View().select_nodes_assign_role(
-            'cinder', *available_nodes_names[:1]
+            ['cinder'], available_nodes_names[:1]
         ))
         logger.info(Cluster_View().click_deploy_changes())
         logger.info(DeployChangesDialog().deploy())
@@ -102,19 +102,19 @@ class Test_Deployment_With_Cinder(TestCasePoteen):
         available_nodes_names = Cluster_Nodes_ListView()\
             .get_nodes_names_by_status('Discovered')
         logger.info(Cluster_Nodes_View().select_nodes_assign_role(
-            'controller', *available_nodes_names[:3]
+            ['controller'], available_nodes_names[:3]
         ))
         logger.info(Cluster_Nodes_View().addNodes.click_and_wait())
         available_nodes_names = Cluster_Nodes_ListView()\
             .get_nodes_names_by_status('Discovered')
         logger.info(Cluster_Nodes_View().select_nodes_assign_role(
-            'compute', *available_nodes_names[:1]
+            ['compute'], available_nodes_names[:1]
         ))
         logger.info(Cluster_Nodes_View().addNodes.click_and_wait())
         available_nodes_names = Cluster_Nodes_ListView()\
             .get_nodes_names_by_status('Discovered')
         logger.info(Cluster_Nodes_View().select_nodes_assign_role(
-            'cinder', *available_nodes_names[:1]
+            ['cinder'], available_nodes_names[:1]
         ))
         logger.info(Cluster_View().click_deploy_changes())
         logger.info(DeployChangesDialog().deploy())

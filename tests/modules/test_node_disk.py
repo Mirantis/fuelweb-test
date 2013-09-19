@@ -53,15 +53,15 @@ class TestDeploymentDisks(TestCasePoteen):
         available_nodes_names = Cluster_Nodes_ListView()\
             .get_nodes_names_by_status('Discovered')
         logger.info(Cluster_Nodes_View().select_nodes_assign_role(
-            'controller', available_nodes_names[-1]
+            ['controller'], available_nodes_names[-1]
         ))
-        logger.info(Cluster_Nodes_View().verify_controller_nodes(
-            available_nodes_names[-1]
+        logger.info(Cluster_Nodes_View().verify_nodes(
+            'controller', available_nodes_names[-1]
         ))
 
         # navigate to disks configuration page
         logger.info(
-            Cluster_Nodes_View().get_nodes_controllers()[-1].click_hardware())
+            Cluster_Nodes_View().get_nodes('controller')[-1].click_hardware())
         logger.info(NodeHardwareDialog().click_disk_configuration())
 
         # verify default disks settings
@@ -107,15 +107,15 @@ class TestDeploymentDisks(TestCasePoteen):
         available_nodes_names = Cluster_Nodes_ListView()\
             .get_nodes_names_by_status('Discovered')
         logger.info(Cluster_Nodes_View().select_nodes_assign_role(
-            'compute', available_nodes_names[-1]
+            ['compute'], available_nodes_names[-1]
         ))
-        logger.info(Cluster_Nodes_View().verify_compute_nodes(
-            available_nodes_names[-1]
+        logger.info(Cluster_Nodes_View().verify_nodes(
+            'compute', available_nodes_names[-1]
         ))
 
         # navigate to disks configuration page
         logger.info(
-            Cluster_Nodes_View().get_nodes_computes()[-1].click_hardware())
+            Cluster_Nodes_View().get_nodes('compute')[-1].click_hardware())
         logger.info(NodeHardwareDialog().click_disk_configuration())
 
         # verify default disks settings
@@ -164,15 +164,15 @@ class TestDeploymentDisks(TestCasePoteen):
         available_nodes_names = Cluster_Nodes_ListView()\
             .get_nodes_names_by_status('Discovered')
         logger.info(Cluster_Nodes_View().select_nodes_assign_role(
-            'cinder', available_nodes_names[-1]
+            ['cinder'], available_nodes_names[-1]
         ))
-        logger.info(Cluster_Nodes_View().verify_cinder_nodes(
-            available_nodes_names[-1]
+        logger.info(Cluster_Nodes_View().verify_nodes(
+            'cinder', available_nodes_names[-1]
         ))
 
         # navigate to disks configuration page
         logger.info(
-            Cluster_Nodes_View().get_nodes_cinders()[-1].click_hardware())
+            Cluster_Nodes_View().get_nodes('cinder')[-1].click_hardware())
         logger.info(NodeHardwareDialog().click_disk_configuration())
 
         # verify default disks settings

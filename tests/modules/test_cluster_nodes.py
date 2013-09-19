@@ -81,9 +81,9 @@ class Test_Cluster_nodes(TestCasePoteen):
         available_nodes_names = Cluster_Nodes_ListView()\
             .get_nodes_names_by_status('Discovered')
         logger.info(Cluster_Nodes_View().select_nodes_assign_role(
-            'controller', *available_nodes_names[:1]
+            ['controller'], available_nodes_names[:1]
         ))
-        logger.info(Cluster_Nodes_View().verify_controllers_amount(1))
+        logger.info(Cluster_Nodes_View().verify_amount('controller', 1))
 
     @attr(set=["smoke", "regression"])
     def test_addition_node_compute_role(self):
@@ -107,9 +107,9 @@ class Test_Cluster_nodes(TestCasePoteen):
         available_nodes_names = Cluster_Nodes_ListView()\
             .get_nodes_names_by_status('Discovered')
         logger.info(Cluster_Nodes_View().select_nodes_assign_role(
-            'compute', *available_nodes_names[:1]
+            ['compute'], available_nodes_names[:1]
         ))
-        logger.info(Cluster_Nodes_View().verify_computes_amount(1))
+        logger.info(Cluster_Nodes_View().verify_amount('compute', 1))
 
     @attr(set=["smoke", "regression"])
     def test_addition_node_cinder_role(self):
@@ -133,9 +133,9 @@ class Test_Cluster_nodes(TestCasePoteen):
         available_nodes_names = Cluster_Nodes_ListView()\
             .get_nodes_names_by_status('Discovered')
         logger.info(Cluster_Nodes_View().select_nodes_assign_role(
-            'cinder', *available_nodes_names[:1]
+            ['cinder'], available_nodes_names[:1]
         ))
-        logger.info(Cluster_Nodes_View().verify_cinders_amount(1))
+        logger.info(Cluster_Nodes_View().verify_amount('cinder', 1))
 
     @attr(set=["smoke", "regression"])
     def test_deletion_node_scheduled_for_addition(self):
@@ -159,16 +159,15 @@ class Test_Cluster_nodes(TestCasePoteen):
         available_nodes_names = Cluster_Nodes_ListView()\
             .get_nodes_names_by_status('Discovered')
         logger.info(Cluster_Nodes_View().select_nodes_assign_role(
-            'compute', *available_nodes_names[:1]
+            ['compute'], available_nodes_names[:1]
         ))
-        logger.info(Cluster_Nodes_View().verify_computes_amount(1))
+        logger.info(Cluster_Nodes_View().verify_amount('compute', 1))
         available_nodes_names = Cluster_Nodes_ListView()\
             .get_nodes_names_by_status('Pending Addition')
-        logger.info(Cluster_Nodes_View().select_nodes(
+        logger.info(Cluster_Nodes_View().delete_nodes(
             *available_nodes_names[:1]
         ))
-        logger.info(Cluster_Nodes_View().deleteNodes.click_and_wait())
-        logger.info(Cluster_Nodes_View().verify_computes_amount(0))
+        logger.info(Cluster_Nodes_View().verify_amount('compute', 0))
 
     @attr(set=["smoke", "regression"])
     @attr("skip")
@@ -193,7 +192,7 @@ class Test_Cluster_nodes(TestCasePoteen):
         available_nodes_names = Cluster_Nodes_ListView()\
             .get_nodes_names_by_status('Discovered')
         logger.info(Cluster_Nodes_View().select_nodes_assign_role(
-            'controller', *available_nodes_names[:1]
+            ['controller'], available_nodes_names[:1]
         ))
         logger.info(Cluster_View().click_deploy_changes())
         logger.info(DeployChangesDialog().deploy())
@@ -230,13 +229,13 @@ class Test_Cluster_nodes(TestCasePoteen):
         available_nodes_names = Cluster_Nodes_ListView()\
             .get_nodes_names_by_status('Discovered')
         logger.info(Cluster_Nodes_View().select_nodes_assign_role(
-            'controller', *available_nodes_names[:1]
+            ['controller'], available_nodes_names[:1]
         ))
         logger.info(Cluster_Nodes_View().addNodes.click_and_wait())
         available_nodes_names = Cluster_Nodes_ListView()\
             .get_nodes_names_by_status('Discovered')
         logger.info(Cluster_Nodes_View().select_nodes_assign_role(
-            'compute', *available_nodes_names[:1]
+            ['compute'], available_nodes_names[:1]
         ))
         logger.info(Cluster_View().click_deploy_changes())
         logger.info(DeployChangesDialog().deploy())
@@ -255,11 +254,11 @@ class Test_Cluster_nodes(TestCasePoteen):
         available_nodes_names = Cluster_Nodes_ListView()\
             .get_nodes_names_by_status('Discovered')
         logger.info(Cluster_Nodes_View().select_nodes_assign_role(
-            'controller', *available_nodes_names[:1]))
+            ['controller'], available_nodes_names[:1]))
         available_nodes_names = Cluster_Nodes_ListView()\
             .get_nodes_names_by_status('Discovered')
         logger.info(Cluster_Nodes_View().select_nodes_assign_role(
-            'compute', *available_nodes_names[:2]))
+            ['compute'], available_nodes_names[:2]))
         logger.info(Cluster_View().click_deploy_changes())
         logger.info(DeployChangesDialog().deploy())
         logger.info(Cluster_View().wait_deployment_done(
@@ -267,5 +266,5 @@ class Test_Cluster_nodes(TestCasePoteen):
         ))
         logger.info(
             Cluster_View().verify_success_message("Successfully removed"))
-        logger.info(Cluster_Nodes_View().verify_computes_amount(2))
-        logger.info(Cluster_Nodes_View().verify_controllers_amount(1))
+        logger.info(Cluster_Nodes_View().verify_amount('compute', 2))
+        logger.info(Cluster_Nodes_View().verify_amount('controller', 1))

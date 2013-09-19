@@ -52,13 +52,13 @@ class TestRedeployment(TestCasePoteen):
         available_nodes_names = Cluster_Nodes_ListView()\
             .get_nodes_names_by_status('Discovered')
         logger.info(Cluster_Nodes_View().select_nodes_assign_role(
-            'controller', *available_nodes_names[:1]
+            ['controller'], available_nodes_names[:1]
         ))
         logger.info(Cluster_Nodes_View().addNodes.click_and_wait())
         available_nodes_names = Cluster_Nodes_ListView()\
             .get_nodes_names_by_status('Discovered')
         logger.info(Cluster_Nodes_View().select_nodes_assign_role(
-            'compute', *available_nodes_names[:1]
+            ['compute'], available_nodes_names[:1]
         ))
         logger.info(Cluster_View().click_deploy_changes())
         logger.info(DeployChangesDialog().deploy())
@@ -75,7 +75,7 @@ class TestRedeployment(TestCasePoteen):
         available_nodes_names = Cluster_Nodes_ListView()\
             .get_nodes_names_by_status('Discovered')
         logger.info(Cluster_Nodes_View().select_nodes_assign_role(
-            'compute', *available_nodes_names[:1]
+            ['compute'], available_nodes_names[:1]
         ))
         logger.info(Cluster_Nodes_ListView().verify_amount_nodes_in_status(
             'Pending Addition', 1))
@@ -118,13 +118,13 @@ class TestRedeployment(TestCasePoteen):
         available_nodes_names = Cluster_Nodes_ListView()\
             .get_nodes_names_by_status('Discovered')
         logger.info(Cluster_Nodes_View().select_nodes_assign_role(
-            'controller', *available_nodes_names[:1]
+            ['controller'], available_nodes_names[:1]
         ))
         logger.info(Cluster_Nodes_View().addNodes.click_and_wait())
         available_nodes_names = Cluster_Nodes_ListView()\
             .get_nodes_names_by_status('Discovered')
         logger.info(Cluster_Nodes_View().select_nodes_assign_role(
-            'compute', *available_nodes_names[:2]
+            ['compute'], available_nodes_names[:2]
         ))
         logger.info(Cluster_View().click_deploy_changes())
         logger.info(DeployChangesDialog().deploy())
@@ -152,5 +152,5 @@ class TestRedeployment(TestCasePoteen):
         logger.info(
             Cluster_View().verify_success_message("Successfully removed")
         )
-        logger.info(Cluster_Nodes_View().verify_computes_amount(1))
-        logger.info(Cluster_Nodes_View().verify_controllers_amount(1))
+        logger.info(Cluster_Nodes_View().verify_amount('compute', 1))
+        logger.info(Cluster_Nodes_View().verify_amount('controller', 1))

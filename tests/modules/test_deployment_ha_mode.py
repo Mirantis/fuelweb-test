@@ -55,21 +55,22 @@ class Test_Deployment_HA_Mode(TestCasePoteen):
         available_nodes_names = Cluster_Nodes_ListView()\
             .get_nodes_names_by_status('Discovered')
         logger.info(Cluster_Nodes_View().select_nodes_assign_role(
-            'controller', *available_nodes_names[:controllers]
+            ['controller'], available_nodes_names[:controllers]
         ))
 
         if computes > 0:
             logger.info(Cluster_Nodes_View().addNodes.click_and_wait())
             logger.info(Cluster_Nodes_View().select_nodes_assign_role(
-                'compute',
-                *available_nodes_names[controllers:controllers + computes]
+                ['compute'],
+                available_nodes_names[controllers:controllers + computes]
             ))
 
-        logger.info(Cluster_Nodes_View().verify_controller_nodes(
-            *available_nodes_names[:controllers]
+        logger.info(Cluster_Nodes_View().verify_nodes(
+            'controller', *available_nodes_names[:controllers]
         ))
         if computes > 0:
-            logger.info(Cluster_Nodes_View().verify_compute_nodes(
+            logger.info(Cluster_Nodes_View().verify_nodes(
+                'compute',
                 *available_nodes_names[controllers:controllers + computes]
             ))
 
@@ -105,20 +106,20 @@ class Test_Deployment_HA_Mode(TestCasePoteen):
         available_nodes_names = Cluster_Nodes_ListView()\
             .get_nodes_names_by_status('Discovered')
         logger.info(Cluster_Nodes_View().select_nodes_assign_role(
-            'controller', *available_nodes_names[:2]
+            ['controller'], available_nodes_names[:2]
         ))
 
-        logger.info(Cluster_Nodes_View().verify_controller_nodes(
-            *available_nodes_names[:2]
+        logger.info(Cluster_Nodes_View().verify_nodes(
+            'controller', *available_nodes_names[:2]
         ))
 
         logger.info(Cluster_View().click_deploy_changes())
         logger.info(VerifyBot().verify_visibility(
             DeployChangesDialog().alert_message.get_element(),
             True, 'Alert message'))
-        logger.info(VerifyBot().verify_visibility(
-            DeployChangesDialog().disabled_deploy_btn.get_element(),
-            True, 'Deploy button is disabled'))
+        logger.info(VerifyBot().verify_contains(
+            'disabled', DeployChangesDialog().deploy_button().get_element()
+            .get_attribute('class'), 'Deploy button'))
 
     @attr(set=["regression"])
     def test_deploy_3_controller_2_compute(self):

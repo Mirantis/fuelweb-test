@@ -45,17 +45,17 @@ class Test_Deployment(TestCasePoteen):
 
         logger.info(Cluster_Nodes_View().addNodes.click_and_wait())
         logger.info(Cluster_Nodes_View().select_nodes_assign_role(
-            'controller', "Supermicro X9DRW"
+            ['controller'], ["Supermicro X9DRW"]
         ))
         logger.info(Cluster_Nodes_View().addNodes.click_and_wait())
         logger.info(Cluster_Nodes_View().select_nodes_assign_role(
+            ['compute'], ["Dell Inspiron"]
+        ))
+        logger.info(Cluster_Nodes_View().verify_nodes(
+            'controller', "Supermicro X9DRW"
+        ))
+        logger.info(Cluster_Nodes_View().verify_nodes(
             'compute', "Dell Inspiron"
-        ))
-        logger.info(Cluster_Nodes_View().verify_controller_nodes(
-            "Supermicro X9DRW"
-        ))
-        logger.info(Cluster_Nodes_View().verify_compute_nodes(
-            "Dell Inspiron"
         ))
         logger.info(Cluster_View().click_deploy_changes())
         logger.info(DeployChangesDialog().deploy())
@@ -94,11 +94,11 @@ class Test_Deployment(TestCasePoteen):
 
         logger.info(Cluster_Nodes_View().addNodes.click_and_wait())
         logger.info(Cluster_Nodes_View().select_nodes_assign_role(
-            'controller', "Supermicro X9SCD (offline)", "Supermicro X9DRW"
+            ['controller'], ["Supermicro X9SCD (offline)", "Supermicro X9DRW"]
         ))
-        logger.info(Cluster_Nodes_View().verify_controller_nodes(
-            "Supermicro X9DRW"
+        logger.info(Cluster_Nodes_View().verify_nodes(
+            'controller', "Supermicro X9DRW"
         ))
-        logger.info(Cluster_Nodes_View().verify_controller_nodes_not_exist(
-            "Supermicro X9SCD (offline)"
+        logger.info(Cluster_Nodes_View().verify_node_with_role_not_exists(
+            'controller', "Supermicro X9SCD (offline)"
         ))

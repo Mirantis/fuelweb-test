@@ -55,11 +55,11 @@ class TestDeploymentSimpleMode(TestCasePoteen):
         logger.info(Cluster_Nodes_View().select_nodes(
             'compute', "Dell Inspiron"
         ))
-        logger.info(Cluster_Nodes_View().verify_controller_nodes(
-            "Supermicro X9DRW"
+        logger.info(Cluster_Nodes_View().verify_nodes(
+            'controller', "Supermicro X9DRW"
         ))
-        logger.info(Cluster_Nodes_View().verify_compute_nodes(
-            "Dell Inspiron"
+        logger.info(Cluster_Nodes_View().verify_nodes(
+            'compute', "Dell Inspiron"
         ))
         logger.info(Cluster_View().click_deploy_changes())
         logger.info(DeployChangesDialog().deploy())
@@ -95,8 +95,8 @@ class TestDeploymentSimpleMode(TestCasePoteen):
         logger.info(Cluster_Nodes_View().select_nodes(
             'controller', "Supermicro X9DRW"
         ))
-        logger.info(Cluster_Nodes_View().verify_controller_nodes(
-            "Supermicro X9DRW"
+        logger.info(Cluster_Nodes_View().verify_nodes(
+            'controller', "Supermicro X9DRW"
         ))
         logger.info(Cluster_View().click_deploy_changes())
         logger.info(DeployChangesDialog().deploy())
@@ -129,16 +129,16 @@ class TestDeploymentSimpleMode(TestCasePoteen):
         logger.info(Cluster_BrowseView().select_by_key(cluster_key))
 
         logger.info(Cluster_Nodes_View().addNodes.click_and_wait())
-        logger.info(Cluster_Nodes_View().select_nodes(
+        logger.info(Cluster_Nodes_View().select_nodes_assign_role(
+            ['compute'], ["Dell Inspiron"]
+        ))
+        logger.info(Cluster_Nodes_View().verify_nodes(
             'compute', "Dell Inspiron"
         ))
-        logger.info(Cluster_Nodes_View().verify_compute_nodes(
-            "Dell Inspiron"
-        ))
         logger.info(Cluster_View().click_deploy_changes())
-        logger.info(VerifyBot().verify_visibility(
-            DeployChangesDialog().disabled_deploy_btn.get_element(),
-            True, "Deploy button"))
+        logger.info(VerifyBot().verify_contains(
+            'disabled', DeployChangesDialog().deploy_button().get_element()
+            .get_attribute('class'), 'Deploy button'))
         logger.info(VerifyBot().verify_visibility(
             DeployChangesDialog().alert_message.get_element(),
             True, "Alert error message"))
@@ -174,11 +174,11 @@ class TestDeploymentSimpleMode(TestCasePoteen):
             'compute', "Dell Inspiron", "Supermicro X9SCD", "KVM"
         ))
 
-        logger.info(Cluster_Nodes_View().verify_controller_nodes(
-            "Supermicro X9DRW"
+        logger.info(Cluster_Nodes_View().verify_nodes(
+            'controller', "Supermicro X9DRW"
         ))
-        logger.info(Cluster_Nodes_View().verify_compute_nodes(
-            "Dell Inspiron", "Supermicro X9SCD", "KVM"
+        logger.info(Cluster_Nodes_View().verify_nodes(
+            'compute', "Dell Inspiron", "Supermicro X9SCD", "KVM"
         ))
         logger.info(Cluster_View().click_deploy_changes())
         logger.info(DeployChangesDialog().deploy())
@@ -217,11 +217,11 @@ class TestDeploymentSimpleMode(TestCasePoteen):
         logger.info(Cluster_Nodes_View().select_nodes(
             'compute', "Dell Inspiron", "Supermicro X9SCD", "KVM", "VirtualBox"
         ))
-        logger.info(Cluster_Nodes_View().verify_controller_nodes(
-            "Supermicro X9DRW"
+        logger.info(Cluster_Nodes_View().verify_nodes(
+            'controller', "Supermicro X9DRW"
         ))
-        logger.info(Cluster_Nodes_View().verify_compute_nodes(
-            "Dell Inspiron", "Supermicro X9SCD", "KVM", "VirtualBox"
+        logger.info(Cluster_Nodes_View().verify_nodes(
+            'compute', "Dell Inspiron", "Supermicro X9SCD", "KVM", "VirtualBox"
         ))
         logger.info(Cluster_View().click_deploy_changes())
         logger.info(DeployChangesDialog().deploy())
@@ -280,11 +280,11 @@ class TestDeploymentSimpleMode(TestCasePoteen):
             logger.info(Cluster_Nodes_View().select_nodes(
                 'compute', *cluster_info['computes']
             ))
-            logger.info(Cluster_Nodes_View().verify_controller_nodes(
-                *cluster_info['controllers']
+            logger.info(Cluster_Nodes_View().verify_nodes(
+                'controller', *cluster_info['controllers']
             ))
-            logger.info(Cluster_Nodes_View().verify_compute_nodes(
-                *cluster_info['computes']
+            logger.info(Cluster_Nodes_View().verify_nodes(
+                'compute', *cluster_info['computes']
             ))
 
         for cluster_key, cluster_info in clusters.iteritems():
