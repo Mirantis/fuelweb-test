@@ -58,6 +58,9 @@ class AbstractDialog(AbstractView):
     def deploy(self):
         return self.click_footer_button(self.BUTTON_DEPLOY)
 
+    def deploy_button(self):
+        return self.footerButton.find(name=self.BUTTON_DEPLOY)
+
     def clickNext(self, wait_closing=False):
         return self.click_footer_button(self.BUTTON_NEXT, wait_closing)
 
