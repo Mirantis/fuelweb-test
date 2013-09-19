@@ -1,8 +1,9 @@
-
+from selenium.webdriver.common.by import By
+from engine.poteen.bots.actionBot import ActionBot
 from engine.poteen.elements.basic.htmlElement import HtmlElement
 from engine.poteen.log.result import Result
 from ....generic.abstractView import AbstractView
-from tests.components.elements.Checkbox import Checkbox
+from .....components.elements.Checkbox import Checkbox
 
 
 class Node(AbstractView):
@@ -19,7 +20,7 @@ class Node(AbstractView):
 
         self._checkbox = Checkbox(
             xpath=".//div[@class='node-checkbox']"
-                  "//div[@class='custom-tumbler']/input",
+                  "//div[@class='custom-tumbler']/label/input",
             element_name="Checkbox")
 
         self.status = HtmlElement(
@@ -36,6 +37,9 @@ class Node(AbstractView):
     def get_status(self):
         return self.status.get_value().strip()
 
+    def is_selected(self):
+        return self._checkbox.verify_value("on")
+
     def verify_checkbox(self, expectedValue):
         return self._checkbox.verify_value(expectedValue)
 
@@ -43,10 +47,15 @@ class Node(AbstractView):
         return self._checkbox.set_value(value)
 
     def select(self):
-        if self.verify_checkbox("on").i_passed():
+        if self.is_selected().i_passed():
             return Result("Node is already selected")
         else:
             return self.set_checkbox("on")
 
     def click_hardware(self):
         return self.hardware.click()
+
+    def get_roles(self):
+        roles_elements = ActionBot().find_elements(
+            By.XPATH, ".//div[@class='roles']//li")
+        return [HtmlElement(element=we).get_value() for we in roles_elements]
