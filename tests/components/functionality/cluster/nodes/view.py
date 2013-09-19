@@ -1,6 +1,5 @@
 from engine.poteen.bots.actionBot import ActionBot
 from engine.poteen.bots.verifyBot import VerifyBot
-from engine.poteen.bots.waitBot import WaitBot
 from engine.poteen.decorators import catch_stale_error
 from engine.poteen.elements.basic.button import Button
 from engine.poteen.elements.basic.htmlElement import HtmlElement
@@ -53,23 +52,11 @@ class Cluster_Nodes_View(AbstractView):
             element_name="Back to Environment Node List"
         )
 
-        self.compute_nodelist = Button(
+        self.nodelist = HtmlElement(
             xpath="//div[@class='node-groups' and "
                   "contains(div[@class='row-fluid node-group-header']"
-                  "//h4/text(),'compute')]",
-            element_name="computes block"
-        )
-        self.controller_nodelist = HtmlElement(
-            xpath="//div[@class='node-groups' and "
-                  "contains(div[@class='row-fluid node-group-header']"
-                  "//h4/text(),'controller')]",
-            element_name="controllers block"
-        )
-        self.cinder_nodelist = Button(
-            xpath="//div[@class='node-groups' and "
-                  "contains(div[@class='row-fluid node-group-header']"
-                  "//h4/text(),'cinder')]",
-            element_name="cinders block"
+                  "//h4/text(),'{role}')]",
+            element_name="'{role}' block"
         )
         self.deploymentMode = Button(
             xpath="//button[contains(@class,'btn btn-cluster-actions')]",
@@ -99,38 +86,18 @@ class Cluster_Nodes_View(AbstractView):
         return rl
 
     @catch_stale_error
-    def verify_cinder_nodes(self, *args):
+    def verify_nodes(self, role, *args):
         return Cluster_Nodes_ListView(
-            self.cinder_nodelist.get_element()
+            self.nodelist.find(role=role).get_element()
         ).verify_nodes(*args)
 
-    @catch_stale_error
-    def verify_compute_nodes(self, *args):
+    def get_nodes(self, role):
         return Cluster_Nodes_ListView(
-            self.compute_nodelist.get_element()
-        ).verify_nodes(*args)
+            self.nodelist.find(role=role).get_element()).get_nodes()
 
-    @catch_stale_error
-    def verify_controller_nodes(self, *args):
+    def verify_node_with_role_not_exists(self, role, *args):
         return Cluster_Nodes_ListView(
-            self.controller_nodelist.get_element()
-        ).verify_nodes(*args)
-
-    def get_nodes_controllers(self):
-        return Cluster_Nodes_ListView(self.controller_nodelist.get_element()) \
-            .get_nodes()
-
-    def get_nodes_computes(self):
-        return Cluster_Nodes_ListView(self.compute_nodelist.get_element()) \
-            .get_nodes()
-
-    def get_nodes_cinders(self):
-        return Cluster_Nodes_ListView(self.cinder_nodelist.get_element()) \
-            .get_nodes()
-
-    def verify_controller_nodes_not_exist(self, *args):
-        return Cluster_Nodes_ListView(
-            self.controller_nodelist.get_element()
+            self.nodelist.find(role=role).get_element()
         ).verify_nodes_not_exist(*args)
 
     def verify_error_contains(self, *args):
@@ -142,54 +109,36 @@ class Cluster_Nodes_View(AbstractView):
             ))
         return rl
 
-    def verify_nodelists_visibility(self, value):
-        rl = ResultList("Verify there are 3 node lists")
-        rl.push(VerifyBot().verify_visibility(
-            self.controller_nodelist.get_element(), value,
-            "Controller nodelist"))
-        rl.push(VerifyBot().verify_visibility(
-            self.compute_nodelist.get_element(), value, "Compute nodelist"))
-        rl.push(VerifyBot().verify_visibility(
-            self.cinder_nodelist.get_element(), value, "Cinder nodelist"))
+    def verify_nodelists_visibility(self, value, *roles):
+        rl = ResultList("Verify node lists visibility")
+        for role in roles:
+            rl.push(VerifyBot().verify_visibility(
+                self.nodelist.find(role=role).get_element(),
+                value, "'{role}' nodelist"))
         return rl
 
-    def verify_amount(self, elements_names, value):
-        elements = None
+    def verify_amount(self, elements_role, value):
         result = None
         try:
-            if elements_names == "controllers":
-                elements = self.get_nodes_controllers()
-            elif elements_names == "computes":
-                elements = self.get_nodes_computes()
-            elif elements_names == "cinders":
-                elements = self.get_nodes_cinders()
+            elements = self.get_nodes(role=elements_role)
 
             if value == 0:
                 result = Result(
-                    "Verify if amount of {name} is 0".format(
-                        name=elements_names, value=value),
+                    "Verify if amount of {role} is 0".format(
+                        role=elements_role, value=value),
                     VerifyBot().verify_visibility(
-                        elements, False, elements_names).i_passed())
+                        elements, False, elements_role).i_passed())
             else:
                 result = Result(
-                    "Verify if amount of {name} is {value}".format(
-                        name=elements_names, value=value),
+                    "Verify if amount of {role} is {value}".format(
+                        role=elements_role, value=value),
                     len(elements) == value)
 
         except ElementNotFoundException:
             if value == 0:
                 result = Result("There are no {name}".format(
-                    name=elements_names), True)
+                    role=elements_role), True)
         return result
-
-    def verify_controllers_amount(self, value):
-        return self.verify_amount("controllers", value)
-
-    def verify_computes_amount(self, value):
-        return self.verify_amount("computes", value)
-
-    def verify_cinders_amount(self, value):
-        return self.verify_amount("cinders", value)
 
     def select_nodes(self, *args):
         rl = ResultList("Select nodes")
@@ -205,26 +154,10 @@ class Cluster_Nodes_View(AbstractView):
             rl.push(RolesPanel().checkbox_role.find(role=role).set_value('on'))
         return rl
 
-    def select_nodes_assign_role(self, role, *args):
+    def select_nodes_assign_role(self, roles, node_names):
         rl = ResultList("Select nodes and assign roles")
-        rl.push(self.select_nodes(*args))
-        rl.push(RolesPanel().checkbox_role.find(role=role).set_value('on'))
-        rl.push(self.apply())
-        ActionBot().wait_for_time(2)
-        return rl
-
-    def select_nodes_2_roles(self, role1, role2, *args):
-        rl = ResultList("Select nodes and assign 2 roles")
-        rl.push(self.select_nodes(*args))
-        rl.push(self.select_roles(role1, role2))
-        rl.push(self.apply())
-        ActionBot().wait_for_time(2)
-        return rl
-
-    def select_nodes_3_roles(self, role1, role2, role3, *args):
-        rl = ResultList("Select nodes")
-        rl.push(self.select_nodes(*args))
-        rl.push(self.select_roles(role1, role2, role3))
+        rl.push(self.select_nodes(*node_names))
+        rl.push(self.select_roles(*roles))
         rl.push(self.apply())
         ActionBot().wait_for_time(2)
         return rl
