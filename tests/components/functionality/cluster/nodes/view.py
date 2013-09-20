@@ -86,7 +86,7 @@ class Cluster_Nodes_View(AbstractView):
         return rl
 
     @catch_stale_error
-    def verify_nodes(self, role, *args):
+    def verify_nodes(self, role, args):
         return Cluster_Nodes_ListView(
             self.nodelist.find(role=role).get_element()
         ).verify_nodes(*args)
@@ -154,7 +154,7 @@ class Cluster_Nodes_View(AbstractView):
             rl.push(RolesPanel().checkbox_role.find(role=role).set_value('on'))
         return rl
 
-    def select_nodes_assign_role(self, roles, node_names):
+    def assign_roles_to_nodes(self, roles, node_names):
         rl = ResultList("Select nodes and assign roles")
         rl.push(self.select_nodes(*node_names))
         rl.push(self.select_roles(*roles))
