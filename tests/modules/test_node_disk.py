@@ -53,10 +53,10 @@ class TestDeploymentDisks(TestCasePoteen):
         available_nodes_names = Cluster_Nodes_ListView()\
             .get_nodes_names_by_status('Discovered')
         logger.info(Cluster_Nodes_View().assign_roles_to_nodes(
-            ['controller'], available_nodes_names[-1]
+            ['controller'], [available_nodes_names[-1]]
         ))
         logger.info(Cluster_Nodes_View().verify_nodes(
-            'controller', available_nodes_names[-1]
+            'controller', [available_nodes_names[-1]]
         ))
 
         # navigate to disks configuration page
@@ -107,10 +107,10 @@ class TestDeploymentDisks(TestCasePoteen):
         available_nodes_names = Cluster_Nodes_ListView()\
             .get_nodes_names_by_status('Discovered')
         logger.info(Cluster_Nodes_View().assign_roles_to_nodes(
-            ['compute'], available_nodes_names[-1]
+            ['compute'], [available_nodes_names[-1]]
         ))
         logger.info(Cluster_Nodes_View().verify_nodes(
-            'compute', available_nodes_names[-1]
+            'compute', [available_nodes_names[-1]]
         ))
 
         # navigate to disks configuration page
@@ -164,10 +164,10 @@ class TestDeploymentDisks(TestCasePoteen):
         available_nodes_names = Cluster_Nodes_ListView()\
             .get_nodes_names_by_status('Discovered')
         logger.info(Cluster_Nodes_View().assign_roles_to_nodes(
-            ['cinder'], available_nodes_names[-1]
+            ['cinder'], [available_nodes_names[-1]]
         ))
         logger.info(Cluster_Nodes_View().verify_nodes(
-            'cinder', available_nodes_names[-1]
+            'cinder', [available_nodes_names[-1]]
         ))
 
         # navigate to disks configuration page
