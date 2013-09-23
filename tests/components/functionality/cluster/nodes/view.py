@@ -1,111 +1,65 @@
+from engine.poteen.bots.actionBot import ActionBot
 from engine.poteen.bots.verifyBot import VerifyBot
 from engine.poteen.decorators import catch_stale_error
 from engine.poteen.elements.basic.button import Button
 from engine.poteen.elements.basic.htmlElement import HtmlElement
 from engine.poteen.elements.basic.link import Link
+from engine.poteen.elements.basic.select import Select
 from engine.poteen.error import ElementNotFoundException
 from engine.poteen.log.resultList import ResultList
 from engine.poteen.log.result import Result
 from ....generic.abstractView import AbstractView
-from .listView import Cluster_Nodes_ListView
 from ..dialogs.environmentDeploymentModeDialog \
     import EnvironmentDeploymentModeDialog
+from .listView import Cluster_Nodes_ListView
+from ...cluster.generic.node import Node
+from ...cluster.nodes.rolesPanel import RolesPanel
+from ...cluster.dialogs.deleteNodeDialog import DeleteNodeDialog
 
 
 class Cluster_Nodes_View(AbstractView):
     def __init__(self, parent=None):
-        self.addCompute = Link(
-            xpath="//div[@id='tab-nodes']"
-                  "//div[contains(@class, 'node-list-compute')]"
-                  "//a[contains(@class, 'btn-add-nodes')]",
-            element_name="Add compute"
+        self.addNodes = Link(
+            xpath="//div//a[@class='btn btn-success btn-add-nodes']",
+            element_name="Add nodes"
         )
-        self.addController = Link(
-            xpath="//div[@id='tab-nodes']"
-                  "//div[contains(@class, 'node-list-controller')]"
-                  "//a[contains(@class, 'btn-add-nodes')]",
-            element_name="Add controller"
+        self.deleteNodes = Button(
+            xpath="//button[contains(@class,'btn-delete-nodes')]",
+            element_name="Delete nodes"
         )
-        self.addCinder = Link(
-            xpath="//div[@id='tab-nodes']"
-                  "//div[contains(@class, 'node-list-cinder')]"
-                  "//a[contains(@class, 'btn-add-nodes')]",
-            element_name="Add cinder"
+        self.reassignRoles = Button(
+            xpath="//button[contains(@class, 'btn-assign-roles')]"
+                  "and contains(text(),'Reassign Roles')]",
+            element_name="Reassign roles"
         )
-        self.addComputeDisabled = Link(
-            xpath="//div[@id='tab-nodes']"
-                  "//div[contains(@class, 'node-list-compute')]"
-                  "//*[contains(@class, 'disabled') and  contains(.,'Add')]",
-            element_name="Add compute disabled"
+        self.assignRoles = Button(
+            xpath="//button[contains("
+                  "@class, 'btn btn-success btn-assign-roles') "
+                  "and contains(text(),'Assign Roles')]",
+            element_name="Assign roles"
         )
-        self.addControllerDisabled = Link(
-            xpath="//div[@id='tab-nodes']"
-                  "//div[contains(@class, 'node-list-controller')]"
-                  "//*[contains(@class, 'disabled') and  contains(.,'Add')]",
-            element_name="Add controller disabled"
+        self.environment_status = HtmlElement(
+            xpath="//div[@class='environment-status']",
+            element_name="Environment status"
         )
-        self.addCinderDisabled = Link(
-            xpath="//div[@id='tab-nodes']"
-                  "//div[contains(@class, 'node-list-cinder')]"
-                  "//*[contains(@class, 'disabled') and  contains(.,'Add')]",
-            element_name="Add controller disabled"
+        self.groupBy = Select(
+            xpath="//div[@class='cluster-toolbar-item nodes-filter']"
+                  "//select[@name='grouping']",
+            element_name="Select group by"
         )
-        self.deleteCompute = Link(
-            xpath="//div[@id='tab-nodes']"
-                  "//div[contains(@class, 'node-list-compute')]"
-                  "//a[contains(@class, 'btn-delete-nodes')]",
-            element_name="Delete compute"
+        self.backToEnvironmentNodeList = Button(
+            xpath="//div[@class='btn btn-go-to-cluster']",
+            element_name="Back to Environment Node List"
         )
-        self.deleteController = Link(
-            xpath="//div[@id='tab-nodes']"
-                  "//div[contains(@class, 'node-list-controller')]"
-                  "//a[contains(@class, 'btn-delete-nodes')]",
-            element_name="Delete controller"
+
+        self.nodelist = HtmlElement(
+            xpath="//div[@class='node-groups' and "
+                  "contains(div[@class='row-fluid node-group-header']"
+                  "//h4/text(),'{role}')]",
+            element_name="'{role}' block"
         )
-        self.deleteCinder = Link(
-            xpath="//div[@id='tab-nodes']"
-                  "//div[contains(@class, 'node-list-cinder')]"
-                  "//a[contains(@class, 'btn-delete-nodes')]",
-            element_name="Delete cinder"
-        )
-        self.deleteComputeDisabled = Link(
-            xpath="//div[@id='tab-nodes']"
-                  "//div[contains(@class, 'node-list-compute')]"
-                  "//*[contains(@class, 'disabled') "
-                  "and  contains(.,'Delete')]",
-            element_name="Delete controller disabled"
-        )
-        self.deleteControllerDisabled = Link(
-            xpath="//div[@id='tab-nodes']"
-                  "//div[contains(@class, 'node-list-controller')]"
-                  "//*[contains(@class, 'disabled') "
-                  "and  contains(.,'Delete')]",
-            element_name="Delete controller disabled"
-        )
-        self.deleteCinderDisabled = Link(
-            xpath="//div[@id='tab-nodes']"
-                  "//div[contains(@class, 'node-list-cinder')]"
-                  "//*[contains(@class, 'disabled') "
-                  "and  contains(.,'Delete')]",
-            element_name="Delete controller disabled"
-        )
-        self.computes = Button(
-            xpath="//div[@id='tab-nodes']"
-                  "//div[contains(@class, 'node-list-compute')]",
-            element_name="computes"
-        )
-        self.controllers = HtmlElement(
-            xpath="//div[@id='tab-nodes']"
-                  "//div[contains(@class, 'node-list-controller')]",
-            element_name="controllers"
-        )
-        self.cinders = Button(
-            xpath="//div[@id='tab-nodes']"
-                  "//div[contains(@class, 'node-list-cinder')]",
-            element_name="cinders"
-        )
-        self.deploymentMode = Link(
-            xpath="//li[contains(@class, 'change-cluster-mode-btn')]",
+        self.deploymentMode = Button(
+            xpath="//button[contains(@class,'btn btn-cluster-actions')]",
             element_name="Deployment mode"
         )
         self.alertError = HtmlElement(
@@ -113,47 +67,8 @@ class Cluster_Nodes_View(AbstractView):
                   "and contains(@class, 'global-error')]/p",
             element_name="Alert Error"
         )
-        self.controller_placeholder = HtmlElement(
-            xpath="//div[contains(@class, 'node-list node-list-controller')]"
-                  "//div[contains(@class, 'nodebox nodeplaceholder')]",
-            element_name="controller placeholder"
-        )
-        self.controller_nodelist = HtmlElement(
-            xpath="//div[@class= 'node-list node-list-controller']",
-            element_name="controller nodelist"
-        )
-        self.compute_nodelist = HtmlElement(
-            xpath="//div[@class= 'node-list node-list-compute']",
-            element_name="compute nodelist"
-        )
-        self.cinder_nodelist = HtmlElement(
-            xpath="//div[@class= 'node-list node-list-cinder']",
-            element_name="cinder nodelist"
-        )
-        self.environment_deployment_mode_dialog = HtmlElement(
-            xpath="//div[contains(@class, 'modal fade in')]",
-            element_name="deployment mode dialog"
-        )
 
         AbstractView.__init__(self, parent)
-
-    def click_add_compute(self):
-        return self.addCompute.click_and_wait()
-
-    def click_add_controller(self):
-        return self.addController.click_and_wait()
-
-    def click_add_cinder(self):
-        return self.addCinder.click_and_wait()
-
-    def click_delete_compute(self):
-        return self.deleteCompute.click_and_wait()
-
-    def click_delete_controller(self):
-        return self.deleteController.click_and_wait()
-
-    def click_delete_cinder(self):
-        return self.deleteCinder.click_and_wait()
 
     def click_deployment_mode(self):
         return self.deploymentMode.click()
@@ -166,46 +81,23 @@ class Cluster_Nodes_View(AbstractView):
         rl.push(self.click_deployment_mode())
         rl.push(EnvironmentDeploymentModeDialog().populate(
             deploymentMode=deploymentMode,
-            submit=True
+            clickNext=True
         ))
         return rl
 
     @catch_stale_error
-    def verify_cinder_nodes(self, *args):
+    def verify_nodes(self, role, args):
         return Cluster_Nodes_ListView(
-            self.cinders.get_element()
+            self.nodelist.find(role=role).get_element()
         ).verify_nodes(*args)
 
-    @catch_stale_error
-    def verify_compute_nodes(self, *args):
+    def get_nodes(self, role):
         return Cluster_Nodes_ListView(
-            self.computes.get_element()
-        ).verify_nodes(*args)
+            self.nodelist.find(role=role).get_element()).get_nodes()
 
-    @catch_stale_error
-    def verify_controller_nodes(self, *args):
+    def verify_node_with_role_not_exists(self, role, *args):
         return Cluster_Nodes_ListView(
-            self.controllers.get_element()
-        ).verify_nodes(*args)
-
-    def get_nodes_controllers(self):
-        return Cluster_Nodes_ListView(self.controllers.get_element()) \
-            .get_nodes()
-
-    def get_nodes_computes(self):
-        return Cluster_Nodes_ListView(self.computes.get_element()) \
-            .get_nodes()
-
-    def get_nodes_cinders(self):
-        return Cluster_Nodes_ListView(self.cinders.get_element()) \
-            .get_nodes()
-
-    def get_controllers_placeholders(self):
-        return Cluster_Nodes_ListView(self.controller_placeholder).get_nodes()
-
-    def verify_controller_nodes_not_exist(self, *args):
-        return Cluster_Nodes_ListView(
-            self.computes.get_element()
+            self.nodelist.find(role=role).get_element()
         ).verify_nodes_not_exist(*args)
 
     def verify_error_contains(self, *args):
@@ -217,56 +109,62 @@ class Cluster_Nodes_View(AbstractView):
             ))
         return rl
 
-    def verify_nodelists_visibility(self, value):
-        rl = ResultList("Verify there are 3 node lists")
-        rl.push(VerifyBot().verify_visibility(
-            self.controller_nodelist.get_element(), value,
-            "Controller nodelist"))
-        rl.push(VerifyBot().verify_visibility(
-            self.compute_nodelist.get_element(), value, "Compute nodelist"))
-        rl.push(VerifyBot().verify_visibility(
-            self.cinder_nodelist.get_element(), value, "Cinder nodelist"))
+    def verify_nodelists_visibility(self, value, *roles):
+        rl = ResultList("Verify node lists visibility")
+        for role in roles:
+            rl.push(VerifyBot().verify_visibility(
+                self.nodelist.find(role=role).get_element(),
+                value, "'{role}' nodelist"))
         return rl
 
-    def verify_amount(self, elements_names, value):
-        elements = None
+    def verify_amount(self, elements_role, value):
         result = None
         try:
-            if elements_names == "placeholders for controllers":
-                elements = self.get_controllers_placeholders()
-            elif elements_names == "controllers":
-                elements = self.get_nodes_controllers()
-            elif elements_names == "computes":
-                elements = self.get_nodes_computes()
-            elif elements_names == "cinders":
-                elements = self.get_nodes_cinders()
+            elements = self.get_nodes(role=elements_role)
 
             if value == 0:
                 result = Result(
-                    "Verify if amount of {name} is 0".format(
-                        name=elements_names, value=value),
+                    "Verify if amount of {role} is 0".format(
+                        role=elements_role, value=value),
                     VerifyBot().verify_visibility(
-                        elements, False, elements_names).i_passed())
+                        elements, False, elements_role).i_passed())
             else:
                 result = Result(
-                    "Verify if amount of {name} is {value}".format(
-                        name=elements_names, value=value),
+                    "Verify if amount of {role} is {value}".format(
+                        role=elements_role, value=value),
                     len(elements) == value)
 
         except ElementNotFoundException:
             if value == 0:
                 result = Result("There are no {name}".format(
-                    name=elements_names), True)
+                    role=elements_role), True)
         return result
 
-    def verify_controllers_placeholders_amount(self, value):
-        return self.verify_amount("placeholders for controllers", value)
+    def select_nodes(self, *args):
+        rl = ResultList("Select nodes")
+        for name in args:
+            node = Node(Cluster_Nodes_ListView().node.find(
+                name=name).get_element())
+            rl.push(node.select())
+        return rl
 
-    def verify_controllers_amount(self, value):
-        return self.verify_amount("controllers", value)
+    def select_roles(self, *roles):
+        rl = ResultList("Select roles")
+        for role in roles:
+            rl.push(RolesPanel().checkbox_role.find(role=role).set_value('on'))
+        return rl
 
-    def verify_computes_amount(self, value):
-        return self.verify_amount("computes", value)
+    def assign_roles_to_nodes(self, roles, node_names):
+        rl = ResultList("Select nodes and assign roles")
+        rl.push(self.select_nodes(*node_names))
+        rl.push(self.select_roles(*roles))
+        rl.push(self.apply())
+        ActionBot().wait_for_time(2)
+        return rl
 
-    def verify_cinders_amount(self, value):
-        return self.verify_amount("cinders", value)
+    def delete_nodes(self, *args):
+        rl = ResultList("Delete nodes")
+        rl.push(self.select_nodes(*args))
+        rl.push(self.deleteNodes.click_and_wait())
+        rl.push(DeleteNodeDialog().delete())
+        return rl
