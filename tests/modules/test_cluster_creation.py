@@ -28,23 +28,25 @@ class Test_Cluster_creation(TestCasePoteen):
         PoteenLogger.add_test_case(
             "Check environment creation page with RHOS")
 
-        cluster_key = "cluster"
-
         logger.info(Main().navigate())
         logger.info(Cluster_BrowseView().remove_all())
 
         # create cluster
-        logger.info(Cluster_BrowseView().click_add_new_cluster(cluster_key))
-        logger.info(CreateEnvironmentDialog().create_environment_RHOS(
-            name="Test environment",
-            version=OPENSTACK_RHOS,
-            downloadMode="rhn",
-            username="rheltest",
-            password="password",
-            serverHostName="satellite.server.host.name",
-            activationKey="activationKey",
-            deploymentMode=Cluster.DEPLOYMENT_MODE_MULTI_NODE,
-            computeType="kvm"
+        logger.info(Cluster_BrowseView().click_add_new_cluster())
+        logger.info(CreateEnvironmentDialog().create_environment(
+            {
+                "name": "Test environment",
+                "version": OPENSTACK_RHOS,
+                "rh": {
+                    "mode": "rhn",
+                    "username": "rheltest",
+                    "password": "password",
+                    "host": "satellite.server.host.name",
+                    "activation_key": "activationKey"
+                },
+                "deployment_mode": Cluster.DEPLOYMENT_MODE_MULTI_NODE,
+                "compute_type": "kvm",
+            }
         ))
 
     @attr(set=["smoke", "regression"])

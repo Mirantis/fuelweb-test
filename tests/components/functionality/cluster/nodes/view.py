@@ -9,12 +9,12 @@ from engine.poteen.error import ElementNotFoundException
 from engine.poteen.log.resultList import ResultList
 from engine.poteen.log.result import Result
 from ....generic.abstractView import AbstractView
-from ..dialogs.environmentDeploymentModeDialog \
-    import EnvironmentDeploymentModeDialog
 from .listView import Cluster_Nodes_ListView
 from ...cluster.generic.node import Node
 from ...cluster.nodes.rolesPanel import RolesPanel
 from ...cluster.dialogs.deleteNodeDialog import DeleteNodeDialog
+from tests.components.functionality.cluster.dialogs.createEnvironmentDialog \
+    import CreateEnvironmentDialog
 
 
 class Cluster_Nodes_View(AbstractView):
@@ -79,10 +79,10 @@ class Cluster_Nodes_View(AbstractView):
                 mode=deploymentMode)
         )
         rl.push(self.click_deployment_mode())
-        rl.push(EnvironmentDeploymentModeDialog().populate(
-            deploymentMode=deploymentMode,
-            clickNext=True
+        rl.push(CreateEnvironmentDialog().select_deployment_mode(
+            deploymentMode
         ))
+        rl.push(CreateEnvironmentDialog().clickNext())
         return rl
 
     @catch_stale_error
