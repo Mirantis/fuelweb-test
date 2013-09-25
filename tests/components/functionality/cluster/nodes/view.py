@@ -86,10 +86,10 @@ class Cluster_Nodes_View(AbstractView):
         return rl
 
     @catch_stale_error
-    def verify_nodes(self, role, args):
+    def verify_nodes(self, role, nodes):
         return Cluster_Nodes_ListView(
             self.nodelist.find(role=role).get_element()
-        ).verify_nodes(*args)
+        ).verify_nodes(*nodes)
 
     def get_nodes(self, role):
         return Cluster_Nodes_ListView(

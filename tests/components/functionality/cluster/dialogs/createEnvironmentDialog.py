@@ -7,6 +7,8 @@ from engine.poteen.log.resultList import ResultList
 
 from .....components.generic.abstractDialog import AbstractDialog
 from .....components.elements.Radio import Radio
+from engine.poteen.utils.storage import Storage
+from tests.testdata.cluster import TD_Cluster
 
 
 class CreateEnvironmentDialog(AbstractDialog):
@@ -96,9 +98,9 @@ class CreateEnvironmentDialog(AbstractDialog):
         return self.deploymentMode.find(mode=value).click()
 
     def populate(self, settings, clickNext=False):
-        # environment = Storage.get_current(TD_Cluster.NAME)
-        # environment.name = name
-        # environment.version = version
+        environment = Storage.get_current(TD_Cluster.NAME)
+        environment.name = settings["name"]
+        environment.version = settings["version"]
 
         rl = ResultList("Populate create new Environment dialog")
 

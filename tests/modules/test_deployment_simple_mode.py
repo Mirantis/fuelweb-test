@@ -40,10 +40,11 @@ class TestDeploymentSimpleMode(TestCasePoteen):
         # create cluster
         logger.info(Cluster_BrowseView().click_add_new_cluster(cluster_key))
         logger.info(CreateEnvironmentDialog().create_environment(
-            name=cluster_name,
-            version=OPENSTACK_CURRENT_VERSION,
-            deploymentMode=Cluster.DEPLOYMENT_MODE_MULTI_NODE,
-            computeType='qemu'
+            {
+                "name": cluster_name,
+                "version": OPENSTACK_CURRENT_VERSION,
+                "deployment_mode": Cluster.DEPLOYMENT_MODE_MULTI_NODE
+            }
         ))
         logger.info(Cluster_BrowseView().select_by_key(cluster_key))
 
@@ -84,10 +85,11 @@ class TestDeploymentSimpleMode(TestCasePoteen):
          # create cluster
         logger.info(Cluster_BrowseView().click_add_new_cluster(cluster_key))
         logger.info(CreateEnvironmentDialog().create_environment(
-            name=cluster_name,
-            version=OPENSTACK_CURRENT_VERSION,
-            deploymentMode=Cluster.DEPLOYMENT_MODE_MULTI_NODE,
-            computeType='qemu'
+            {
+                "name": cluster_name,
+                "version": OPENSTACK_CURRENT_VERSION,
+                "deployment_mode": Cluster.DEPLOYMENT_MODE_MULTI_NODE
+            }
         ))
         logger.info(Cluster_BrowseView().select_by_key(cluster_key))
 
@@ -113,7 +115,6 @@ class TestDeploymentSimpleMode(TestCasePoteen):
             "Deploy without HA mode 1 compute")
 
         cluster_key = "cluster"
-        cluster_name = "Test environment"
 
         logger.info(Main().navigate())
         logger.info(Cluster_BrowseView().remove_all())
@@ -121,10 +122,11 @@ class TestDeploymentSimpleMode(TestCasePoteen):
         # create cluster
         logger.info(Cluster_BrowseView().click_add_new_cluster(cluster_key))
         logger.info(CreateEnvironmentDialog().create_environment(
-            name=cluster_name,
-            version=OPENSTACK_CURRENT_VERSION,
-            deploymentMode=Cluster.DEPLOYMENT_MODE_MULTI_NODE,
-            computeType='qemu'
+            {
+                "name": "Test environment",
+                "version": OPENSTACK_CURRENT_VERSION,
+                "deployment_mode": Cluster.DEPLOYMENT_MODE_MULTI_NODE
+            }
         ))
         logger.info(Cluster_BrowseView().select_by_key(cluster_key))
 
@@ -157,10 +159,11 @@ class TestDeploymentSimpleMode(TestCasePoteen):
         # create cluster
         logger.info(Cluster_BrowseView().click_add_new_cluster(cluster_key))
         logger.info(CreateEnvironmentDialog().create_environment(
-            name=cluster_name,
-            version=OPENSTACK_CURRENT_VERSION,
-            deploymentMode=Cluster.DEPLOYMENT_MODE_MULTI_NODE,
-            computeType='qemu'
+            {
+                "name": cluster_name,
+                "version": OPENSTACK_CURRENT_VERSION,
+                "deployment_mode": Cluster.DEPLOYMENT_MODE_MULTI_NODE
+            }
         ))
         logger.info(Cluster_BrowseView().select_by_key(cluster_key))
 
@@ -178,7 +181,7 @@ class TestDeploymentSimpleMode(TestCasePoteen):
             'controller', "Supermicro X9DRW"
         ))
         logger.info(Cluster_Nodes_View().verify_nodes(
-            'compute', "Dell Inspiron", "Supermicro X9SCD", "KVM"
+            'compute', ["Dell Inspiron", "Supermicro X9SCD", "KVM"]
         ))
         logger.info(Cluster_View().click_deploy_changes())
         logger.info(DeployChangesDialog().deploy())
@@ -203,10 +206,11 @@ class TestDeploymentSimpleMode(TestCasePoteen):
         # create cluster
         logger.info(Cluster_BrowseView().click_add_new_cluster(cluster_key))
         logger.info(CreateEnvironmentDialog().create_environment(
-            name=cluster_name,
-            version=OPENSTACK_CURRENT_VERSION,
-            deploymentMode=Cluster.DEPLOYMENT_MODE_MULTI_NODE,
-            computeType='qemu'
+            {
+                "name": "Test environment",
+                "version": OPENSTACK_CURRENT_VERSION,
+                "deployment_mode": Cluster.DEPLOYMENT_MODE_MULTI_NODE
+            }
         ))
         logger.info(Cluster_BrowseView().select_by_key(cluster_key))
         logger.info(Cluster_Nodes_View().addNodes.click_and_wait())
@@ -222,7 +226,8 @@ class TestDeploymentSimpleMode(TestCasePoteen):
             'controller', "Supermicro X9DRW"
         ))
         logger.info(Cluster_Nodes_View().verify_nodes(
-            'compute', "Dell Inspiron", "Supermicro X9SCD", "KVM", "VirtualBox"
+            'compute',
+            ["Dell Inspiron", "Supermicro X9SCD", "KVM", "VirtualBox"]
         ))
         logger.info(Cluster_View().click_deploy_changes())
         logger.info(DeployChangesDialog().deploy())
@@ -266,10 +271,11 @@ class TestDeploymentSimpleMode(TestCasePoteen):
             logger.info(Cluster_BrowseView().click_add_new_cluster(
                 cluster_key))
             logger.info(CreateEnvironmentDialog().create_environment(
-                name=cluster_info['name'],
-                version=OPENSTACK_CURRENT_VERSION,
-                deploymentMode=Cluster.DEPLOYMENT_MODE_MULTI_NODE,
-                computeType='qemu'
+                {
+                    "name": "Test environment",
+                    "version": OPENSTACK_CURRENT_VERSION,
+                    "deployment_mode": Cluster.DEPLOYMENT_MODE_MULTI_NODE
+                }
             ))
             logger.info(Cluster_BrowseView().select_by_key(cluster_key))
 

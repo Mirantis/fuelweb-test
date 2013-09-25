@@ -22,7 +22,7 @@ class Test_Deployment(TestCasePoteen):
         super(Test_Deployment, cls).setUpClass()
         PoteenLogger.add_test_suite("Delete cluster")
 
-    @attr(set=["regression"])
+    @attr("test", set=["regression"])
     def test_delete_cluster_after_successful_deployment(self):
         PoteenLogger.add_test_case(
             "Delete cluster after successful deployment")
@@ -36,10 +36,11 @@ class Test_Deployment(TestCasePoteen):
         # create cluster
         logger.info(Cluster_BrowseView().click_add_new_cluster(cluster_key))
         logger.info(CreateEnvironmentDialog().create_environment(
-            name=cluster_name,
-            version=OPENSTACK_CURRENT_VERSION,
-            deploymentMode=Cluster.DEPLOYMENT_MODE_MULTI_NODE,
-            computeType='qemu'
+            {
+                "name": cluster_name,
+                "version": OPENSTACK_CURRENT_VERSION,
+                "deployment_mode": Cluster.DEPLOYMENT_MODE_MULTI_NODE
+            }
         ))
         logger.info(Cluster_BrowseView().select_by_key(cluster_key))
 
@@ -77,7 +78,6 @@ class Test_Deployment(TestCasePoteen):
             "Can not add 'offline' node to environment")
 
         cluster_key = "cluster"
-        cluster_name = "Test environment"
 
         logger.info(Main().navigate())
         logger.info(Cluster_BrowseView().remove_all())
@@ -85,10 +85,11 @@ class Test_Deployment(TestCasePoteen):
         # create cluster
         logger.info(Cluster_BrowseView().click_add_new_cluster(cluster_key))
         logger.info(CreateEnvironmentDialog().create_environment(
-            name=cluster_name,
-            version=OPENSTACK_CURRENT_VERSION,
-            deploymentMode=Cluster.DEPLOYMENT_MODE_MULTI_NODE,
-            computeType='qemu'
+            {
+                "name": "Test environment",
+                "version": OPENSTACK_CURRENT_VERSION,
+                "deployment_mode": Cluster.DEPLOYMENT_MODE_MULTI_NODE
+            }
         ))
         logger.info(Cluster_BrowseView().select_by_key(cluster_key))
 
@@ -97,7 +98,7 @@ class Test_Deployment(TestCasePoteen):
             ['controller'], ["Supermicro X9SCD (offline)", "Supermicro X9DRW"]
         ))
         logger.info(Cluster_Nodes_View().verify_nodes(
-            'controller', "Supermicro X9DRW"
+            'controller', ["Supermicro X9DRW"]
         ))
         logger.info(Cluster_Nodes_View().verify_node_with_role_not_exists(
             'controller', "Supermicro X9SCD (offline)"

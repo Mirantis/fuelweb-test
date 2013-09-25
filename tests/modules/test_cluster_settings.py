@@ -38,10 +38,11 @@ class Test_OpenStack_settings(TestCasePoteen):
         # create cluster
         logger.info(Cluster_BrowseView().click_add_new_cluster(cluster_key))
         logger.info(CreateEnvironmentDialog().create_environment(
-            name='Test environment',
-            version=OPENSTACK_CURRENT_VERSION,
-            deploymentMode=Cluster.DEPLOYMENT_MODE_MULTI_NODE,
-            computeType='qemu'
+            {
+                "name": "Test environment",
+                "version": OPENSTACK_CURRENT_VERSION,
+                "deployment_mode": Cluster.DEPLOYMENT_MODE_MULTI_NODE
+            }
         ))
         logger.info(Cluster_BrowseView().select_by_key(cluster_key))
 

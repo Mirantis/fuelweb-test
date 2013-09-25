@@ -42,8 +42,7 @@ class Test_Cluster_creation(TestCasePoteen):
                     "username": "rheltest",
                     "password": "password",
                     "host": "satellite.server.host.name",
-                    "activation_key": "activationKey"
-                },
+                    "activation_key": "activationKey"},
                 "deployment_mode": Cluster.DEPLOYMENT_MODE_MULTI_NODE,
                 "compute_type": "kvm",
             }
