@@ -50,7 +50,7 @@ class Test_Releases(TestCasePoteen):
             )
             logger.info(Configure_Release_Dialog().populate(
                 "rheltest", "password"))
-            logger.info(Configure_Release_Dialog().download())
+            logger.info(Configure_Release_Dialog().apply())
             logger.info(Releases_Table().wait_downloading(RELEASE_RHOS))
             logger.info(Releases_Table().verify_release_status(
                 RELEASE_RHOS, "Active"))
