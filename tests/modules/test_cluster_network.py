@@ -30,7 +30,6 @@ class Test_Network_settings(TestCasePoteen):
             "Check network settings page")
 
         cluster_key = "cluster"
-        cluster_name = "Test environment"
 
         logger.info(Main().navigate())
         logger.info(Cluster_BrowseView().remove_all())
@@ -38,10 +37,11 @@ class Test_Network_settings(TestCasePoteen):
         # create cluster
         logger.info(Cluster_BrowseView().click_add_new_cluster(cluster_key))
         logger.info(CreateEnvironmentDialog().create_environment(
-            name=cluster_name,
-            version=OPENSTACK_CURRENT_VERSION,
-            deploymentMode=Cluster.DEPLOYMENT_MODE_MULTI_NODE,
-            computeType='qemu'
+            {
+                "name": "Test environment",
+                "version": OPENSTACK_CURRENT_VERSION,
+                "deployment_mode": Cluster.DEPLOYMENT_MODE_MULTI_NODE
+            }
         ))
         logger.info(Cluster_BrowseView().select_by_key(cluster_key))
 
@@ -76,7 +76,6 @@ class Test_Network_settings(TestCasePoteen):
             "Change network manager")
 
         cluster_key = "cluster"
-        cluster_name = "Test environment"
 
         logger.info(Main().navigate())
         logger.info(Cluster_BrowseView().remove_all())
@@ -84,10 +83,11 @@ class Test_Network_settings(TestCasePoteen):
         # create cluster
         logger.info(Cluster_BrowseView().click_add_new_cluster(cluster_key))
         logger.info(CreateEnvironmentDialog().create_environment(
-            name=cluster_name,
-            version=OPENSTACK_CURRENT_VERSION,
-            deploymentMode=Cluster.DEPLOYMENT_MODE_MULTI_NODE,
-            computeType='qemu'
+            {
+                "name": "Test environment",
+                "version": OPENSTACK_CURRENT_VERSION,
+                "deployment_mode": Cluster.DEPLOYMENT_MODE_MULTI_NODE
+            }
         ))
         logger.info(Cluster_BrowseView().select_by_key(cluster_key))
 
@@ -117,7 +117,6 @@ class Test_Network_settings(TestCasePoteen):
             "Check Amount field validation")
 
         cluster_key = "cluster"
-        cluster_name = "Test environment"
 
         logger.info(Main().navigate())
         logger.info(Cluster_BrowseView().remove_all())
@@ -125,10 +124,11 @@ class Test_Network_settings(TestCasePoteen):
         # create cluster
         logger.info(Cluster_BrowseView().click_add_new_cluster(cluster_key))
         logger.info(CreateEnvironmentDialog().create_environment(
-            name=cluster_name,
-            version=OPENSTACK_CURRENT_VERSION,
-            deploymentMode=Cluster.DEPLOYMENT_MODE_MULTI_NODE,
-            computeType='qemu'
+            {
+                "name": "Test environment",
+                "version": OPENSTACK_CURRENT_VERSION,
+                "deployment_mode": Cluster.DEPLOYMENT_MODE_MULTI_NODE
+            }
         ))
         logger.info(Cluster_BrowseView().select_by_key(cluster_key))
 
@@ -161,7 +161,6 @@ class Test_Network_settings(TestCasePoteen):
             "Check CIDR field validation")
 
         cluster_key = "cluster"
-        cluster_name = "Test environment"
 
         logger.info(Main().navigate())
         logger.info(Cluster_BrowseView().remove_all())
@@ -169,10 +168,11 @@ class Test_Network_settings(TestCasePoteen):
         # create cluster
         logger.info(Cluster_BrowseView().click_add_new_cluster(cluster_key))
         logger.info(CreateEnvironmentDialog().create_environment(
-            name=cluster_name,
-            version=OPENSTACK_CURRENT_VERSION,
-            deploymentMode=Cluster.DEPLOYMENT_MODE_MULTI_NODE,
-            computeType='qemu'
+            {
+                "name": "Test environment",
+                "version": OPENSTACK_CURRENT_VERSION,
+                "deployment_mode": Cluster.DEPLOYMENT_MODE_MULTI_NODE
+            }
         ))
         logger.info(Cluster_BrowseView().select_by_key(cluster_key))
 
@@ -201,7 +201,6 @@ class Test_Network_settings(TestCasePoteen):
             "Check CIDR prefix")
 
         cluster_key = "cluster"
-        cluster_name = "Test environment"
 
         logger.info(Main().navigate())
         logger.info(Cluster_BrowseView().remove_all())
@@ -209,10 +208,11 @@ class Test_Network_settings(TestCasePoteen):
         # create cluster
         logger.info(Cluster_BrowseView().click_add_new_cluster(cluster_key))
         logger.info(CreateEnvironmentDialog().create_environment(
-            name=cluster_name,
-            version=OPENSTACK_CURRENT_VERSION,
-            deploymentMode=Cluster.DEPLOYMENT_MODE_MULTI_NODE,
-            computeType='qemu'
+            {
+                "name": "Test environment",
+                "version": OPENSTACK_CURRENT_VERSION,
+                "deployment_mode": Cluster.DEPLOYMENT_MODE_MULTI_NODE
+            }
         ))
         logger.info(Cluster_BrowseView().select_by_key(cluster_key))
 
@@ -240,7 +240,6 @@ class Test_Network_settings(TestCasePoteen):
             "Check VlanID field validation")
 
         cluster_key = "cluster"
-        cluster_name = "Test environment"
 
         logger.info(Main().navigate())
         logger.info(Cluster_BrowseView().remove_all())
@@ -248,10 +247,11 @@ class Test_Network_settings(TestCasePoteen):
         # create cluster
         logger.info(Cluster_BrowseView().click_add_new_cluster(cluster_key))
         logger.info(CreateEnvironmentDialog().create_environment(
-            name=cluster_name,
-            version=OPENSTACK_CURRENT_VERSION,
-            deploymentMode=Cluster.DEPLOYMENT_MODE_MULTI_NODE,
-            computeType='qemu'
+            {
+                "name": "Test environment",
+                "version": OPENSTACK_CURRENT_VERSION,
+                "deployment_mode": Cluster.DEPLOYMENT_MODE_MULTI_NODE
+            }
         ))
         logger.info(Cluster_BrowseView().select_by_key(cluster_key))
         logger.info(Cluster_View().click_network_settings_tab())

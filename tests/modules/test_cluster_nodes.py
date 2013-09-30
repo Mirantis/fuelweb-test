@@ -33,17 +33,17 @@ class Test_Cluster_nodes(TestCasePoteen):
             "Testing cluster page")
 
         cluster_key = "cluster"
-        cluster_name = "Test environment"
 
         logger.info(Main().navigate())
         logger.info(Cluster_BrowseView().remove_all())
         logger.info(
             Cluster_BrowseView().click_add_new_cluster(cluster_key))
         logger.info(CreateEnvironmentDialog().create_environment(
-            name=cluster_name,
-            version=OPENSTACK_CURRENT_VERSION,
-            deploymentMode=Cluster.DEPLOYMENT_MODE_MULTI_NODE,
-            computeType='qemu'
+            {
+                "name": "Test environment",
+                "version": OPENSTACK_CURRENT_VERSION,
+                "deployment_mode": Cluster.DEPLOYMENT_MODE_MULTI_NODE
+            }
         ))
         logger.info(Cluster_BrowseView().select_by_key(cluster_key))
         logger.info(VerifyBot().verify_visibility(
@@ -65,16 +65,16 @@ class Test_Cluster_nodes(TestCasePoteen):
             "Testing node addition to controller role")
 
         cluster_key = "cluster"
-        cluster_name = "Test environment"
 
         logger.info(Main().navigate())
         logger.info(Cluster_BrowseView().remove_all())
         logger.info(Cluster_BrowseView().click_add_new_cluster(cluster_key))
         logger.info(CreateEnvironmentDialog().create_environment(
-            name=cluster_name,
-            version=OPENSTACK_CURRENT_VERSION,
-            deploymentMode=Cluster.DEPLOYMENT_MODE_MULTI_NODE,
-            computeType='qemu'
+            {
+                "name": "Test environment",
+                "version": OPENSTACK_CURRENT_VERSION,
+                "deployment_mode": Cluster.DEPLOYMENT_MODE_MULTI_NODE
+            }
         ))
         logger.info(Cluster_BrowseView().select_by_key(cluster_key))
         logger.info(Cluster_Nodes_View().addNodes.click_and_wait())
@@ -97,10 +97,11 @@ class Test_Cluster_nodes(TestCasePoteen):
         logger.info(Cluster_BrowseView().remove_all())
         logger.info(Cluster_BrowseView().click_add_new_cluster(cluster_key))
         logger.info(CreateEnvironmentDialog().create_environment(
-            name=cluster_name,
-            version=OPENSTACK_CURRENT_VERSION,
-            deploymentMode=Cluster.DEPLOYMENT_MODE_MULTI_NODE,
-            computeType='qemu'
+            {
+                "name": "Test environment",
+                "version": OPENSTACK_CURRENT_VERSION,
+                "deployment_mode": Cluster.DEPLOYMENT_MODE_MULTI_NODE
+            }
         ))
         logger.info(Cluster_BrowseView().select_by_key(cluster_key))
         logger.info(Cluster_Nodes_View().addNodes.click_and_wait())
@@ -117,16 +118,16 @@ class Test_Cluster_nodes(TestCasePoteen):
             "Testing node addition to cinder role")
 
         cluster_key = "cluster"
-        cluster_name = "Test environment"
 
         logger.info(Main().navigate())
         logger.info(Cluster_BrowseView().remove_all())
         logger.info(Cluster_BrowseView().click_add_new_cluster(cluster_key))
         logger.info(CreateEnvironmentDialog().create_environment(
-            name=cluster_name,
-            version=OPENSTACK_CURRENT_VERSION,
-            deploymentMode=Cluster.DEPLOYMENT_MODE_MULTI_NODE,
-            computeType='qemu'
+            {
+                "name": "Test environment",
+                "version": OPENSTACK_CURRENT_VERSION,
+                "deployment_mode": Cluster.DEPLOYMENT_MODE_MULTI_NODE
+            }
         ))
         logger.info(Cluster_BrowseView().select_by_key(cluster_key))
         logger.info(Cluster_Nodes_View().addNodes.click_and_wait())
@@ -143,16 +144,16 @@ class Test_Cluster_nodes(TestCasePoteen):
             "Testing deletion of compute node, scheduled for addition")
 
         cluster_key = "cluster"
-        cluster_name = "Test environment"
 
         logger.info(Main().navigate())
         logger.info(Cluster_BrowseView().remove_all())
         logger.info(Cluster_BrowseView().click_add_new_cluster(cluster_key))
         logger.info(CreateEnvironmentDialog().create_environment(
-            name=cluster_name,
-            version=OPENSTACK_CURRENT_VERSION,
-            deploymentMode=Cluster.DEPLOYMENT_MODE_MULTI_NODE,
-            computeType='qemu'
+            {
+                "name": "Test environment",
+                "version": OPENSTACK_CURRENT_VERSION,
+                "deployment_mode": Cluster.DEPLOYMENT_MODE_MULTI_NODE
+            }
         ))
         logger.info(Cluster_BrowseView().select_by_key(cluster_key))
         logger.info(Cluster_Nodes_View().addNodes.click_and_wait())
@@ -176,16 +177,16 @@ class Test_Cluster_nodes(TestCasePoteen):
             "Testing deployment")
 
         cluster_key = "cluster"
-        cluster_name = "Test environment"
 
         logger.info(Main().navigate())
         logger.info(Cluster_BrowseView().remove_all())
         logger.info(Cluster_BrowseView().click_add_new_cluster(cluster_key))
         logger.info(CreateEnvironmentDialog().create_environment(
-            name=cluster_name,
-            version=OPENSTACK_CURRENT_VERSION,
-            deploymentMode=Cluster.DEPLOYMENT_MODE_MULTI_NODE,
-            computeType='qemu'
+            {
+                "name": "Test environment",
+                "version": OPENSTACK_CURRENT_VERSION,
+                "deployment_mode": Cluster.DEPLOYMENT_MODE_MULTI_NODE
+            }
         ))
         logger.info(Cluster_BrowseView().select_by_key(cluster_key))
         logger.info(Cluster_Nodes_View().addNodes.click_and_wait())
@@ -219,10 +220,11 @@ class Test_Cluster_nodes(TestCasePoteen):
         logger.info(Cluster_BrowseView().remove_all())
         logger.info(Cluster_BrowseView().click_add_new_cluster(cluster_key))
         logger.info(CreateEnvironmentDialog().create_environment(
-            name=cluster_name,
-            version=OPENSTACK_CURRENT_VERSION,
-            deploymentMode=Cluster.DEPLOYMENT_MODE_MULTI_NODE,
-            computeType='qemu'
+            {
+                "name": cluster_name,
+                "version": OPENSTACK_CURRENT_VERSION,
+                "deployment_mode": Cluster.DEPLOYMENT_MODE_MULTI_NODE
+            }
         ))
         logger.info(Cluster_BrowseView().select_by_key(cluster_key))
         logger.info(Cluster_Nodes_View().addNodes.click_and_wait())
