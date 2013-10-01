@@ -73,6 +73,10 @@ class Cluster_Nodes_View(AbstractView):
     def click_deployment_mode(self):
         return self.deploymentMode.click()
 
+    @catch_stale_error
+    def click_add_nodes(self):
+        return self.addNodes.click_and_wait()
+
     def select_environment_mode(self, deploymentMode):
         rl = ResultList(
             "Select environment mode [{mode}]".format(

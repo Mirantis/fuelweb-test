@@ -44,11 +44,11 @@ class Test_Deployment(TestCasePoteen):
         ))
         logger.info(Cluster_BrowseView().select_by_key(cluster_key))
 
-        logger.info(Cluster_Nodes_View().addNodes.click_and_wait())
+        logger.info(Cluster_Nodes_View().click_add_nodes())
         logger.info(Cluster_Nodes_View().assign_roles_to_nodes(
             ['controller'], ["Supermicro X9DRW"]
         ))
-        logger.info(Cluster_Nodes_View().addNodes.click_and_wait())
+        logger.info(Cluster_Nodes_View().click_add_nodes())
         logger.info(Cluster_Nodes_View().assign_roles_to_nodes(
             ['compute'], ["Dell Inspiron"]
         ))
@@ -93,7 +93,7 @@ class Test_Deployment(TestCasePoteen):
         ))
         logger.info(Cluster_BrowseView().select_by_key(cluster_key))
 
-        logger.info(Cluster_Nodes_View().addNodes.click_and_wait())
+        logger.info(Cluster_Nodes_View().click_add_nodes())
         logger.info(Cluster_Nodes_View().assign_roles_to_nodes(
             ['controller'], ["Supermicro X9SCD (offline)", "Supermicro X9DRW"]
         ))

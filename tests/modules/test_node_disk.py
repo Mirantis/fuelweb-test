@@ -50,7 +50,7 @@ class TestDeploymentDisks(TestCasePoteen):
         logger.info(Cluster_BrowseView().select_by_key(cluster_key))
 
         # add controller node
-        logger.info(Cluster_Nodes_View().addNodes.click_and_wait())
+        logger.info(Cluster_Nodes_View().click_add_nodes())
         available_nodes_names = Cluster_Nodes_ListView()\
             .get_nodes_names_by_status('Discovered')
         logger.info(Cluster_Nodes_View().assign_roles_to_nodes(
@@ -105,7 +105,7 @@ class TestDeploymentDisks(TestCasePoteen):
         logger.info(Cluster_BrowseView().select_by_key(cluster_key))
 
         # add compute node
-        logger.info(Cluster_Nodes_View().addNodes.click_and_wait())
+        logger.info(Cluster_Nodes_View().click_add_nodes())
         available_nodes_names = Cluster_Nodes_ListView()\
             .get_nodes_names_by_status('Discovered')
         logger.info(Cluster_Nodes_View().assign_roles_to_nodes(
@@ -162,7 +162,7 @@ class TestDeploymentDisks(TestCasePoteen):
         logger.info(Cluster_BrowseView().select_by_key(cluster_key))
 
         # add cinder node
-        logger.info(Cluster_Nodes_View().addNodes.click_and_wait())
+        logger.info(Cluster_Nodes_View().click_add_nodes())
         available_nodes_names = Cluster_Nodes_ListView()\
             .get_nodes_names_by_status('Discovered')
         logger.info(Cluster_Nodes_View().assign_roles_to_nodes(

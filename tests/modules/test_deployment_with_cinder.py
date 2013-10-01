@@ -49,19 +49,19 @@ class Test_Deployment_With_Cinder(TestCasePoteen):
         ))
         logger.info(Cluster_BrowseView().select_by_key(cluster_key))
 
-        logger.info(Cluster_Nodes_View().addNodes.click_and_wait())
+        logger.info(Cluster_Nodes_View().click_add_nodes())
         available_nodes_names = Cluster_Nodes_ListView()\
             .get_nodes_names_by_status('Discovered')
         logger.info(Cluster_Nodes_View().assign_roles_to_nodes(
             ['controller'], available_nodes_names[:1]
         ))
-        logger.info(Cluster_Nodes_View().addNodes.click_and_wait())
+        logger.info(Cluster_Nodes_View().click_add_nodes())
         available_nodes_names = Cluster_Nodes_ListView()\
             .get_nodes_names_by_status('Discovered')
         logger.info(Cluster_Nodes_View().assign_roles_to_nodes(
             ['compute'], available_nodes_names[:1]
         ))
-        logger.info(Cluster_Nodes_View().addNodes.click_and_wait())
+        logger.info(Cluster_Nodes_View().click_add_nodes())
         available_nodes_names = Cluster_Nodes_ListView()\
             .get_nodes_names_by_status('Discovered')
         logger.info(Cluster_Nodes_View().assign_roles_to_nodes(
@@ -100,19 +100,19 @@ class Test_Deployment_With_Cinder(TestCasePoteen):
         ))
         logger.info(Cluster_BrowseView().select_by_key(cluster_key))
 
-        logger.info(Cluster_Nodes_View().addNodes.click_and_wait())
+        logger.info(Cluster_Nodes_View().click_add_nodes())
         available_nodes_names = Cluster_Nodes_ListView()\
             .get_nodes_names_by_status('Discovered')
         logger.info(Cluster_Nodes_View().assign_roles_to_nodes(
             ['controller'], available_nodes_names[:3]
         ))
-        logger.info(Cluster_Nodes_View().addNodes.click_and_wait())
+        logger.info(Cluster_Nodes_View().click_add_nodes())
         available_nodes_names = Cluster_Nodes_ListView()\
             .get_nodes_names_by_status('Discovered')
         logger.info(Cluster_Nodes_View().assign_roles_to_nodes(
             ['compute'], available_nodes_names[:1]
         ))
-        logger.info(Cluster_Nodes_View().addNodes.click_and_wait())
+        logger.info(Cluster_Nodes_View().click_add_nodes())
         available_nodes_names = Cluster_Nodes_ListView()\
             .get_nodes_names_by_status('Discovered')
         logger.info(Cluster_Nodes_View().assign_roles_to_nodes(
