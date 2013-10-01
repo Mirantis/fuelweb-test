@@ -16,8 +16,14 @@ class Checkbox(EngineCheckbox):
             self._element_name, value
         ))
         if not self.get_value() == value:
-            res.push(ActionBot().click(
-                self.get_element(), self._element_name, self._type, True))
+            res.push(
+                ActionBot().click(
+                    self.get_element(),
+                    self._element_name,
+                    self._type,
+                    invisible=True
+                )
+            )
         else:
             res.push(
                 Result(

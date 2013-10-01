@@ -22,7 +22,7 @@ class Test_Deployment(TestCasePoteen):
         super(Test_Deployment, cls).setUpClass()
         PoteenLogger.add_test_suite("Delete cluster")
 
-    @attr("test", set=["regression"])
+    @attr(set=["regression"])
     def test_delete_cluster_after_successful_deployment(self):
         PoteenLogger.add_test_case(
             "Delete cluster after successful deployment")
@@ -53,10 +53,10 @@ class Test_Deployment(TestCasePoteen):
             ['compute'], ["Dell Inspiron"]
         ))
         logger.info(Cluster_Nodes_View().verify_nodes(
-            'controller', "Supermicro X9DRW"
+            'controller', ["Supermicro X9DRW"]
         ))
         logger.info(Cluster_Nodes_View().verify_nodes(
-            'compute', "Dell Inspiron"
+            'compute', ["Dell Inspiron"]
         ))
         logger.info(Cluster_View().click_deploy_changes())
         logger.info(DeployChangesDialog().deploy())
