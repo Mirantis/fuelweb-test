@@ -62,7 +62,7 @@ class TestDeploymentDisks(TestCasePoteen):
 
         # navigate to disks configuration page
         logger.info(
-            Cluster_Nodes_View().get_nodes('controller')[-1].click_hardware())
+            Cluster_Nodes_View().get_nodes('controller')[-1].click_node_details())
         logger.info(NodeHardwareDialog().click_disk_configuration())
 
         # verify default disks settings
@@ -117,7 +117,7 @@ class TestDeploymentDisks(TestCasePoteen):
 
         # navigate to disks configuration page
         logger.info(
-            Cluster_Nodes_View().get_nodes('compute')[-1].click_hardware())
+            Cluster_Nodes_View().get_nodes('compute')[-1].click_node_details())
         logger.info(NodeHardwareDialog().click_disk_configuration())
 
         # verify default disks settings
@@ -174,7 +174,7 @@ class TestDeploymentDisks(TestCasePoteen):
 
         # navigate to disks configuration page
         logger.info(
-            Cluster_Nodes_View().get_nodes('cinder')[-1].click_hardware())
+            Cluster_Nodes_View().get_nodes('cinder')[-1].click_node_details())
         logger.info(NodeHardwareDialog().click_disk_configuration())
 
         # verify default disks settings
