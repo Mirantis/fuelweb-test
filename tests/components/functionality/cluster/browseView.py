@@ -70,9 +70,10 @@ class Cluster_BrowseView(AbstractView):
         return rl
 
     def select(self, name):
-        return ResultList("Select environment [{}]".format(name)) \
-            .push(self.environment.find(name=name).click_and_wait()
-            .push(self.get_wait_bot().wait_for_time(2)))
+        rl = ResultList("Select environment [{}]".format(name))
+        rl.push(self.environment.find(name=name).click_and_wait())
+        rl.push(self.get_wait_bot().wait_for_time(2))
+        return rl
 
     def select_by_key(self, key):
         return self.select(Storage.get(key).name)

@@ -47,7 +47,7 @@ class Test_Deployment_HA_Mode(TestCasePoteen):
             {
                 "name": "Test environment",
                 "version": OPENSTACK_CURRENT_VERSION,
-                "deployment_mode": Cluster.DEPLOYMENT_MODE_MULTI_NODE
+                "deployment_mode": Cluster.DEPLOYMENT_MODE_MULTI_NODE_WITH_HA
             }
         ))
         logger.info(Cluster_BrowseView().select_by_key(cluster_key))
@@ -67,12 +67,12 @@ class Test_Deployment_HA_Mode(TestCasePoteen):
             ))
 
         logger.info(Cluster_Nodes_View().verify_nodes(
-            'controller', *available_nodes_names[:controllers]
+            'controller', available_nodes_names[:controllers]
         ))
         if computes > 0:
             logger.info(Cluster_Nodes_View().verify_nodes(
                 'compute',
-                *available_nodes_names[controllers:controllers + computes]
+                available_nodes_names[controllers:controllers + computes]
             ))
 
         logger.info(Cluster_View().click_deploy_changes())
@@ -123,7 +123,7 @@ class Test_Deployment_HA_Mode(TestCasePoteen):
             'disabled', DeployChangesDialog().deploy_button().get_element()
             .get_attribute('class'), 'Deploy button'))
 
-    @attr(set=["regression"])
+    @attr("test",set=["regression"])
     def test_deploy_3_controller_2_compute(self):
         self.deploy(self.cluster_name, 3, 2)
         logger.info(Cluster_View().verify_successful_deployment_per_name(

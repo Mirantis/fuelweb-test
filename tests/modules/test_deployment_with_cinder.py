@@ -42,7 +42,7 @@ class Test_Deployment_With_Cinder(TestCasePoteen):
         logger.info(Cluster_BrowseView().click_add_new_cluster(cluster_key))
         logger.info(CreateEnvironmentDialog().create_environment(
             {
-                "name": "Test environment",
+                "name": cluster_name,
                 "version": OPENSTACK_CURRENT_VERSION,
                 "deployment_mode": Cluster.DEPLOYMENT_MODE_MULTI_NODE
             }
@@ -93,7 +93,7 @@ class Test_Deployment_With_Cinder(TestCasePoteen):
         logger.info(Cluster_BrowseView().click_add_new_cluster(cluster_key))
         logger.info(CreateEnvironmentDialog().create_environment(
             {
-                "name": "Test environment",
+                "name": cluster_name,
                 "version": OPENSTACK_CURRENT_VERSION,
                 "deployment_mode": Cluster.DEPLOYMENT_MODE_MULTI_NODE
             }
