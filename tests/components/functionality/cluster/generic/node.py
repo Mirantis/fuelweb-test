@@ -28,8 +28,9 @@ class Node(AbstractView):
         self.status = HtmlElement(
             xpath=".//div[@class='node-status']", element_name="Status")
 
-        self.hardware = HtmlElement(
-            xpath=".//div[@class='node-hardware']", element_name="Hardware")
+        self.details = HtmlElement(
+            xpath=".//div[@class='node-details']",
+            element_name="Node details icon")
 
         AbstractView.__init__(self, parent)
 
@@ -54,8 +55,8 @@ class Node(AbstractView):
         else:
             return self._checkbox.set_value(Checkbox.VALUE_ON)
 
-    def click_hardware(self):
-        return self.hardware.click()
+    def click_node_details(self):
+        return self.details.click()
 
     def get_roles(self):
         roles_elements = ActionBot().find_elements(
