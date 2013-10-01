@@ -9,13 +9,13 @@ from selenium.webdriver.common.by import By
 
 class Cluster_Nodes_ListView(AbstractView):
 
-    xpath_nodes_by_status = ("//div[contains(@class, 'node-box') and "
-                             "contains(./div/div[@class='node-status']/div, "
-                             "'{status}')]")
+    xpath_nodes_by_status = \
+        "//div[(@class='node' or @class='node checked') and contains(" \
+        ".//div[@class='node-status']/div, '{status}')]"
 
     def __init__(self, parent=None):
         self.node = HtmlElement(
-            xpath=".//div[contains(@class, 'node-box') and "
+            xpath=".//div[(@class='node' or @class='node checked') and "
                   ".//div[@class='node-name' and .//div//text()='{name}']]",
             element_name="Node [{name}]"
         )

@@ -57,10 +57,10 @@ class TestDeploymentSimpleMode(TestCasePoteen):
             ['compute'], ["Dell Inspiron"]
         ))
         logger.info(Cluster_Nodes_View().verify_nodes(
-            'controller', "Supermicro X9DRW"
+            'controller', ["Supermicro X9DRW"]
         ))
         logger.info(Cluster_Nodes_View().verify_nodes(
-            'compute', "Dell Inspiron"
+            'compute', ["Dell Inspiron"]
         ))
         logger.info(Cluster_View().click_deploy_changes())
         logger.info(DeployChangesDialog().deploy())
@@ -98,7 +98,7 @@ class TestDeploymentSimpleMode(TestCasePoteen):
             ['controller'], ["Supermicro X9DRW"]
         ))
         logger.info(Cluster_Nodes_View().verify_nodes(
-            'controller', "Supermicro X9DRW"
+            'controller', ["Supermicro X9DRW"]
         ))
         logger.info(Cluster_View().click_deploy_changes())
         logger.info(DeployChangesDialog().deploy())
@@ -135,7 +135,7 @@ class TestDeploymentSimpleMode(TestCasePoteen):
             ['compute'], ["Dell Inspiron"]
         ))
         logger.info(Cluster_Nodes_View().verify_nodes(
-            'compute', "Dell Inspiron"
+            'compute', ["Dell Inspiron"]
         ))
         logger.info(Cluster_View().click_deploy_changes())
         logger.info(VerifyBot().verify_contains(
@@ -178,7 +178,7 @@ class TestDeploymentSimpleMode(TestCasePoteen):
         ))
 
         logger.info(Cluster_Nodes_View().verify_nodes(
-            'controller', "Supermicro X9DRW"
+            'controller', ["Supermicro X9DRW"]
         ))
         logger.info(Cluster_Nodes_View().verify_nodes(
             'compute', ["Dell Inspiron", "Supermicro X9SCD", "KVM"]
@@ -223,7 +223,7 @@ class TestDeploymentSimpleMode(TestCasePoteen):
             ["Dell Inspiron", "Supermicro X9SCD", "KVM", "VirtualBox"]
         ))
         logger.info(Cluster_Nodes_View().verify_nodes(
-            'controller', "Supermicro X9DRW"
+            'controller', ["Supermicro X9DRW"]
         ))
         logger.info(Cluster_Nodes_View().verify_nodes(
             'compute',

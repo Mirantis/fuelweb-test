@@ -1,9 +1,11 @@
 from selenium.webdriver.common.by import By
+
 from engine.poteen.bots.actionBot import ActionBot
 from engine.poteen.elements.basic.htmlElement import HtmlElement
 from engine.poteen.log.result import Result
+
 from ....generic.abstractView import AbstractView
-from .....components.elements.Checkbox import Checkbox
+from ....elements.Checkbox import Checkbox
 
 
 class Node(AbstractView):
@@ -20,7 +22,7 @@ class Node(AbstractView):
 
         self._checkbox = Checkbox(
             xpath=".//div[@class='node-checkbox']"
-                  "//div[@class='custom-tumbler']/label/input",
+                  "//div[@class='custom-tumbler']/input",
             element_name="Checkbox")
 
         self.status = HtmlElement(
@@ -50,7 +52,7 @@ class Node(AbstractView):
         if self.is_selected().i_passed():
             return Result("Node is already selected")
         else:
-            return self.set_checkbox("on")
+            return self._checkbox.set_value(Checkbox.VALUE_ON)
 
     def click_hardware(self):
         return self.hardware.click()
