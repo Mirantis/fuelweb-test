@@ -21,7 +21,7 @@ class Node(AbstractView):
         )
 
         self._checkbox = Checkbox(
-            xpath=".//div[@class='node-checkbox']"
+            xpath=".//label[@class='node-checkbox']"
                   "//div[@class='custom-tumbler']/input",
             element_name="Checkbox")
 
