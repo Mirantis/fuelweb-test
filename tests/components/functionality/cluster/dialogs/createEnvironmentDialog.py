@@ -213,6 +213,5 @@ class CreateEnvironmentDialog(AbstractDialog):
                     "Install Murano", Checkbox.VALUE_ON))
         rl.push(self.clickNext())
 
-        rl.push(self.message_configuration_ready.verify_visible(True))
         rl.push(self.create())
         return rl
