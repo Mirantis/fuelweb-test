@@ -31,6 +31,23 @@ class TestEnvWizard(BaseTestCase):
             w.prev.click()
             self.assertEqual(w.release.first_selected_option.text, OPENSTACK_RELEASE_UBUNTU)
 
+    def test_rhel_form(self):
+        with Wizard() as w:
+            w.name.send_keys(OPENSTACK_RELEASE_REDHAT)
+            w.release.select_by_visible_text(OPENSTACK_RELEASE_REDHAT)
+            self.assertTrue(w.license_rhsm.is_displayed())
+            self.assertTrue(w.license_rhn.is_displayed())
+            self.assertTrue(w.redhat_username.is_displayed())
+            self.assertTrue(w.redhat_password.is_displayed())
+
+            w.license_rhn.click()
+            self.assertTrue(w.redhat_satellite.is_displayed())
+            self.assertTrue(w.redhat_activation_key.is_displayed())
+
+            w.license_rhsm.click()
+            self.assertFalse(w.redhat_satellite.is_displayed())
+            self.assertFalse(w.redhat_activation_key.is_displayed())
+
     def test_mode_radios(self):
         with Wizard() as w:
             w.name.send_keys(OPENSTACK_RELEASE_UBUNTU)
