@@ -1,4 +1,4 @@
-from fuelui_tests.pageobjects.base import PageObject
+from pageobjects.base import PageObject
 
 
 class Tabs(PageObject):

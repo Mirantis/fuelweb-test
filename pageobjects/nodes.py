@@ -1,5 +1,5 @@
 from selenium.webdriver.support.select import Select
-from fuelui_tests.pageobjects.base import PageObject
+from pageobjects.base import PageObject
 
 
 class Nodes(PageObject):

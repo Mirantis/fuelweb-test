@@ -1,4 +1,4 @@
-from fuelui_tests import browser
+import browser
 
 
 class PageObject:

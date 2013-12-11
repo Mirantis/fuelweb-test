@@ -1,6 +1,6 @@
 from selenium import webdriver
 from selenium.webdriver import DesiredCapabilities
-from fuelui_tests.settings import *
+from settings import *
 
 driver = None
 

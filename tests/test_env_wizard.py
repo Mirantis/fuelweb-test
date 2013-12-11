@@ -1,7 +1,7 @@
 import time
-from fuelui_tests.pageobjects.environments import Environments, Wizard
-from fuelui_tests.settings import *
-from fuelui_tests.tests.base import BaseTestCase
+from pageobjects.environments import Environments, Wizard
+from settings import *
+from tests.base import BaseTestCase
 
 
 class TestEnvWizard(BaseTestCase):

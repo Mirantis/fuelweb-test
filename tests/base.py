@@ -4,8 +4,8 @@ from unittest import TestCase
 from PIL import Image
 import operator
 import math
-from fuelui_tests import browser
-from fuelui_tests.settings import *
+import browser
+from settings import *
 
 
 class BaseTestCase(TestCase):

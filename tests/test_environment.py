@@ -1,11 +1,11 @@
 import time
-from fuelui_tests.pageobjects.environments import Environments, Wizard
-from fuelui_tests.pageobjects.networks import Networks
-from fuelui_tests.pageobjects.nodes import Nodes
-from fuelui_tests.pageobjects.settings import Settings
-from fuelui_tests.pageobjects.tabs import Tabs
-from fuelui_tests.settings import *
-from fuelui_tests.tests.base import BaseTestCase
+from pageobjects.environments import Environments, Wizard
+from pageobjects.networks import Networks
+from pageobjects.nodes import Nodes
+from pageobjects.settings import Settings
+from pageobjects.tabs import Tabs
+from settings import *
+from tests.base import BaseTestCase
 
 
 class TestEnvironment(BaseTestCase):

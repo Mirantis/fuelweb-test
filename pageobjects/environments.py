@@ -1,5 +1,5 @@
 from selenium.webdriver.support.select import Select
-from fuelui_tests.pageobjects.base import PageObject
+from pageobjects.base import PageObject
 
 
 class Environments(PageObject):
@@ -90,3 +90,27 @@ class Wizard(PageObject):
     @property
     def install_murano(self):
         return self.parent.find_element_by_xpath(self.XPATH_CHECKBOX.format('murano'))
+
+    @property
+    def license_rhsm(self):
+        return self.parent.find_element_by_xpath(self.XPATH_RADIO.format('license-type', 'rhsm'))
+
+    @property
+    def license_rhn(self):
+        return self.parent.find_element_by_xpath(self.XPATH_RADIO.format('license-type', 'rhn'))
+
+    @property
+    def redhat_username(self):
+        return self.parent.find_element_by_name('username')
+
+    @property
+    def redhat_password(self):
+        return self.parent.find_element_by_name('password')
+
+    @property
+    def redhat_satellite(self):
+        return self.parent.find_element_by_name('satellite')
+
+    @property
+    def redhat_activation_key(self):
+        return self.parent.find_element_by_name('activation_key')
