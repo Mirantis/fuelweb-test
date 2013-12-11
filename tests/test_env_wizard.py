@@ -31,6 +31,30 @@ class TestEnvWizard(BaseTestCase):
             w.prev.click()
             self.assertEqual(w.release.first_selected_option.text, OPENSTACK_RELEASE_UBUNTU)
 
+    def test_rhel_empty_form(self):
+        with Wizard() as w:
+            w.name.send_keys(OPENSTACK_RELEASE_REDHAT)
+            w.release.select_by_visible_text(OPENSTACK_RELEASE_REDHAT)
+            w.next.click()
+            self.assertIn('Invalid username',
+                          w.redhat_username.find_element_by_xpath('..').text)
+            self.assertIn('Invalid password',
+                          w.redhat_password.find_element_by_xpath('..').text)
+
+            w.license_rhn.click()
+            w.next.click()
+            self.assertIn('Invalid username',
+                          w.redhat_username.find_element_by_xpath('..').text)
+            self.assertIn('Invalid password',
+                          w.redhat_password.find_element_by_xpath('..').text)
+            self.assertIn(
+                'Only valid fully qualified domain name is allowed for the '
+                'hostname field',
+                w.redhat_satellite.find_element_by_xpath('..').text)
+            self.assertIn(
+                'Invalid activation key',
+                w.redhat_activation_key.find_element_by_xpath('..').text)
+
     def test_rhel_form(self):
         with Wizard() as w:
             w.name.send_keys(OPENSTACK_RELEASE_REDHAT)
