@@ -21,6 +21,10 @@ class Wizard(PageObject):
         self.parent = browser.driver.find_element_by_css_selector('div.create-cluster-modal')
         PageObject.wait_until_moving(self.parent)
 
+    def wait_until_exists(self):
+        PageObject.wait_until_exists(self.parent)
+        PageObject.wait_until_exists(browser.driver.find_element_by_css_selector('div.modal-backdrop'))
+
     @property
     def name(self):
         return self.parent.find_element_by_name('name')
