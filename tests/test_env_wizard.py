@@ -23,6 +23,21 @@ class TestEnvWizard(BaseTestCase):
                 'Environment name cannot be empty',
                 w.name.find_element_by_xpath('..').text)
 
+    def test_name_exists(self):
+        with Wizard() as w:
+            w.name.send_keys(OPENSTACK_RELEASE_CENTOS)
+            for i in range(6):
+                w.next.click()
+            w.create.click()
+            w.wait_until_exists()
+
+        Environments().create_cluster_box.click()
+        with Wizard() as w:
+            w.name.send_keys(OPENSTACK_RELEASE_CENTOS)
+            w.next.click()
+            self.assertIn('Environment with name "{}" already exists'.format(OPENSTACK_RELEASE_CENTOS),
+                          w.name.find_element_by_xpath('..').text)
+
     def test_release_field(self):
         with Wizard() as w:
             w.name.send_keys(OPENSTACK_RELEASE_UBUNTU)
