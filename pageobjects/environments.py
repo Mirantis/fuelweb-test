@@ -1,4 +1,5 @@
 from selenium.webdriver.support.select import Select
+import browser
 from pageobjects.base import PageObject
 
 
@@ -14,6 +15,11 @@ class Environments(PageObject):
 
 
 class Wizard(PageObject):
+
+    def __init__(self):
+        PageObject.__init__(self)
+        self.parent = browser.driver.find_element_by_css_selector('div.create-cluster-modal')
+        PageObject.wait_until_moving(self.parent)
 
     @property
     def name(self):

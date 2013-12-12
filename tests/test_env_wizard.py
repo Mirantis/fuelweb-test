@@ -1,4 +1,5 @@
 import time
+from pageobjects.base import PageObject
 from pageobjects.environments import Environments, Wizard
 from settings import *
 from tests.base import BaseTestCase
@@ -9,7 +10,6 @@ class TestEnvWizard(BaseTestCase):
     def setUp(self):
         BaseTestCase.setUp(self)
         Environments().create_cluster_box.click()
-        time.sleep(2)
 
     def test_name_field(self):
         with Wizard() as w:
@@ -164,10 +164,10 @@ class TestEnvWizard(BaseTestCase):
             w.install_murano.click()
             w.next.click()
             w.cancel.click()
-            time.sleep(2)
+            PageObject.wait_until_exists(w.parent)
 
-            Environments().create_cluster_box.click()
-            time.sleep(2)
+        Environments().create_cluster_box.click()
+        with Wizard() as w:
             self.assertEqual(w.name.get_attribute('value'), '')
             self.assertEqual(w.release.first_selected_option.text, OPENSTACK_RELEASE_CENTOS)
             w.name.send_keys(OPENSTACK_RELEASE_UBUNTU)

@@ -1,4 +1,5 @@
 import time
+from pageobjects.base import PageObject
 from pageobjects.environments import Environments, Wizard
 from pageobjects.networks import Networks
 from pageobjects.nodes import Nodes
@@ -13,7 +14,6 @@ class TestEnvironment(BaseTestCase):
     def setUp(self):
         BaseTestCase.setUp(self)
         Environments().create_cluster_box.click()
-        time.sleep(2)
 
     def test_centos_simple(self):
         with Wizard() as w:
@@ -22,7 +22,7 @@ class TestEnvironment(BaseTestCase):
             for i in range(6):
                 w.next.click()
             w.create.click()
-            time.sleep(2)
+            PageObject.wait_until_exists(w.parent)
 
         cb = Environments().create_cluster_boxes[0]
         self.assertIn(OPENSTACK_CENTOS, cb.text)
