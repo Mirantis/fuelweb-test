@@ -69,3 +69,23 @@ class TestEnvironment(BaseTestCase):
             n.info_icon.click()
             self.assertIn(OPENSTACK_CENTOS, n.env_details.text)
             self.assertIn('Multi-node with HA', n.env_details.text)
+
+    def test_hypervisor_kvm(self):
+        with Wizard() as w:
+            w.name.send_keys(OPENSTACK_CENTOS)
+            w.release.select_by_visible_text(OPENSTACK_RELEASE_CENTOS)
+            w.next.click()
+            w.next.click()
+            w.hypervisor_kvm.click()
+            for i in range(4):
+                w.next.click()
+            w.create.click()
+            w.wait_until_exists()
+
+        cb = Environments().create_cluster_boxes[0]
+        cb.click()
+        Tabs().settings.click()
+
+        with Settings() as s:
+            self.assertTrue(s.hypervisor_kvm.find_element_by_tag_name('input').is_selected())
+
