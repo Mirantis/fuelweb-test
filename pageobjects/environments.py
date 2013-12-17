@@ -22,7 +22,7 @@ class Wizard(PageObject):
         PageObject.wait_until_moving(self.parent)
 
     def wait_until_exists(self):
-        PageObject.wait_until_exists(self.parent)
+        #PageObject.wait_until_exists(self.parent)
         PageObject.wait_until_exists(browser.driver.find_element_by_css_selector('div.modal-backdrop'))
 
     @property
@@ -100,6 +100,10 @@ class Wizard(PageObject):
     @property
     def install_murano(self):
         return self.parent.find_element_by_xpath(self.XPATH_CHECKBOX.format('murano'))
+
+    @property
+    def install_ceilometer(self):
+        return self.parent.find_element_by_xpath(self.XPATH_CHECKBOX.format('ceilometer'))
 
     @property
     def license_rhsm(self):
