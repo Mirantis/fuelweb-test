@@ -31,6 +31,8 @@ class BaseTestCase(TestCase):
         syncdb()
         fixman.upload_fixtures()
         for fixture in NAILGUN_FIXTURES.split(':'):
+            if fixture == '':
+                continue
             with open(fixture, "r") as fileobj:
                 fixman.upload_fixture(fileobj)
 
