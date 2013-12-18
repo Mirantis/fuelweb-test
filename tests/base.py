@@ -22,9 +22,12 @@ class BaseTestCase(TestCase):
         browser.quit_driver()
 
     def setUp(self):
+        self.get_home()
+
+    def get_home(self):
         for i in range(5):
             try:
-                browser.driver.get('http://localhost:8000/')
+                browser.driver.get(URL_HOME)
                 self.assertTrue(Environments().create_cluster_box.is_displayed())
                 break
             except NoSuchElementException:

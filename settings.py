@@ -27,3 +27,5 @@ OPENSTACK_REDHAT = openstack_name(OPENSTACK_RELEASE_REDHAT)
 OPENSTACK_UBUNTU = openstack_name(OPENSTACK_RELEASE_UBUNTU)
 
 NAILGUN_FIXTURES = os.environ.get('NAILGUN_FIXTURES', '')
+
+URL_HOME = os.environ.get('URL_HOME', 'http://localhost:8000/')
