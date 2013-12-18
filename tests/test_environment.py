@@ -14,6 +14,7 @@ from tests.base import BaseTestCase
 class TestEnvironment(BaseTestCase):
 
     def setUp(self):
+        self.clear_nailgun_database()
         BaseTestCase.setUp(self)
         Environments().create_cluster_box.click()
 

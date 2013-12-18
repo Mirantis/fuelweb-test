@@ -13,6 +13,7 @@ class BaseTestCase(TestCase):
     @classmethod
     def setUpClass(cls):
         browser.start_driver()
+        cls.clear_nailgun_database()
 
     @classmethod
     def tearDownClass(cls):
@@ -20,6 +21,18 @@ class BaseTestCase(TestCase):
 
     def setUp(self):
         browser.driver.get('http://localhost:8000/')
+
+    @staticmethod
+    def clear_nailgun_database():
+        from nailgun.db import dropdb
+        from nailgun.db import syncdb
+        from nailgun.db.sqlalchemy import fixman
+        dropdb()
+        syncdb()
+        fixman.upload_fixtures()
+        for fixture in NAILGUN_FIXTURES.split(':'):
+            with open(fixture, "r") as fileobj:
+                fixman.upload_fixture(fileobj)
 
     def assert_screen(self, name):
         img_exp = Image.open('{}/{}.png'.format(FOLDER_SCREEN_EXPECTED, name))

@@ -25,3 +25,5 @@ openstack_name = lambda release: re.sub('\s\\(.*?\\)$', '', release)
 OPENSTACK_CENTOS = openstack_name(OPENSTACK_RELEASE_CENTOS)
 OPENSTACK_REDHAT = openstack_name(OPENSTACK_RELEASE_REDHAT)
 OPENSTACK_UBUNTU = openstack_name(OPENSTACK_RELEASE_UBUNTU)
+
+NAILGUN_FIXTURES = os.environ.get('NAILGUN_FIXTURES', '')
