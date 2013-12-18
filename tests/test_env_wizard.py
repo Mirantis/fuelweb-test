@@ -153,14 +153,17 @@ class TestEnvWizard(BaseTestCase):
             w.next.click()
             w.next.click()
             w.next.click()
+            w.network_neutron_gre.click()
             w.next.click()
             w.next.click()
             w.install_savanna.click()
             w.install_murano.click()
+            w.install_ceilometer.click()
             w.next.click()
             w.prev.click()
             self.assertTrue(w.install_savanna.find_element_by_tag_name('input').is_selected())
             self.assertTrue(w.install_murano.find_element_by_tag_name('input').is_selected())
+            self.assertTrue(w.install_ceilometer.find_element_by_tag_name('input').is_selected())
 
     def test_cancel_button(self):
         with Wizard() as w:
