@@ -24,8 +24,9 @@ class TestEnvWizard(BaseTestCase):
                 w.name.find_element_by_xpath('..').text)
 
     def test_name_exists(self):
+        name = 'test name'
         with Wizard() as w:
-            w.name.send_keys(OPENSTACK_RELEASE_CENTOS)
+            w.name.send_keys(name)
             for i in range(6):
                 w.next.click()
             w.create.click()
@@ -33,9 +34,9 @@ class TestEnvWizard(BaseTestCase):
 
         Environments().create_cluster_box.click()
         with Wizard() as w:
-            w.name.send_keys(OPENSTACK_RELEASE_CENTOS)
+            w.name.send_keys(name)
             w.next.click()
-            self.assertIn('Environment with name "{}" already exists'.format(OPENSTACK_RELEASE_CENTOS),
+            self.assertIn('Environment with name "{}" already exists'.format(name),
                           w.name.find_element_by_xpath('..').text)
 
     def test_release_field(self):
