@@ -36,6 +36,7 @@ class TestEnvWizard(BaseTestCase):
         with Wizard() as w:
             w.name.send_keys(name)
             w.next.click()
+            time.sleep(1)
             self.assertIn('Environment with name "{}" already exists'.format(name),
                           w.name.find_element_by_xpath('..').text)
 
