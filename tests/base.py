@@ -4,7 +4,9 @@ from unittest import TestCase
 from PIL import Image
 import operator
 import math
+from selenium.common.exceptions import NoSuchElementException
 import browser
+from pageobjects.environments import Environments
 from settings import *
 
 
@@ -20,7 +22,13 @@ class BaseTestCase(TestCase):
         browser.quit_driver()
 
     def setUp(self):
-        browser.driver.get('http://localhost:8000/')
+        for i in range(5):
+            try:
+                browser.driver.get('http://localhost:8000/')
+                self.assertTrue(Environments().create_cluster_box.is_displayed())
+                break
+            except NoSuchElementException:
+                pass
 
     @staticmethod
     def clear_nailgun_database():
