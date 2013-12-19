@@ -71,6 +71,18 @@ class Settings(PageObject):
         return self.parent.find_element_by_xpath(self.XPATH_CHECKBOX.format('vlan_splinters'))
 
     @property
+    def vlan_splinters_disabled(self):
+        return self.parent.find_element_by_xpath(self.XPATH_RADIO.format('vlan_splinters', 'disabled'))
+
+    @property
+    def vlan_splinters_soft(self):
+        return self.parent.find_element_by_xpath(self.XPATH_RADIO.format('vlan_splinters', 'soft'))
+
+    @property
+    def vlan_splinters_hard(self):
+        return self.parent.find_element_by_xpath(self.XPATH_RADIO.format('vlan_splinters', 'hard'))
+
+    @property
     def use_cow_images(self):
         return self.parent.find_element_by_xpath(self.XPATH_CHECKBOX.format('use_cow_images'))
 

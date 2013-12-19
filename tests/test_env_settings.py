@@ -140,7 +140,8 @@ class TestCommon(BaseClass):
         self._test_radio_group(['filter_scheduler', 'simple_scheduler'])
 
     def test_vlan_splinters(self):
-        self._test_tumbler_field('vlan_splinters')
+        self._test_radio_group(
+            ['vlan_splinters_disabled', 'vlan_splinters_soft', 'vlan_splinters_hard'])
 
     def test_use_cow_images(self):
         self._test_tumbler_field('use_cow_images')
