@@ -21,6 +21,10 @@ class PageObject:
     def __exit__(self, exc_type, exc_val, exc_tb):
         pass
 
+    @property
+    def logo(self):
+        return self.parent.find_element_by_css_selector('div.logo')
+
     @staticmethod
     def wait_until_moving(element, timeout=10):
         class Move:
