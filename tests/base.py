@@ -6,6 +6,7 @@ import operator
 import math
 from selenium.common.exceptions import NoSuchElementException
 import browser
+from pageobjects.base import PageObject
 from pageobjects.environments import Environments
 from settings import *
 
@@ -24,11 +25,22 @@ class BaseTestCase(TestCase):
     def setUp(self):
         self.get_home()
 
-    def get_home(self):
+    @staticmethod
+    def get_home():
         for i in range(5):
             try:
                 browser.driver.get(URL_HOME)
-                self.assertTrue(Environments().create_cluster_box.is_displayed())
+                PageObject().logo.is_displayed()
+                break
+            except NoSuchElementException:
+                pass
+
+    @staticmethod
+    def refresh():
+        for i in range(5):
+            try:
+                browser.driver.refresh()
+                PageObject().logo.is_displayed()
                 break
             except NoSuchElementException:
                 pass
