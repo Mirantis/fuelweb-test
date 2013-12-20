@@ -58,19 +58,19 @@ class Networks(PageObject):
 
 
 class Network(PageObject):
-    XPATH_PARAMETER = '//div[@class="network-attribute" and ' \
+    XPATH_PARAMETER = './/div[@class="network-attribute" and ' \
                       'div[contains(@class,"parameter-name")]="{}"]'
 
     XPATH_PARAMETER_RANGES = XPATH_PARAMETER + '/div[contains(@class,"ip-range-row")]'
 
     def __init__(self, name):
-        el = self.parent.find_element_by_xpath('//div[legend="{}"]'.format(name))
+        el = browser.driver.find_element_by_xpath('//div[legend="{}"]'.format(name))
         PageObject.__init__(self, el)
 
     @property
     def ip_ranges(self):
         elements = self.parent.find_elements_by_xpath(
-            self.XPATH_PARAMETER_RANGES.format('IP Ranges'))
+            self.XPATH_PARAMETER_RANGES.format('IP Range'))
         return [IpRange(el) for el in elements]
 
     @property
@@ -94,19 +94,19 @@ class Network(PageObject):
 class NeutronParameters(PageObject):
 
     def __init__(self):
-        PageObject.__init__(self)
-        self.parent = browser.driver.find_element_by_css_selector('div.neutron-parameters')
+        el = browser.driver.find_element_by_css_selector('div.neutron-parameters')
+        PageObject.__init__(self, el)
 
 
 class IpRange(PageObject):
 
     @property
     def start(self):
-        return self.parent.find_element_by_xpath('//label[1]/div/input')
+        return self.parent.find_element_by_xpath('.//label[1]/div/input')
 
     @property
     def end(self):
-        return self.parent.find_element_by_xpath('//label[2]/div/input')
+        return self.parent.find_element_by_xpath('.//label[2]/div/input')
 
     @property
     def icon_plus(self):
