@@ -25,10 +25,9 @@ class BaseClass(BaseTestCase):
             w.create.click()
             w.wait_until_exists()
 
-        cb = Environments().create_cluster_boxes[0]
-        cb.click()
-
     def setUp(self):
+        BaseTestCase.setUp(self)
+        Environments().create_cluster_boxes[0].click()
         Tabs().settings.click()
 
     def _test_text_field(self, text_field, value):
