@@ -1,3 +1,4 @@
+import time
 from pageobjects.environments import Environments, Wizard
 from pageobjects.networks import Networks
 from pageobjects.tabs import Tabs
@@ -31,32 +32,77 @@ class BaseClass(BaseTestCase):
         Tabs().networks.click()
 
     def _test_ranges_plus_icon(self, network):
-        with getattr(Networks(), network) as p:
-            p.ip_ranges[0].icon_plus.click()
-            self.assertEqual(len(p.ip_ranges), 2, 'Plus icon. row 1')
-            p.ip_ranges[1].icon_plus.click()
-            self.assertEqual(len(p.ip_ranges), 3, 'Plus icon. row 2')
-            p.ip_ranges[1].start.send_keys(RANGES[0][0])
-            p.ip_ranges[1].end.send_keys(RANGES[0][1])
-            p.ip_ranges[0].icon_plus.click()
-            self.assertEqual(len(p.ip_ranges), 4, 'Plus icon. row 1')
-            self.assertEqual(p.ip_ranges[1].start.get_attribute('value'), '')
-            self.assertEqual(p.ip_ranges[1].end.get_attribute('value'), '')
-            self.assertEqual(p.ip_ranges[2].start.get_attribute('value'), RANGES[0][0])
-            self.assertEqual(p.ip_ranges[2].end.get_attribute('value'), RANGES[0][1])
+        with getattr(Networks(), network) as n:
+            n.ip_ranges[0].icon_plus.click()
+            self.assertEqual(len(n.ip_ranges), 2, 'Plus icon. row 1')
+            n.ip_ranges[1].icon_plus.click()
+            self.assertEqual(len(n.ip_ranges), 3, 'Plus icon. row 2')
+            n.ip_ranges[1].start.send_keys(RANGES[0][0])
+            n.ip_ranges[1].end.send_keys(RANGES[0][1])
+            n.ip_ranges[0].icon_plus.click()
+            self.assertEqual(len(n.ip_ranges), 4, 'Plus icon. row 1')
+            self.assertEqual(n.ip_ranges[1].start.get_attribute('value'), '')
+            self.assertEqual(n.ip_ranges[1].end.get_attribute('value'), '')
+            self.assertEqual(n.ip_ranges[2].start.get_attribute('value'), RANGES[0][0])
+            self.assertEqual(n.ip_ranges[2].end.get_attribute('value'), RANGES[0][1])
 
     def _test_ranges_minus_icon(self, network):
-        with getattr(Networks(), network) as p:
+        with getattr(Networks(), network) as n:
             for i in range(3):
-                p.ip_ranges[i].icon_plus.click()
-            p.ip_ranges[3].icon_minus.click()
-            self.assertEqual(len(p.ip_ranges), 3, 'Minus icon. last row')
-            p.ip_ranges[2].start.send_keys(RANGES[0][0])
-            p.ip_ranges[2].end.send_keys(RANGES[0][1])
-            p.ip_ranges[1].icon_minus.click()
-            self.assertEqual(len(p.ip_ranges), 2, 'Minus icon. second row')
-            self.assertEqual(p.ip_ranges[1].start.get_attribute('value'), RANGES[0][0])
-            self.assertEqual(p.ip_ranges[1].end.get_attribute('value'), RANGES[0][1])
+                n.ip_ranges[i].icon_plus.click()
+            n.ip_ranges[3].icon_minus.click()
+            self.assertEqual(len(n.ip_ranges), 3, 'Minus icon. last row')
+            n.ip_ranges[2].start.send_keys(RANGES[0][0])
+            n.ip_ranges[2].end.send_keys(RANGES[0][1])
+            n.ip_ranges[1].icon_minus.click()
+            self.assertEqual(len(n.ip_ranges), 2, 'Minus icon. second row')
+            self.assertEqual(n.ip_ranges[1].start.get_attribute('value'), RANGES[0][0])
+            self.assertEqual(n.ip_ranges[1].end.get_attribute('value'), RANGES[0][1])
+
+    def _test_use_vlan_tagging(self, network, vlan_id, initial_value=False):
+        def assert_on():
+            with getattr(Networks(), network) as n:
+                self.assertTrue(
+                    n.vlan_tagging.find_element_by_tag_name('input').is_selected(),
+                    'use vlan tagging is turned on')
+                self.assertEqual(n.vlan_id.get_attribute('value'), vlan_id,
+                                 'vlan id value')
+
+        def assert_off():
+            with getattr(Networks(), network) as n:
+                self.assertFalse(
+                    n.vlan_tagging.find_element_by_tag_name('input').is_selected(),
+                    'use vlan tagging is turned off')
+                self.assertFalse(n.vlan_id.is_displayed(),
+                                 'vlan id input is not visible')
+
+        def turn_on():
+            with getattr(Networks(), network) as n:
+                n.vlan_tagging.click()
+                self.assertTrue(n.vlan_id.is_displayed(), 'vlan id input is visible')
+                n.vlan_id.send_keys(vlan_id)
+                Networks().save_settings.click()
+                time.sleep(1)
+            self.refresh()
+            assert_on()
+
+        def turn_off():
+            with getattr(Networks(), network) as n:
+                n.vlan_tagging.click()
+                self.assertFalse(n.vlan_id.is_displayed(),
+                                 'vlan id input is not visible')
+                Networks().save_settings.click()
+                time.sleep(1)
+            self.refresh()
+            assert_off()
+
+        for i in range(2):
+            if initial_value:
+                turn_off()
+                turn_on()
+            else:
+                turn_on()
+                turn_off()
 
 
 class TestPublicNetwork(BaseClass):
@@ -67,6 +113,9 @@ class TestPublicNetwork(BaseClass):
     def test_ranges_minus_icon(self):
         self._test_ranges_minus_icon('public')
 
+    def test_use_vlan_tagging(self):
+        self._test_use_vlan_tagging('public', '111', False)
+
 
 class TestFloatingNetwork(BaseClass):
 
@@ -75,3 +124,6 @@ class TestFloatingNetwork(BaseClass):
 
     def test_ranges_minus_icon(self):
         self._test_ranges_minus_icon('floating')
+
+    def test_use_vlan_tagging(self):
+        self._test_use_vlan_tagging('public', '111', False)
