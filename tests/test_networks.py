@@ -193,3 +193,30 @@ class TestFixedNetwork(BaseClass):
 
     def test_use_vlan_tagging(self):
         self._test_use_vlan_tagging('fixed', '111', True)
+
+
+class TestDnsServers(BaseClass):
+
+    def test_name_servers(self):
+        v1 = '8.7.7.7'
+        v2 = '8.6.6.6'
+        with Networks() as n:
+            n.dns1.clear()
+            n.dns1.send_keys(v1)
+            n.dns2.clear()
+            n.dns2.send_keys(v2)
+        Networks().save_settings.click()
+        time.sleep(1)
+        self.refresh()
+        with Networks() as n:
+            self.assertEqual(n.dns1.get_attribute('value'), v1, 'dns1')
+            self.assertEqual(n.dns1.get_attribute('value'), v1, 'dns2')
+            n.dns1.clear()
+            n.dns1.send_keys(' ')
+            n.dns2.clear()
+            n.dns2.send_keys(' ')
+            Networks().cancel_changes.click()
+            self.assertEqual(n.dns1.get_attribute('value'), v1,
+                             'cancel changes dns1')
+            self.assertEqual(n.dns1.get_attribute('value'), v1,
+                             'cancel changes dns2')
