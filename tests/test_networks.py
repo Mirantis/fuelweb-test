@@ -175,3 +175,12 @@ class TestManagementNetwork(BaseClass):
 
     def test_use_vlan_tagging(self):
         self._test_use_vlan_tagging('management', '111', True)
+
+
+class TestStorageNetwork(BaseClass):
+
+    def test_cidr(self):
+        self._test_text_field('storage', 'cidr', '192.170.0.0/16')
+
+    def test_use_vlan_tagging(self):
+        self._test_use_vlan_tagging('storage', '111', True)
