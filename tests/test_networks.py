@@ -6,8 +6,10 @@ from settings import *
 from tests.base import BaseTestCase
 
 RANGES = [
-    ['192.16.0.2', '192.16.0.10'],
-    ['192.168.10.20', '192.168.10.50']
+    ['172.16.0.2', '172.16.0.10'],
+    ['172.16.0.20', '172.16.0.50'],
+    ['172.16.0.128', '172.16.0.140'],
+    ['172.16.0.158', '172.16.0.165']
 ]
 
 
@@ -58,6 +60,34 @@ class BaseClass(BaseTestCase):
             self.assertEqual(len(n.ip_ranges), 2, 'Minus icon. second row')
             self.assertEqual(n.ip_ranges[1].start.get_attribute('value'), RANGES[0][0])
             self.assertEqual(n.ip_ranges[1].end.get_attribute('value'), RANGES[0][1])
+
+    def _test_ranges(self, network, values):
+        with getattr(Networks(), network) as n:
+            n.ip_ranges[0].icon_plus.click()
+            n.ip_ranges[0].start.clear()
+            n.ip_ranges[0].start.send_keys(values[0][0])
+            n.ip_ranges[0].end.clear()
+            n.ip_ranges[0].end.send_keys(values[0][1])
+            n.ip_ranges[1].start.send_keys(values[1][0])
+            n.ip_ranges[1].end.send_keys(values[1][1])
+        Networks().save_settings.click()
+        time.sleep(1)
+        self.refresh()
+        with getattr(Networks(), network) as n:
+            self.assertEqual(n.ip_ranges[0].start.get_attribute('value'), values[0][0])
+            self.assertEqual(n.ip_ranges[0].end.get_attribute('value'), values[0][1])
+            self.assertEqual(n.ip_ranges[1].start.get_attribute('value'), values[1][0])
+            self.assertEqual(n.ip_ranges[1].end.get_attribute('value'), values[1][1])
+
+            n.ip_ranges[0].start.clear()
+            n.ip_ranges[0].start.send_keys(' ')
+            self.assertIn('Invalid IP range start',
+                          n.ip_ranges[0].start.find_element_by_xpath('../../..').text)
+
+            n.ip_ranges[1].end.clear()
+            n.ip_ranges[1].end.send_keys(' ')
+            self.assertIn('Invalid IP range end',
+                          n.ip_ranges[1].end.find_element_by_xpath('../../..').text)
 
     def _test_use_vlan_tagging(self, network, vlan_id, initial_value=False):
         def assert_on():
@@ -132,6 +162,9 @@ class TestPublicNetwork(BaseClass):
     def test_ranges_minus_icon(self):
         self._test_ranges_minus_icon('public')
 
+    def test_ranges(self):
+        self._test_ranges('public', RANGES[:2])
+
     def test_use_vlan_tagging(self):
         self._test_use_vlan_tagging('public', '111', False)
 
@@ -149,6 +182,9 @@ class TestFloatingNetwork(BaseClass):
 
     def test_ranges_minus_icon(self):
         self._test_ranges_minus_icon('floating')
+
+    def test_ranges(self):
+        self._test_ranges('floating', RANGES[2:4])
 
     def test_use_vlan_tagging(self):
         value = '112'
