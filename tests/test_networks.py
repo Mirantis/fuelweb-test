@@ -96,13 +96,12 @@ class BaseClass(BaseTestCase):
             self.refresh()
             assert_off()
 
-        for i in range(2):
-            if initial_value:
-                turn_off()
-                turn_on()
-            else:
-                turn_on()
-                turn_off()
+        if initial_value:
+            turn_off()
+            turn_on()
+        else:
+            turn_on()
+            turn_off()
 
     def _test_text_field(self, network, field, value):
         with getattr(Networks(), network) as n:
@@ -167,3 +166,12 @@ class TestFloatingNetwork(BaseClass):
             self.assertTrue(
                 n.vlan_tagging.find_element_by_tag_name('input').is_selected())
             self.assertEqual(n.vlan_id.get_attribute('value'), value)
+
+
+class TestManagementNetwork(BaseClass):
+
+    def test_cidr(self):
+        self._test_text_field('management', 'cidr', '192.169.0.0/16')
+
+    def test_use_vlan_tagging(self):
+        self._test_use_vlan_tagging('management', '111', True)
