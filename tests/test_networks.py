@@ -72,6 +72,10 @@ class BaseClass(BaseTestCase):
             n.ip_ranges[1].end.send_keys(values[1][1])
         Networks().save_settings.click()
         time.sleep(1)
+        self.assertFalse(Networks().save_settings.is_enabled(),
+                         'Save settings is disabled')
+        self.assertFalse(Networks().cancel_changes.is_enabled(),
+                         'Cancel is disabled')
         self.refresh()
         with getattr(Networks(), network) as n:
             self.assertEqual(n.ip_ranges[0].start.get_attribute('value'), values[0][0])
@@ -88,6 +92,11 @@ class BaseClass(BaseTestCase):
             n.ip_ranges[1].end.send_keys(' ')
             self.assertIn('Invalid IP range end',
                           n.ip_ranges[1].end.find_element_by_xpath('../../..').text)
+
+            self.assertFalse(Networks().save_settings.is_enabled(),
+                            'Save settings is disabled')
+            self.assertFalse(Networks().cancel_changes.is_enabled(),
+                            'Cancel changes is disabled')
 
     def _test_use_vlan_tagging(self, network, vlan_id, initial_value=False):
         def assert_on():
@@ -109,20 +118,38 @@ class BaseClass(BaseTestCase):
         def turn_on():
             with getattr(Networks(), network) as n:
                 n.vlan_tagging.click()
-                self.assertTrue(n.vlan_id.is_displayed(), 'vlan id input is visible')
+                self.assertTrue(n.vlan_id.is_displayed(),
+                                'vlan id input is visible')
                 n.vlan_id.send_keys(vlan_id)
-                Networks().save_settings.click()
-                time.sleep(1)
+            Networks().save_settings.click()
+            time.sleep(1)
+            self.assertFalse(Networks().save_settings.is_enabled(),
+                             'Save settings is disabled')
+            self.assertFalse(Networks().cancel_changes.is_enabled(),
+                             'Cancel is disabled')
             self.refresh()
             assert_on()
+            with getattr(Networks(), network) as n:
+                n.vlan_id.clear()
+                n.vlan_id.send_keys(' ')
+                self.assertIn('Invalid VLAN ID',
+                              n.vlan_id.find_element_by_xpath('../../..').text)
+                self.assertFalse(Networks().save_settings.is_enabled(),
+                                 'Save settings is disabled')
+                self.assertFalse(Networks().verify_networks.is_enabled(),
+                                 'Verify networks is disabled')
 
         def turn_off():
             with getattr(Networks(), network) as n:
                 n.vlan_tagging.click()
                 self.assertFalse(n.vlan_id.is_displayed(),
                                  'vlan id input is not visible')
-                Networks().save_settings.click()
-                time.sleep(1)
+            Networks().save_settings.click()
+            time.sleep(1)
+            self.assertFalse(Networks().save_settings.is_enabled(),
+                             'Save settings is disabled')
+            self.assertFalse(Networks().cancel_changes.is_enabled(),
+                             'Cancel is disabled')
             self.refresh()
             assert_off()
 
@@ -137,8 +164,12 @@ class BaseClass(BaseTestCase):
         with getattr(Networks(), network) as n:
             getattr(n, field).clear()
             getattr(n, field).send_keys(value)
-            Networks().save_settings.click()
-            time.sleep(1)
+        Networks().save_settings.click()
+        time.sleep(1)
+        self.assertFalse(Networks().save_settings.is_enabled(),
+                         'Save settings is disabled')
+        self.assertFalse(Networks().cancel_changes.is_enabled(),
+                         'Cancel is disabled')
         self.refresh()
         with getattr(Networks(), network) as n:
             self.assertEqual(
@@ -146,6 +177,12 @@ class BaseClass(BaseTestCase):
                 'New value')
             getattr(n, field).clear()
             getattr(n, field).send_keys(' ')
+            self.assertIn('Invalid',
+                          getattr(n, field).find_element_by_xpath('../..').text)
+            self.assertFalse(Networks().save_settings.is_enabled(),
+                             'Save settings is disabled')
+            self.assertFalse(Networks().verify_networks.is_enabled(),
+                             'Verify networks is disabled')
             Networks().cancel_changes.click()
             time.sleep(1)
         with getattr(Networks(), network) as n:
@@ -243,14 +280,29 @@ class TestDnsServers(BaseClass):
             n.dns2.send_keys(v2)
         Networks().save_settings.click()
         time.sleep(1)
+        self.assertFalse(Networks().save_settings.is_enabled(),
+                         'Save settings is disabled')
+        self.assertFalse(Networks().cancel_changes.is_enabled(),
+                         'Cancel is disabled')
         self.refresh()
         with Networks() as n:
             self.assertEqual(n.dns1.get_attribute('value'), v1, 'dns1')
             self.assertEqual(n.dns1.get_attribute('value'), v1, 'dns2')
             n.dns1.clear()
             n.dns1.send_keys(' ')
+            self.assertIn('Invalid nameserver',
+                          n.dns1.find_element_by_xpath('../../..').text)
+
             n.dns2.clear()
             n.dns2.send_keys(' ')
+            self.assertIn('Invalid nameserver',
+                          n.dns2.find_element_by_xpath('../../..').text)
+
+            self.assertFalse(Networks().save_settings.is_enabled(),
+                             'Save settings is disabled')
+            self.assertFalse(Networks().verify_networks.is_enabled(),
+                             'Verify networks is disabled')
+
             Networks().cancel_changes.click()
             self.assertEqual(n.dns1.get_attribute('value'), v1,
                              'cancel changes dns1')
