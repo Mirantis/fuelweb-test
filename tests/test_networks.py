@@ -191,13 +191,22 @@ class BaseClass(BaseTestCase):
                 "cancel changes")
 
 
-class TestPublicNetwork(BaseClass):
+class TestRangesControls(BaseClass):
 
-    def test_ranges_plus_icon(self):
+    def test_public_plus_icon(self):
         self._test_ranges_plus_icon('public')
 
-    def test_ranges_minus_icon(self):
+    def test_public_minus_icon(self):
         self._test_ranges_minus_icon('public')
+
+    def test_floating_plus_icon(self):
+        self._test_ranges_plus_icon('floating')
+
+    def test_floating_minus_icon(self):
+        self._test_ranges_minus_icon('floating')
+
+
+class TestPublicNetwork(BaseClass):
 
     def test_ranges(self):
         self._test_ranges('public', RANGES[:2])
@@ -213,12 +222,6 @@ class TestPublicNetwork(BaseClass):
 
 
 class TestFloatingNetwork(BaseClass):
-
-    def test_ranges_plus_icon(self):
-        self._test_ranges_plus_icon('floating')
-
-    def test_ranges_minus_icon(self):
-        self._test_ranges_minus_icon('floating')
 
     def test_ranges(self):
         self._test_ranges('floating', RANGES[2:4])
