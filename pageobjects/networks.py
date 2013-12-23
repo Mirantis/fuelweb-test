@@ -75,20 +75,23 @@ class Network(PageObject):
 
     @property
     def vlan_tagging(self):
-        return self.parent.find_elements_by_xpath(
-            self.XPATH_CHECKBOX.format('use-vlan-tagging'))
+        return self.parent.find_element_by_css_selector('div.custom-tumbler')
+
+    @property
+    def vlan_id(self):
+        return self.parent.find_element_by_css_selector('input[name=public-vlan_start]')
 
     @property
     def netmask(self):
-        return self.parent.find_elements_css_selector('input[name$=netmask]')
+        return self.parent.find_element_by_css_selector('input[name$=netmask]')
 
     @property
     def gateway(self):
-        return self.parent.find_elements_css_selector('input[name$=gateway]')
+        return self.parent.find_element_by_css_selector('input[name$=gateway]')
 
     @property
     def cidr(self):
-        return self.parent.find_elements_css_selector('input[name$=cidr]')
+        return self.parent.find_element_by_css_selector('input[name$=cidr]')
 
 
 class NeutronParameters(PageObject):
