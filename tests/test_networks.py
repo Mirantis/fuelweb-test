@@ -184,3 +184,12 @@ class TestStorageNetwork(BaseClass):
 
     def test_use_vlan_tagging(self):
         self._test_use_vlan_tagging('storage', '111', True)
+
+
+class TestFixedNetwork(BaseClass):
+
+    def test_cidr(self):
+        self._test_text_field('fixed', 'cidr', '10.1.0.0/24')
+
+    def test_use_vlan_tagging(self):
+        self._test_use_vlan_tagging('fixed', '111', True)
