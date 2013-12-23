@@ -45,14 +45,33 @@ class BaseClass(BaseTestCase):
             self.assertEqual(p.ip_ranges[2].start.get_attribute('value'), RANGES[0][0])
             self.assertEqual(p.ip_ranges[2].end.get_attribute('value'), RANGES[0][1])
 
+    def _test_ranges_minus_icon(self, network):
+        with getattr(Networks(), network) as p:
+            for i in range(3):
+                p.ip_ranges[i].icon_plus.click()
+            p.ip_ranges[3].icon_minus.click()
+            self.assertEqual(len(p.ip_ranges), 3, 'Minus icon. last row')
+            p.ip_ranges[2].start.send_keys(RANGES[0][0])
+            p.ip_ranges[2].end.send_keys(RANGES[0][1])
+            p.ip_ranges[1].icon_minus.click()
+            self.assertEqual(len(p.ip_ranges), 2, 'Minus icon. second row')
+            self.assertEqual(p.ip_ranges[1].start.get_attribute('value'), RANGES[0][0])
+            self.assertEqual(p.ip_ranges[1].end.get_attribute('value'), RANGES[0][1])
+
 
 class TestPublicNetwork(BaseClass):
 
     def test_ranges_plus_icon(self):
         self._test_ranges_plus_icon('public')
 
+    def test_ranges_minus_icon(self):
+        self._test_ranges_minus_icon('public')
+
 
 class TestFloatingNetwork(BaseClass):
 
     def test_ranges_plus_icon(self):
         self._test_ranges_plus_icon('floating')
+
+    def test_ranges_minus_icon(self):
+        self._test_ranges_minus_icon('floating')
