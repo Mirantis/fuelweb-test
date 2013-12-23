@@ -15,11 +15,11 @@ FOLDER_SCREEN_CURRENT = os.environ.get(
     'FOLDER_SCREEN_CURRENT', '/home/nfedotov/testscreens/current')
 
 OPENSTACK_RELEASE_CENTOS = os.environ.get(
-    'OPENSTACK_RELEASE_CENTOS', 'Havana on CentOS 6.4 (2013.2)')
+    'OPENSTACK_RELEASE_CENTOS', 'Havana on CentOS 6.4 (2013.2.1)')
 OPENSTACK_RELEASE_REDHAT = os.environ.get(
     'OPENSTACK_RELEASE_REDHAT', 'RHOS 3.0 for RHEL 6.4 (2013.1.2)')
 OPENSTACK_RELEASE_UBUNTU = os.environ.get(
-    'OPENSTACK_RELEASE_UBUNTU', 'Havana on Ubuntu 12.04 (2013.2)')
+    'OPENSTACK_RELEASE_UBUNTU', 'Havana on Ubuntu 12.04 (2013.2.1)')
 
 openstack_name = lambda release: re.sub('\s\\(.*?\\)$', '', release)
 OPENSTACK_CENTOS = openstack_name(OPENSTACK_RELEASE_CENTOS)
