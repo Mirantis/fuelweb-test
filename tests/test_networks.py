@@ -104,6 +104,26 @@ class BaseClass(BaseTestCase):
                 turn_on()
                 turn_off()
 
+    def _test_text_field(self, network, field, value):
+        with getattr(Networks(), network) as n:
+            getattr(n, field).clear()
+            getattr(n, field).send_keys(value)
+            Networks().save_settings.click()
+            time.sleep(1)
+        self.refresh()
+        with getattr(Networks(), network) as n:
+            self.assertEqual(
+                getattr(n, field).get_attribute('value'), value,
+                'New value')
+            getattr(n, field).clear()
+            getattr(n, field).send_keys(' ')
+            Networks().cancel_changes.click()
+            time.sleep(1)
+        with getattr(Networks(), network) as n:
+            self.assertEqual(
+                getattr(n, field).get_attribute('value'), value,
+                "cancel changes")
+
 
 class TestPublicNetwork(BaseClass):
 
@@ -116,6 +136,12 @@ class TestPublicNetwork(BaseClass):
     def test_use_vlan_tagging(self):
         self._test_use_vlan_tagging('public', '111', False)
 
+    def test_net_mask(self):
+        self._test_text_field('public', 'netmask', '255.255.0.0')
+
+    def test_gateway(self):
+        self._test_text_field('public', 'gateway', '172.16.0.20')
+
 
 class TestFloatingNetwork(BaseClass):
 
@@ -126,4 +152,18 @@ class TestFloatingNetwork(BaseClass):
         self._test_ranges_minus_icon('floating')
 
     def test_use_vlan_tagging(self):
-        self._test_use_vlan_tagging('public', '111', False)
+        value = '112'
+        with Networks().public as n:
+            n.vlan_tagging.click()
+            n.vlan_id.send_keys(value)
+        with Networks().floating as n:
+            self.assertTrue(
+                n.vlan_tagging.find_element_by_tag_name('input').is_selected())
+            self.assertEqual(n.vlan_id.get_attribute('value'), value)
+        Networks().save_settings.click()
+        time.sleep(1)
+        self.refresh()
+        with Networks().floating as n:
+            self.assertTrue(
+                n.vlan_tagging.find_element_by_tag_name('input').is_selected())
+            self.assertEqual(n.vlan_id.get_attribute('value'), value)
