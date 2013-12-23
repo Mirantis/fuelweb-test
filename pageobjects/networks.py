@@ -46,9 +46,11 @@ class Networks(PageObject):
     def dns2(self):
         return self.parent.find_element_by_css_selector('input[name=nameserver-1]')
 
+    @property
     def verify_networks(self):
         return self.parent.find_element_by_xpath('//button[text()="Verify Networks"]')
 
+    @property
     def cancel_changes(self):
         return self.parent.find_element_by_xpath('//button[text()="Cancel Changes"]')
 
@@ -79,7 +81,7 @@ class Network(PageObject):
 
     @property
     def vlan_id(self):
-        return self.parent.find_element_by_css_selector('input[name=public-vlan_start]')
+        return self.parent.find_element_by_css_selector('input[name$=vlan_start]')
 
     @property
     def netmask(self):
