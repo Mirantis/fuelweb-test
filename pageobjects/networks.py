@@ -39,6 +39,10 @@ class Networks(PageObject):
         return Network('VM (Fixed)')
 
     @property
+    def neutron(self):
+        return NeutronParameters()
+
+    @property
     def dns1(self):
         return self.parent.find_element_by_css_selector('input[name=nameserver-0]')
 
@@ -113,6 +117,42 @@ class NeutronParameters(PageObject):
     def __init__(self):
         el = browser.driver.find_element_by_css_selector('div.neutron-parameters')
         PageObject.__init__(self, el)
+
+    @property
+    def id_start(self):
+        return self.parent.find_element_by_css_selector('input[name=id_start]')
+
+    @property
+    def id_end(self):
+        return self.parent.find_element_by_css_selector('input[name=id_end]')
+
+    @property
+    def base_mac(self):
+        return self.parent.find_element_by_css_selector('input[name=base_mac]')
+
+    @property
+    def floating_start(self):
+        return self.parent.find_element_by_css_selector('input[name=floating_start]')
+
+    @property
+    def floating_end(self):
+        return self.parent.find_element_by_css_selector('input[name=floating_end]')
+
+    @property
+    def cidr(self):
+        return self.parent.find_element_by_css_selector('input[name=cidr-int]')
+
+    @property
+    def gateway(self):
+        return self.parent.find_element_by_css_selector('input[name=gateway]')
+
+    @property
+    def nameserver0(self):
+        return self.parent.find_element_by_css_selector('input[name=nameserver-0]')
+
+    @property
+    def nameserver1(self):
+        return self.parent.find_element_by_css_selector('input[name=nameserver-1]')
 
 
 class IpRange(PageObject):

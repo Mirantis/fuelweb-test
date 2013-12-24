@@ -156,7 +156,7 @@ class SimpleFlatNetworks(BaseTestCase):
             getattr(n, field).clear()
             getattr(n, field).send_keys(' ')
             self.assertIn('Invalid',
-                          getattr(n, field).find_element_by_xpath('../..').text)
+                          getattr(n, field).find_element_by_xpath('../../..').text)
             self._assert_save_verify_disabled()
             Networks().cancel_changes.click()
             time.sleep(1)
@@ -180,6 +180,41 @@ class SimpleFlatNetworks(BaseTestCase):
             self.assertEqual(
                 getattr(n, field).first_selected_option.text, value,
                 "cancel changes")
+
+
+class TestNeutronNetworks(SimpleFlatNetworks):
+
+    @classmethod
+    def setUpClass(cls):
+        BaseTestCase.setUpClass()
+        preconditions.Environment.simple_neutron_gre()
+
+    def test_id_start(self):
+        self._test_text_field('neutron', 'id_start', '1500')
+
+    def test_id_end(self):
+        self._test_text_field('neutron', 'id_end', '3500')
+
+    def test_base_mac(self):
+        self._test_text_field('neutron', 'base_mac', 'aa:bb:3e:14:b4:a3')
+
+    def test_floating_start(self):
+        self._test_text_field('neutron', 'floating_start', RANGES[3][0])
+
+    def test_floating_end(self):
+        self._test_text_field('neutron', 'floating_end', RANGES[3][1])
+
+    def test_cidr(self):
+        self._test_text_field('neutron', 'cidr', '192.168.111.0/16')
+
+    def test_gateway(self):
+        self._test_text_field('neutron', 'gateway', '192.168.111.2')
+
+    def test_nameserver0(self):
+        self._test_text_field('neutron', 'nameserver0', '5.5.5.5')
+
+    def test_nameserver1(self):
+        self._test_text_field('neutron', 'nameserver1', '5.5.5.5')
 
 
 class TestSimpleVlanNetworks(SimpleFlatNetworks):
