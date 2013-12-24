@@ -165,6 +165,67 @@ class SimpleFlatNetworks(BaseTestCase):
                 getattr(n, field).get_attribute('value'), value,
                 "cancel changes")
 
+    def _test_select_field(self, network, field, value):
+        with getattr(Networks(), network) as n:
+            getattr(n, field).select_by_visible_text(value)
+        self._save_settings()
+        with getattr(Networks(), network) as n:
+            self.assertEqual(
+                getattr(n, field).first_selected_option.text, value,
+                'New value')
+            getattr(n, field).options[0].click()
+            Networks().cancel_changes.click()
+            time.sleep(1)
+        with getattr(Networks(), network) as n:
+            self.assertEqual(
+                getattr(n, field).first_selected_option.text, value,
+                "cancel changes")
+
+
+class TestSimpleVlanNetworks(SimpleFlatNetworks):
+
+    @classmethod
+    def setUpClass(cls):
+        BaseTestCase.setUpClass()
+        preconditions.Environment.simple_flat()
+        Environments().create_cluster_boxes[0].click()
+        Tabs().networks.click()
+        with Networks() as n:
+            n.vlan_manager.click()
+            n.save_settings.click()
+            time.sleep(1)
+
+    def test_fixed_number_of_networks(self):
+        self._test_text_field('fixed', 'number_of_networks', '3')
+
+    def test_fixed_size_of_networks(self):
+        self._test_select_field('fixed', 'network_size', '128')
+
+    def test_fixed_vlan_range_start(self):
+        self._test_text_field('fixed', 'vlan_id', '120')
+
+    def test_fixed_vlan_range_end_calculation(self):
+        start_values = [105, 120]
+        with Networks().fixed as n:
+            number = int(n.number_of_networks.get_attribute('value'))
+            for v in start_values:
+                n.vlan_id.clear()
+                n.vlan_id.send_keys(v)
+                self.assertEqual(
+                    n.vlan_end.get_attribute('value'),
+                    str(v + number - 1), 'end value')
+
+    def test_fixed_vlan_range_end_calculation_2(self):
+        numbers = [5, 20]
+        with Networks().fixed as n:
+            start = int(n.vlan_id.get_attribute('value'))
+            for v in numbers:
+                n.number_of_networks.clear()
+                n.number_of_networks.send_keys(v)
+                self.assertEqual(
+                    n.vlan_end.get_attribute('value'),
+                    str(v + start - 1), 'end value')
+
 
 class TestRangesControls(SimpleFlatNetworks):
 

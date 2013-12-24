@@ -63,7 +63,7 @@ class Network(PageObject):
     XPATH_PARAMETER = './/div[@class="network-attribute" and ' \
                       'div[contains(@class,"parameter-name")]="{}"]'
 
-    XPATH_PARAMETER_RANGES = XPATH_PARAMETER + '/div[contains(@class,"ip-range-row")]'
+    XPATH_PARAMETER_RANGES = XPATH_PARAMETER + '/div[contains(@class,"range-row")]'
 
     def __init__(self, name):
         el = browser.driver.find_element_by_xpath('//div[legend="{}"]'.format(name))
@@ -84,6 +84,10 @@ class Network(PageObject):
         return self.parent.find_element_by_css_selector('input[name$=vlan_start]')
 
     @property
+    def vlan_end(self):
+        return self.parent.find_element_by_css_selector('input[name$=vlan_end]')
+
+    @property
     def netmask(self):
         return self.parent.find_element_by_css_selector('input[name$=netmask]')
 
@@ -94,6 +98,14 @@ class Network(PageObject):
     @property
     def cidr(self):
         return self.parent.find_element_by_css_selector('input[name$=cidr]')
+
+    @property
+    def number_of_networks(self):
+        return self.parent.find_element_by_css_selector('input[name$=amount]')
+
+    @property
+    def network_size(self):
+        return Select(self.parent.find_element_by_css_selector('select[name$=network_size]'))
 
 
 class NeutronParameters(PageObject):
