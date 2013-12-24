@@ -67,7 +67,7 @@ class Network(PageObject):
     XPATH_PARAMETER = './/div[@class="network-attribute" and ' \
                       'div[contains(@class,"parameter-name")]="{}"]'
 
-    XPATH_PARAMETER_RANGES = XPATH_PARAMETER + '/div[contains(@class,"range-row")]'
+    XPATH_PARAMETER_RANGES = XPATH_PARAMETER + '/div[contains(@class,"ip-range-row")]'
 
     def __init__(self, name):
         el = browser.driver.find_element_by_xpath('//div[legend="{}"]'.format(name))
