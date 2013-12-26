@@ -48,3 +48,15 @@ class PageObject:
             wait.until(lambda driver: not element.is_displayed())
         except StaleElementReferenceException as e:
             pass
+
+
+class Popup(PageObject):
+
+    def __init__(self):
+        element = browser.driver.find_element_by_css_selector('div.modal')
+        PageObject.__init__(element)
+        PageObject.wait_until_moving(self.parent)
+
+    @property
+    def close_cross(self):
+        return self.parent.find_element_by_css_selector('.close')
