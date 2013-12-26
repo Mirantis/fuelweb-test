@@ -1,8 +1,26 @@
-from selenium.webdriver.support.select import Select
 from pageobjects.base import PageObject
 
 
-class Settings(PageObject):
+class SettingsFooter(PageObject):
+
+    @property
+    def back_to_node_list(self):
+        return self.parent.find_element_by_xpath('//button[text()="Back To Node List"]')
+
+    @property
+    def load_defaults(self):
+        return self.parent.find_element_by_xpath('//button[text()="Load Defaults"]')
+
+    @property
+    def cancel_changes(self):
+        return self.parent.find_element_by_xpath('//button[text()="Cancel Changes"]')
+
+    @property
+    def save_settings(self):
+        return self.parent.find_element_by_xpath('//button[text()="Save Settings"]')
+
+
+class Settings(PageObject, SettingsFooter):
 
     @property
     def username(self):
@@ -137,15 +155,3 @@ class Settings(PageObject):
     @property
     def ceph_factor(self):
         return self.parent.find_element_by_name('osd_pool_size')
-
-    @property
-    def load_defaults(self):
-        return self.parent.find_element_by_xpath('//button[text()="Load Defaults"]')
-
-    @property
-    def cancel_changes(self):
-        return self.parent.find_element_by_xpath('//button[text()="Cancel Changes"]')
-
-    @property
-    def save_settings(self):
-        return self.parent.find_element_by_xpath('//button[text()="Save Settings"]')

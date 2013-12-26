@@ -1,6 +1,6 @@
 from selenium.webdriver.support.select import Select
 import browser
-from pageobjects.base import PageObject
+from pageobjects.base import PageObject, Popup
 
 
 class Nodes(PageObject):
@@ -26,12 +26,31 @@ class Nodes(PageObject):
         return self.parent.find_element_by_css_selector('button.btn-add-nodes')
 
     @property
+    def apply_changes(self):
+        return self.parent.find_element_by_css_selector('button.btn-apply')
+
+    @property
     def configure_interfaces(self):
         return self.parent.find_element_by_css_selector('button.btn-configure-interfaces')
 
     @property
     def configure_disks(self):
         return self.parent.find_element_by_css_selector('button.btn-configure-disks')
+
+    @property
+    def nodes_discovered(self):
+        elements = self.parent.find_elements_by_css_selector('.node-container.discover')
+        return [NodeContainer(el) for el in elements]
+
+    @property
+    def nodes_offline(self):
+        elements = self.parent.find_elements_by_css_selector('.node-container.node-offline')
+        return [NodeContainer(el) for el in elements]
+
+    @property
+    def nodes_error(self):
+        elements = self.parent.find_elements_by_css_selector('.node-container.error')
+        return [NodeContainer(el) for el in elements]
 
 
 class NodeContainer(PageObject):
@@ -52,10 +71,14 @@ class NodeContainer(PageObject):
     def checkbox(self):
         return self.parent.find_element_by_css_selector('div.node-checkbox')
 
+    @property
+    def roles(self):
+        return self.parent.find_element_by_css_selector('div.role-list')
+
 
 class RolesPanel(PageObject):
 
-    XPATH_ROLE = '//label[contains(., "{}")]'
+    XPATH_ROLE = '//label[contains(., "{}")]/input'
 
     @property
     def controller(self):
@@ -72,3 +95,14 @@ class RolesPanel(PageObject):
     @property
     def ceph_osd(self):
         return self.parent.find_element_by_xpath(self.XPATH_ROLE.format('Ceph OSD'))
+
+
+class NodeInfo(Popup):
+
+    @property
+    def edit_networks(self):
+        return self.parent.find_element_by_css_selector('.btn-edit-networks')
+
+    @property
+    def edit_disks(self):
+        return self.parent.find_element_by_css_selector('.btn-edit-disks')
