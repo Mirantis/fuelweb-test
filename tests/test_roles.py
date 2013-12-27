@@ -12,7 +12,14 @@ ROLE_CINDER = 'CINDER'
 ROLE_CEPH = 'CEPH-OSD'
 
 
-class TestRolesSimpleFlat(BaseTestCase):
+class BaseClass(BaseTestCase):
+
+    def assertNodeInRoles(self, node, roles):
+        for role in roles:
+            self.assertIn(role, node.roles.text, "node's roles")
+
+
+class TestRolesSimpleFlat(BaseClass):
 
     @classmethod
     def setUpClass(cls):
@@ -36,11 +43,11 @@ class TestRolesSimpleFlat(BaseTestCase):
                 r.compute.find_element_by_xpath('../..').text,
                 'error "{}" is visible'.format(ERROR_ROLE_CANNOT_COMBINE))
         with Nodes()as n:
-            self.assertIn(ROLE_CONTROLLER, n.nodes_discovered[0].roles.text, "node's roles")
+            self.assertNodeInRoles(n.nodes_discovered[0], [ROLE_CONTROLLER])
             self.assertTrue(n.apply_changes.is_enabled())
             n.nodes_discovered[0].checkbox.click()
             self.assertFalse(n.apply_changes.is_enabled())
-            self.assertIn(ROLE_UNALLOCATED, n.nodes_discovered[0].roles.text, "node's roles")
+            self.assertNodeInRoles(n.nodes_discovered[0], [ROLE_UNALLOCATED])
 
     def test_one_controller_allowed_nodes_disabled(self):
         with Nodes()as n:
@@ -72,11 +79,11 @@ class TestRolesSimpleFlat(BaseTestCase):
                 r.controller.find_element_by_xpath('../..').text,
                 'error "{}" is visible'.format(ERROR_ROLE_CANNOT_COMBINE))
         with Nodes()as n:
-            self.assertIn(ROLE_COMPUTE, n.nodes_discovered[0].roles.text, "node's roles")
+            self.assertNodeInRoles(n.nodes_discovered[0], [ROLE_COMPUTE])
             self.assertTrue(n.apply_changes.is_enabled())
             n.nodes_discovered[0].checkbox.click()
             self.assertFalse(n.apply_changes.is_enabled())
-            self.assertIn(ROLE_UNALLOCATED, n.nodes_discovered[0].roles.text, "node's roles")
+            self.assertNodeInRoles(n.nodes_discovered[0], [ROLE_UNALLOCATED])
 
     def test_cinder(self):
         with Nodes()as n:
@@ -84,11 +91,11 @@ class TestRolesSimpleFlat(BaseTestCase):
         with RolesPanel() as r:
             r.cinder.click()
         with Nodes()as n:
-            self.assertIn(ROLE_CINDER, n.nodes_discovered[0].roles.text, "node's roles")
+            self.assertNodeInRoles(n.nodes_discovered[0], [ROLE_CINDER])
             self.assertTrue(n.apply_changes.is_enabled())
             n.nodes_discovered[0].checkbox.click()
             self.assertFalse(n.apply_changes.is_enabled())
-            self.assertIn(ROLE_UNALLOCATED, n.nodes_discovered[0].roles.text, "node's roles")
+            self.assertNodeInRoles(n.nodes_discovered[0], [ROLE_UNALLOCATED])
 
     def test_ceph(self):
         with Nodes()as n:
@@ -96,11 +103,11 @@ class TestRolesSimpleFlat(BaseTestCase):
         with RolesPanel() as r:
             r.ceph_osd.click()
         with Nodes()as n:
-            self.assertIn(ROLE_CEPH, n.nodes_discovered[0].roles.text, "node's roles")
+            self.assertNodeInRoles(n.nodes_discovered[0], [ROLE_CEPH])
             self.assertTrue(n.apply_changes.is_enabled())
             n.nodes_discovered[0].checkbox.click()
             self.assertFalse(n.apply_changes.is_enabled())
-            self.assertIn(ROLE_UNALLOCATED, n.nodes_discovered[0].roles.text, "node's roles")
+            self.assertNodeInRoles(n.nodes_discovered[0], [ROLE_UNALLOCATED])
 
     def test_multiroles(self):
         with Nodes()as n:
@@ -110,6 +117,26 @@ class TestRolesSimpleFlat(BaseTestCase):
             r.cinder.click()
             r.ceph_osd.click()
         with Nodes()as n:
-            self.assertIn(ROLE_CONTROLLER, n.nodes_discovered[0].roles.text, "node's roles")
-            self.assertIn(ROLE_CINDER, n.nodes_discovered[0].roles.text, "node's roles")
-            self.assertIn(ROLE_CEPH, n.nodes_discovered[0].roles.text, "node's roles")
+            self.assertNodeInRoles(
+                n.nodes_discovered[0],
+                [ROLE_CONTROLLER, ROLE_CINDER, ROLE_CEPH])
+
+    def test_several_nodes(self):
+        with Nodes()as n:
+            n.nodes_discovered[0].checkbox.click()
+            n.nodes_discovered[1].checkbox.click()
+            n.nodes_discovered[2].checkbox.click()
+        with RolesPanel() as r:
+            r.compute.click()
+            r.cinder.click()
+            r.ceph_osd.click()
+        with Nodes()as n:
+            self.assertNodeInRoles(
+                n.nodes_discovered[0],
+                [ROLE_COMPUTE, ROLE_CINDER, ROLE_CEPH])
+            self.assertNodeInRoles(
+                n.nodes_discovered[1],
+                [ROLE_COMPUTE, ROLE_CINDER, ROLE_CEPH])
+            self.assertNodeInRoles(
+                n.nodes_discovered[2],
+                [ROLE_COMPUTE, ROLE_CINDER, ROLE_CEPH])
