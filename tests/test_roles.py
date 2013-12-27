@@ -18,6 +18,12 @@ class BaseClass(BaseTestCase):
         for role in roles:
             self.assertIn(role, node.roles.text, "node's roles")
 
+    def setUp(self):
+        BaseTestCase.setUp(self)
+        Environments().create_cluster_boxes[0].click()
+        Nodes().add_nodes.click()
+        time.sleep(1)
+
 
 class TestRolesSimpleFlat(BaseClass):
 
@@ -25,12 +31,6 @@ class TestRolesSimpleFlat(BaseClass):
     def setUpClass(cls):
         BaseTestCase.setUpClass()
         preconditions.Environment.simple_flat()
-
-    def setUp(self):
-        BaseTestCase.setUp(self)
-        Environments().create_cluster_boxes[0].click()
-        Nodes().add_nodes.click()
-        time.sleep(1)
 
     def test_controller(self):
         with Nodes()as n:
@@ -140,3 +140,28 @@ class TestRolesSimpleFlat(BaseClass):
             self.assertNodeInRoles(
                 n.nodes_discovered[2],
                 [ROLE_COMPUTE, ROLE_CINDER, ROLE_CEPH])
+
+
+class TestRolesHAFlat(BaseClass):
+
+    @classmethod
+    def setUpClass(cls):
+        BaseTestCase.setUpClass()
+        preconditions.Environment.ha_flat()
+
+    def test_controller_role_always_enabled(self):
+        with Nodes()as n:
+            for node in n.nodes_discovered:
+                node.checkbox.click()
+                self.assertTrue(RolesPanel().controller.is_enabled())
+            RolesPanel().controller.click()
+            for node in n.nodes_discovered:
+                self.assertNodeInRoles(node, [ROLE_CONTROLLER])
+
+    def test_all_nodes_could_be_controller(self):
+        RolesPanel().controller.click()
+        with Nodes()as n:
+            for node in n.nodes_discovered:
+                node.checkbox.click()
+            for node in n.nodes_discovered:
+                self.assertNodeInRoles(node, [ROLE_CONTROLLER])
