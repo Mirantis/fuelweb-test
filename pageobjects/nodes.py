@@ -52,20 +52,29 @@ class Nodes(PageObject):
         elements = self.parent.find_elements_by_css_selector('.node-container.error')
         return [NodeContainer(el) for el in elements]
 
+    @property
+    def select_all(self):
+        return self.parent.find_element_by_css_selector('[name=select-nodes-common]')
+
+    @property
+    def select_all_in_group(self):
+        return self.parent.find_elements_by_css_selector('[name=select-node-group]')
+
+    @property
+    def node_groups(self):
+        elements = self.parent.find_elements_by_css_selector('.node-groups')
+        return [Nodes(el) for el in elements]
+
 
 class NodeContainer(PageObject):
 
-    XPATH_BY_STATUS = '//label[contains(@class, "node-container") and ' \
-                      './/span[@class="node-status-label"]="{}"]'
+    @property
+    def name(self):
+        return self.parent.find_element_by_css_selector('div.name > p')
 
-    @classmethod
-    def find_by_status(cls, status):
-        elements = browser.driver.find_element_by_xpath(cls.XPATH_BY_STATUS.format(status))
-        return [cls(el) for el in elements]
-
-    @classmethod
-    def find_discovered(cls):
-        return cls.find_by_status('Discovered')
+    @property
+    def name_input(self):
+        return self.parent.find_element_by_css_selector('div.name > input')
 
     @property
     def checkbox(self):
@@ -74,6 +83,10 @@ class NodeContainer(PageObject):
     @property
     def roles(self):
         return self.parent.find_element_by_css_selector('div.role-list')
+
+    @property
+    def details(self):
+        return self.parent.find_element_by_css_selector('.node-details')
 
 
 class RolesPanel(PageObject):
@@ -106,3 +119,7 @@ class NodeInfo(Popup):
     @property
     def edit_disks(self):
         return self.parent.find_element_by_css_selector('.btn-edit-disks')
+
+    @property
+    def close(self):
+        return self.parent.find_element_by_css_selector('.node-modal-close')
