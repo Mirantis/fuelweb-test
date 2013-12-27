@@ -1,6 +1,6 @@
 from selenium.webdriver.support.select import Select
 import browser
-from pageobjects.base import PageObject
+from pageobjects.base import PageObject, Popup
 
 
 class Environments(PageObject):
@@ -14,16 +14,7 @@ class Environments(PageObject):
         return self.parent.find_elements_by_css_selector('a.clusterbox')
 
 
-class Wizard(PageObject):
-
-    def __init__(self):
-        PageObject.__init__(self)
-        self.parent = browser.driver.find_element_by_css_selector('div.create-cluster-modal')
-        PageObject.wait_until_moving(self.parent)
-
-    def wait_until_exists(self):
-        #PageObject.wait_until_exists(self.parent)
-        PageObject.wait_until_exists(browser.driver.find_element_by_css_selector('div.modal-backdrop'))
+class Wizard(Popup):
 
     @property
     def name(self):

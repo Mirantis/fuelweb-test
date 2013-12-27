@@ -54,9 +54,17 @@ class Popup(PageObject):
 
     def __init__(self):
         element = browser.driver.find_element_by_css_selector('div.modal')
-        PageObject.__init__(element)
+        PageObject.__init__(self, element)
         PageObject.wait_until_moving(self.parent)
+
+    def wait_until_exists(self):
+        PageObject.wait_until_exists(
+            browser.driver.find_element_by_css_selector('div.modal-backdrop'))
 
     @property
     def close_cross(self):
         return self.parent.find_element_by_css_selector('.close')
+
+    @property
+    def header(self):
+        return self.parent.find_element_by_css_selector('.modal-header > h3')
