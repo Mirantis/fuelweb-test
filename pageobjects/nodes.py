@@ -38,6 +38,11 @@ class Nodes(PageObject):
         return self.parent.find_element_by_css_selector('button.btn-configure-disks')
 
     @property
+    def nodes(self):
+        elements = self.parent.find_elements_by_css_selector('.node-container')
+        return [NodeContainer(el) for el in elements]
+
+    @property
     def nodes_discovered(self):
         elements = self.parent.find_elements_by_css_selector('.node-container.discover')
         return [NodeContainer(el) for el in elements]

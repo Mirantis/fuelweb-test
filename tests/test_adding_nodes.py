@@ -1,10 +1,12 @@
 import time
 from selenium.common.exceptions import NoSuchElementException
 from selenium.webdriver.common.keys import Keys
+from pageobjects.base import PageObject
 from pageobjects.environments import Environments
-from pageobjects.nodes import Nodes, NodeInfo
+from pageobjects.nodes import Nodes, NodeInfo, RolesPanel
 from tests import preconditions
 from tests.base import BaseTestCase
+from tests.test_roles import ROLE_CONTROLLER, ROLE_CEPH, ROLE_CINDER
 
 
 class TestNodesAddPage(BaseTestCase):
@@ -110,3 +112,44 @@ class TestNodesAddPage(BaseTestCase):
         self.assertEqual(
             name, Nodes().nodes_discovered[0].name.text,
             'New node name')
+
+
+class TestAddingNodes(BaseTestCase):
+
+    @classmethod
+    def setUpClass(cls):
+        BaseTestCase.setUpClass()
+        preconditions.Environment.simple_flat()
+
+    def setUp(self):
+        BaseTestCase.setUp(self)
+        Environments().create_cluster_boxes[0].click()
+        Nodes().add_nodes.click()
+        time.sleep(1)
+
+    def test_adding_node_single_role(self):
+        name = Nodes().nodes_discovered[0].name.text
+        Nodes().nodes_discovered[0].checkbox.click()
+        RolesPanel().controller.click()
+        Nodes().apply_changes.click()
+        with Nodes() as n:
+            self.assertTrue(n.env_name.is_displayed())
+            self.assertEqual(len(n.nodes), 1, 'Nodes amount')
+            self.assertEqual(n.nodes[0].name.text, name, 'Node name')
+            self.assertIn(ROLE_CONTROLLER, n.nodes[0].roles.text, 'Node role')
+
+    def test_adding_node_multiple_roles(self):
+        Nodes().nodes_discovered[0].checkbox.click()
+        with RolesPanel() as r:
+            r.controller.click()
+            r.cinder.click()
+            r.ceph_osd.click()
+        Nodes().apply_changes.click()
+        with Nodes() as n:
+            self.assertTrue(n.env_name.is_displayed())
+            self.assertIn(ROLE_CONTROLLER, n.nodes[0].roles.text,
+                          'Node first role')
+            self.assertIn(ROLE_CINDER, n.nodes[0].roles.text,
+                          'Node second role')
+            self.assertIn(ROLE_CEPH, n.nodes[0].roles.text,
+                          'Node third role')
