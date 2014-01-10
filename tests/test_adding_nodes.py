@@ -25,17 +25,23 @@ class TestNodesAddPage(BaseTestCase):
     def test_discovered_nodes_enabled(self):
         with Nodes()as n:
             for node in n.nodes_discovered:
-                self.assertTrue(node.checkbox.is_enabled(), 'Node enabled')
+                self.assertTrue(
+                    node.checkbox.find_element_by_tag_name('input').is_enabled(),
+                    'Node enabled')
 
     def test_offline_nodes_disabled(self):
         with Nodes()as n:
             for node in n.nodes_offline:
-                self.assertFalse(node.checkbox.is_enabled(), 'Node disabled')
+                self.assertFalse(
+                    node.checkbox.find_element_by_tag_name('input').is_enabled(),
+                    'Node disabled')
 
     def test_error_nodes_disabled(self):
         with Nodes()as n:
             for node in n.nodes_error:
-                self.assertFalse(node.checkbox.is_enabled(), 'Node disabled')
+                self.assertFalse(
+                    node.checkbox.find_element_by_tag_name('input').is_enabled(),
+                    'Node disabled')
 
     def test_select_all(self):
         with Nodes()as n:
@@ -119,9 +125,10 @@ class TestAddingNodes(BaseTestCase):
     @classmethod
     def setUpClass(cls):
         BaseTestCase.setUpClass()
-        preconditions.Environment.simple_flat()
 
     def setUp(self):
+        BaseTestCase.clear_nailgun_database()
+        preconditions.Environment.simple_flat()
         BaseTestCase.setUp(self)
         Environments().create_cluster_boxes[0].click()
         Nodes().add_nodes.click()
