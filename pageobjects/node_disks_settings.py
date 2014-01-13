@@ -21,13 +21,29 @@ class Disk(PageObject):
 
     @property
     def volume_os(self):
-        return Volume(self.parent.find_elements_by_css_selector(
+        return Volume(self.parent.find_element_by_css_selector(
             'div.volume-group.os > .toggle-volume'))
 
     @property
     def volume_image(self):
-        return Volume(self.parent.find_elements_by_css_selector(
+        return Volume(self.parent.find_element_by_css_selector(
             'div.volume-group.image > .toggle-volume'))
+
+    @property
+    def volume_group_os(self):
+        return VolumeGroup(self.parent.find_element_by_css_selector(
+            'div.volume-group-box[data-volume=os]'
+        ))
+
+    @property
+    def volume_group_image(self):
+        return VolumeGroup(self.parent.find_element_by_css_selector(
+            'div.volume-group-box[data-volume=os]'
+        ))
+
+    @property
+    def details_panel(self):
+        return self.parent.find_element_by_css_selector('.disk-map-details')
 
     @property
     def name(self):
