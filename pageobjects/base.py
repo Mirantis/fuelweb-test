@@ -1,5 +1,6 @@
 from selenium.common.exceptions import StaleElementReferenceException
 from selenium.webdriver.support.wait import WebDriverWait
+import time
 import browser
 
 
@@ -55,6 +56,7 @@ class Popup(PageObject):
     def __init__(self):
         element = browser.driver.find_element_by_css_selector('div.modal')
         PageObject.__init__(self, element)
+        time.sleep(0.5)
         PageObject.wait_until_moving(self.parent)
 
     def wait_until_exists(self):
