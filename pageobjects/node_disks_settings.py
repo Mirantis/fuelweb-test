@@ -30,6 +30,11 @@ class Disk(PageObject):
             'div.volume-group.image > .toggle-volume'))
 
     @property
+    def volume_unallocated(self):
+        return Volume(self.parent.find_element_by_css_selector(
+            'div.volume-group.unallocated > .toggle-volume'))
+
+    @property
     def volume_group_os(self):
         return VolumeGroup(self.parent.find_element_by_css_selector(
             'div.volume-group-box[data-volume=os]'
@@ -38,7 +43,7 @@ class Disk(PageObject):
     @property
     def volume_group_image(self):
         return VolumeGroup(self.parent.find_element_by_css_selector(
-            'div.volume-group-box[data-volume=os]'
+            'div.volume-group-box[data-volume=image]'
         ))
 
     @property
@@ -73,15 +78,15 @@ class Volume(PageObject):
 
     @property
     def name(self):
-        return self.parent.find_elements_by_css_selector('.volume-group-name')
+        return self.parent.find_element_by_css_selector('.volume-group-name')
 
     @property
     def size(self):
-        return self.parent.find_elements_by_css_selector('.volume-group-size')
+        return self.parent.find_element_by_css_selector('.volume-group-size')
 
     @property
     def close_cross(self):
-        return self.parent.find_elements_by_css_selector('.close-btn')
+        return self.parent.find_element_by_xpath('./../div[contains(@class, "close-btn")]')
 
 
 class VolumeGroup(PageObject):
@@ -91,12 +96,12 @@ class VolumeGroup(PageObject):
 
     @property
     def name(self):
-        return self.parent.find_elements_by_css_selector('.volume-group-box-name')
+        return self.parent.find_element_by_css_selector('.volume-group-box-name')
 
     @property
     def use_all(self):
-        return self.parent.find_elements_by_css_selector('.use-all-allowed')
+        return self.parent.find_element_by_css_selector('.use-all-allowed')
 
     @property
     def input(self):
-        return self.parent.find_elements_by_tag_name('input')
+        return self.parent.find_element_by_tag_name('input')
