@@ -1,5 +1,6 @@
 import random
 import time
+from pageobjects.base import ConfirmPopup
 from pageobjects.environments import Environments
 from pageobjects.node_disks_settings import Settings
 from pageobjects.nodes import Nodes, RolesPanel, NodeInfo
@@ -134,3 +135,30 @@ class TestConfigureDisks(BaseTestCase):
                 s.disks[0].volume_group_image.input.get_attribute('value'),
                 'default value has been restored'
             )
+
+    def test_confirm_if_back_to_list(self):
+        with Settings() as s:
+            s.disks[0].volume_image.parent.click()
+            time.sleep(1)
+            s.disks[0].volume_group_image.input.\
+                clear()
+            s.disks[0].volume_group_image.input.\
+                send_keys('0')
+
+            s.back_to_node_list.click()
+            with ConfirmPopup() as p:
+                p.stay_on_page.click()
+                p.wait_until_exists()
+            self.assertEqual(
+                '0', s.disks[0].volume_group_image.input.get_attribute('value'),
+                'Value is not changed')
+
+            s.back_to_node_list.click()
+            with ConfirmPopup() as p:
+                p.leave_page.click()
+                p.wait_until_exists()
+                time.sleep(1)
+
+            self.assertTrue(
+                Nodes().add_nodes.is_displayed(),
+                'Backed to nodes page. Add Nodes button is displayed')

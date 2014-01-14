@@ -70,3 +70,16 @@ class Popup(PageObject):
     @property
     def header(self):
         return self.parent.find_element_by_css_selector('.modal-header > h3')
+
+
+class ConfirmPopup(Popup):
+
+    TEXT = 'Settings were modified but not saved'
+
+    @property
+    def stay_on_page(self):
+        return self.parent.find_element_by_css_selector('.btn-return')
+
+    @property
+    def leave_page(self):
+        return self.parent.find_element_by_css_selector('.proceed-btn')
