@@ -1,3 +1,4 @@
+import random
 import time
 from pageobjects.environments import Environments
 from pageobjects.node_disks_settings import Settings
@@ -39,3 +40,97 @@ class TestConfigureDisks(BaseTestCase):
             self.assertFalse(
                 s.disks[0].details_panel.is_displayed(),
                 'details panel is expanded')
+
+    def test_remove_volume_cross(self):
+        with Settings() as s:
+            s.disks[0].volume_image.parent.click()
+            time.sleep(1)
+            s.disks[0].volume_image.close_cross.click()
+            self.assertFalse(
+                s.disks[0].volume_image.close_cross.is_displayed(),
+                'Image volume has been removed')
+            self.assertEqual(
+                '0',
+                s.disks[0].volume_group_image.input.get_attribute('value'),
+                'image volume size is 0')
+
+    def test_use_all_allowed(self):
+        with Settings() as s:
+            s.disks[1].volume_image.parent.click()
+            time.sleep(1)
+            s.disks[1].volume_image.close_cross.click()
+            unallocated = s.disks[1].volume_unallocated.size.text
+
+            s.disks[1].volume_group_os.use_all.click()
+            self.assertEqual(
+                unallocated, s.disks[1].volume_os.size.text,
+                'Base system uses all allowed space'
+            )
+            s.disks[1].volume_os.close_cross.click()
+
+            s.disks[1].volume_group_image.use_all.click()
+            self.assertEqual(
+                unallocated, s.disks[1].volume_image.size.text,
+                'Image storage uses all allowed space'
+            )
+
+    def test_type_volume_size(self):
+        values = [random.randint(100000, 200000) for i in range(3)]
+        with Settings() as s:
+            s.disks[0].volume_image.parent.click()
+            time.sleep(1)
+            for v in values:
+                s.disks[0].volume_group_image.input.clear()
+                s.disks[0].volume_group_image.input.send_keys(v)
+                time.sleep(0.5)
+                exp = '{0:.1f} GB'.format((float(v) / 1024))
+                cur = s.disks[0].volume_image.size.text
+                self.assertEqual(
+                    exp, cur,
+                    'Volume size. exp: {0} ({1}), cur {2}'.format(exp, v, cur))
+
+    def test_save_load_defaults(self):
+        default = None
+        value = random.randint(60000, 80000)
+        with Settings() as s:
+            s.disks[0].volume_image.parent.click()
+            time.sleep(1)
+            default = s.disks[0].volume_group_image.input.get_attribute('value')
+            s.disks[0].volume_group_image.input.\
+                clear()
+            s.disks[0].volume_group_image.input.\
+                send_keys(value)
+            s.apply.click()
+            time.sleep(1)
+        self.refresh()
+        with Settings() as s:
+            time.sleep(2)
+            self.assertEqual(
+                "{:,}".format(value),
+                s.disks[0].volume_group_image.input.get_attribute('value'),
+                'New value has been saved'
+            )
+            s.load_defaults.click()
+            time.sleep(1)
+            self.assertEqual(
+                default,
+                s.disks[0].volume_group_image.input.get_attribute('value'),
+                'default value has been restored'
+            )
+
+    def test_cancel_changes(self):
+        with Settings() as s:
+            s.disks[0].volume_image.parent.click()
+            time.sleep(1)
+            default = s.disks[0].volume_group_image.input.get_attribute('value')
+            s.disks[0].volume_group_image.input.\
+                clear()
+            s.disks[0].volume_group_image.input.\
+                send_keys(random.randint(60000, 80000))
+            s.cancel_changes.click()
+            time.sleep(1)
+            self.assertEqual(
+                default,
+                s.disks[0].volume_group_image.input.get_attribute('value'),
+                'default value has been restored'
+            )

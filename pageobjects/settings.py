@@ -19,6 +19,10 @@ class SettingsFooter(PageObject):
     def save_settings(self):
         return self.parent.find_element_by_xpath('//button[text()="Save Settings"]')
 
+    @property
+    def apply(self):
+        return self.parent.find_element_by_xpath('//button[text()="Apply"]')
+
 
 class Settings(PageObject, SettingsFooter):
 
