@@ -8,6 +8,7 @@ from selenium.common.exceptions import NoSuchElementException
 import browser
 from pageobjects.base import PageObject
 from pageobjects.environments import Environments
+from pageobjects.header import Header
 from settings import *
 
 
@@ -30,7 +31,7 @@ class BaseTestCase(TestCase):
         for i in range(5):
             try:
                 browser.driver.get(URL_HOME)
-                PageObject().logo.is_displayed()
+                Header().logo.is_displayed()
                 break
             except NoSuchElementException:
                 pass
@@ -40,7 +41,7 @@ class BaseTestCase(TestCase):
         for i in range(5):
             try:
                 browser.driver.refresh()
-                PageObject().logo.is_displayed()
+                Header().logo.is_displayed()
                 break
             except NoSuchElementException:
                 pass

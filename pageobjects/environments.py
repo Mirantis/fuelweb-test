@@ -14,7 +14,38 @@ class Environments(PageObject):
         return self.parent.find_elements_by_css_selector('a.clusterbox')
 
 
-class Wizard(Popup):
+class RedhatAccountPopup(Popup):
+
+    @property
+    def license_rhsm(self):
+        return self.parent.find_element_by_xpath(self.XPATH_RADIO.format('license-type', 'rhsm'))
+
+    @property
+    def license_rhn(self):
+        return self.parent.find_element_by_xpath(self.XPATH_RADIO.format('license-type', 'rhn'))
+
+    @property
+    def redhat_username(self):
+        return self.parent.find_element_by_name('username')
+
+    @property
+    def redhat_password(self):
+        return self.parent.find_element_by_name('password')
+
+    @property
+    def redhat_satellite(self):
+        return self.parent.find_element_by_name('satellite')
+
+    @property
+    def redhat_activation_key(self):
+        return self.parent.find_element_by_name('activation_key')
+
+    @property
+    def apply(self):
+        return self.parent.find_element_by_css_selector('button.btn-os-download')
+
+
+class Wizard(Popup, RedhatAccountPopup):
 
     @property
     def name(self):
@@ -95,27 +126,3 @@ class Wizard(Popup):
     @property
     def install_ceilometer(self):
         return self.parent.find_element_by_xpath(self.XPATH_CHECKBOX.format('ceilometer'))
-
-    @property
-    def license_rhsm(self):
-        return self.parent.find_element_by_xpath(self.XPATH_RADIO.format('license-type', 'rhsm'))
-
-    @property
-    def license_rhn(self):
-        return self.parent.find_element_by_xpath(self.XPATH_RADIO.format('license-type', 'rhn'))
-
-    @property
-    def redhat_username(self):
-        return self.parent.find_element_by_name('username')
-
-    @property
-    def redhat_password(self):
-        return self.parent.find_element_by_name('password')
-
-    @property
-    def redhat_satellite(self):
-        return self.parent.find_element_by_name('satellite')
-
-    @property
-    def redhat_activation_key(self):
-        return self.parent.find_element_by_name('activation_key')
