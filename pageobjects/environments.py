@@ -126,3 +126,10 @@ class Wizard(Popup, RedhatAccountPopup):
     @property
     def install_ceilometer(self):
         return self.parent.find_element_by_xpath(self.XPATH_CHECKBOX.format('ceilometer'))
+
+
+class DeployChangesPopup(Popup):
+
+    @property
+    def deploy(self):
+        return self.parent.find_element_by_css_selector('.start-deployment-btn')

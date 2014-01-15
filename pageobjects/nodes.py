@@ -14,6 +14,18 @@ class Nodes(PageObject):
         return self.parent.find_element_by_css_selector('span.btn-cluster-details')
 
     @property
+    def deploy_changes(self):
+        return self.parent.find_element_by_css_selector('button.deploy-btn')
+
+    @property
+    def discard_changes(self):
+        return self.parent.find_element_by_css_selector('button.rollback')
+
+    @property
+    def progress_deployment(self):
+        return self.parent.find_element_by_css_selector('.progress-deploy')
+
+    @property
     def env_details(self):
         return self.parent.find_element_by_css_selector('ul.cluster-details')
 
@@ -92,6 +104,10 @@ class NodeContainer(PageObject):
     @property
     def details(self):
         return self.parent.find_element_by_css_selector('.node-details')
+
+    @property
+    def status(self):
+        return self.parent.find_element_by_css_selector('.node-status-label')
 
 
 class RolesPanel(PageObject):
