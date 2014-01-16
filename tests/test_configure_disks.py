@@ -4,6 +4,7 @@ from pageobjects.base import ConfirmPopup
 from pageobjects.environments import Environments
 from pageobjects.node_disks_settings import Settings
 from pageobjects.nodes import Nodes, RolesPanel, NodeInfo
+from pageobjects.tabs import Tabs
 from tests import preconditions
 from tests.base import BaseTestCase
 
@@ -162,3 +163,48 @@ class TestConfigureDisks(BaseTestCase):
             self.assertTrue(
                 Nodes().add_nodes.is_displayed(),
                 'Backed to nodes page. Add Nodes button is displayed')
+
+    def test_configure_disks_of_several_nodes(self):
+        values = [random.randint(100000, 500000) for i in range(4)]
+
+        # Go back to nodes page
+        Tabs().nodes.click()
+        time.sleep(1)
+        # Add second node
+        Nodes().add_nodes.click()
+        time.sleep(1)
+        Nodes().select_all_in_group[1].click()
+        RolesPanel().compute.click()
+        Nodes().apply_changes.click()
+        time.sleep(1)
+        # change volumes size
+        with Nodes() as n:
+            n.select_all_in_group[1].click()
+            n.configure_disks.click()
+            time.sleep(1)
+
+        with Settings() as s:
+            for i, v in enumerate(values):
+                s.disks[i].volume_storage.parent.click()
+                time.sleep(1)
+                s.disks[i].volume_group_storage.input.\
+                    clear()
+                s.disks[i].volume_group_storage.input.\
+                    send_keys(v)
+            s.apply.click()
+            time.sleep(1)
+
+        for i in range(1, 3):
+            # Go to nodes page
+            Tabs().nodes.click()
+            time.sleep(1)
+            # Verify disks settings of each node
+            Nodes().nodes[i].details.click()
+            NodeInfo().edit_disks.click()
+            time.sleep(1)
+
+            for j, v in enumerate(values):
+                self.assertEqual(
+                    "{:,}".format(v),
+                    s.disks[j].volume_group_storage.input.get_attribute('value'),
+                    'Image volume size of disk {0} of node {0} is correct'.format(j, i))

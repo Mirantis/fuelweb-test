@@ -4,6 +4,7 @@ import browser
 from pageobjects.environments import Environments
 from pageobjects.node_interfaces_settings import Settings
 from pageobjects.nodes import Nodes, RolesPanel, NodeInfo
+from pageobjects.tabs import Tabs
 from tests import preconditions
 from tests.base import BaseTestCase
 
@@ -153,3 +154,50 @@ class TestConfigureNetworks(BaseTestCase):
             self.assertIn(
                 'floating', s.interfaces[0].networks,
                 'floating at eht0')
+
+    def test_configure_interfaces_of_several_nodes(self):
+        # Go back to nodes page
+        Tabs().nodes.click()
+        time.sleep(1)
+        # Add second node
+        Nodes().add_nodes.click()
+        time.sleep(1)
+        Nodes().nodes_discovered[0].checkbox.click()
+        RolesPanel().compute.click()
+        Nodes().apply_changes.click()
+        time.sleep(1)
+        # rearrange interfaces
+        with Nodes() as n:
+            n.select_all.click()
+            n.configure_interfaces.click()
+            time.sleep(1)
+        with Settings() as s:
+            ActionChains(browser.driver).drag_and_drop(
+                s.interfaces[0].networks['public'],
+                s.interfaces[1].networks_box).perform()
+            ActionChains(browser.driver).drag_and_drop(
+                s.interfaces[0].networks['management'],
+                s.interfaces[1].networks_box).perform()
+            ActionChains(browser.driver).drag_and_drop(
+                s.interfaces[0].networks['storage'],
+                s.interfaces[2].networks_box).perform()
+            s.apply.click()
+            time.sleep(1)
+
+        for i in range(2):
+            # Go to nodes page
+            Tabs().nodes.click()
+            time.sleep(1)
+            # Verify interfaces settings of each node
+            Nodes().nodes[i].details.click()
+            NodeInfo().edit_networks.click()
+            time.sleep(1)
+            self.assertIn(
+                'public', s.interfaces[1].networks,
+                'public at eht1. Node #{0}'.format(i))
+            self.assertIn(
+                'management', s.interfaces[1].networks,
+                'management at eht1. Node #{0}'.format(i))
+            self.assertIn(
+                'storage', s.interfaces[2].networks,
+                'storage at eht2. Node #{0}'.format(i))

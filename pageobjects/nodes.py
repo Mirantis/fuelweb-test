@@ -38,6 +38,22 @@ class Nodes(PageObject):
         return self.parent.find_element_by_css_selector('button.btn-add-nodes')
 
     @property
+    def delete_nodes(self):
+        return self.parent.find_element_by_css_selector('button.btn-delete-nodes')
+
+    @property
+    def edit_roles(self):
+        return self.parent.find_element_by_css_selector('button.btn-edit-nodes')
+
+    @property
+    def configure_interfaces(self):
+        return self.parent.find_element_by_css_selector('button.btn-configure-interfaces')
+
+    @property
+    def configure_disks(self):
+        return self.parent.find_element_by_css_selector('button.btn-configure-disks')
+
+    @property
     def apply_changes(self):
         return self.parent.find_element_by_css_selector('button.btn-apply')
 

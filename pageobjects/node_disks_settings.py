@@ -30,6 +30,11 @@ class Disk(PageObject):
             'div.volume-group.image > .toggle-volume'))
 
     @property
+    def volume_storage(self):
+        return Volume(self.parent.find_element_by_css_selector(
+            'div.volume-group.vm > .toggle-volume'))
+
+    @property
     def volume_unallocated(self):
         return Volume(self.parent.find_element_by_css_selector(
             'div.volume-group.unallocated > .toggle-volume'))
@@ -44,6 +49,12 @@ class Disk(PageObject):
     def volume_group_image(self):
         return VolumeGroup(self.parent.find_element_by_css_selector(
             'div.volume-group-box[data-volume=image]'
+        ))
+
+    @property
+    def volume_group_storage(self):
+        return VolumeGroup(self.parent.find_element_by_css_selector(
+            'div.volume-group-box[data-volume=vm]'
         ))
 
     @property
