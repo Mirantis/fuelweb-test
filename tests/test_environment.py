@@ -149,7 +149,7 @@ class TestEnvironment(BaseTestCase):
         Tabs().settings.click()
 
         with Settings() as s:
-            time.sleep(1)
+            time.sleep(15)
             self.assertFalse(s.cinder_for_volumes.find_element_by_tag_name('input').is_selected())
             self.assertTrue(s.ceph_for_volumes.find_element_by_tag_name('input').is_selected())
             self.assertTrue(s.ceph_for_images.find_element_by_tag_name('input').is_selected())
