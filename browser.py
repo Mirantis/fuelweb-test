@@ -27,7 +27,8 @@ def start_driver(browser=None):
     elif browser == "firefox":
         driver = start_firefox()
 
-    driver.set_window_size(1024, 768)
+    #driver.set_window_size(1024, 768)
+    driver.maximize_window()
     driver.implicitly_wait(10)
     return driver
 
