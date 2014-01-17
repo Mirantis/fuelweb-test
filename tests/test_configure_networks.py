@@ -9,7 +9,7 @@ from tests import preconditions
 from tests.base import BaseTestCase
 
 
-class TestConfigureNetworks(BaseTestCase):
+class TestConfigureNetworksPage(BaseTestCase):
 
     @classmethod
     def setUpClass(cls):
@@ -101,6 +101,50 @@ class TestConfigureNetworks(BaseTestCase):
             )
             self.assertTrue(s.apply.is_enabled(), 'Apply enabled')
 
+    def test_cancel_changes(self):
+        with Settings() as s:
+            ActionChains(browser.driver).drag_and_drop(
+                s.interfaces[0].networks['public'],
+                s.interfaces[1].networks_box).perform()
+            ActionChains(browser.driver).drag_and_drop(
+                s.interfaces[0].networks['storage'],
+                s.interfaces[2].networks_box).perform()
+
+            s.cancel_changes.click()
+            time.sleep(1)
+            self.assertIn(
+                'storage', s.interfaces[0].networks,
+                'storage at eht0')
+            self.assertIn(
+                'public', s.interfaces[0].networks,
+                'public at eht0')
+            self.assertIn(
+                'floating', s.interfaces[0].networks,
+                'floating at eht0')
+
+
+class TestConfigureNetworks(BaseTestCase):
+
+    @classmethod
+    def setUpClass(cls):
+        BaseTestCase.setUpClass()
+
+    def setUp(self):
+        BaseTestCase.clear_nailgun_database()
+        BaseTestCase.setUp(self)
+
+        preconditions.Environment.simple_flat()
+        Environments().create_cluster_boxes[0].click()
+        Nodes().add_nodes.click()
+        time.sleep(1)
+        Nodes().nodes_discovered[0].checkbox.click()
+        RolesPanel().controller.click()
+        Nodes().apply_changes.click()
+        time.sleep(1)
+        Nodes().nodes[0].details.click()
+        NodeInfo().edit_networks.click()
+        time.sleep(1)
+
     def test_save_load_defaults(self):
         with Settings() as s:
             ActionChains(browser.driver).drag_and_drop(
@@ -123,27 +167,6 @@ class TestConfigureNetworks(BaseTestCase):
                 'floating', s.interfaces[1].networks,
                 'floating at eht1')
             s.load_defaults.click()
-            time.sleep(1)
-            self.assertIn(
-                'storage', s.interfaces[0].networks,
-                'storage at eht0')
-            self.assertIn(
-                'public', s.interfaces[0].networks,
-                'public at eht0')
-            self.assertIn(
-                'floating', s.interfaces[0].networks,
-                'floating at eht0')
-
-    def test_cancel_changes(self):
-        with Settings() as s:
-            ActionChains(browser.driver).drag_and_drop(
-                s.interfaces[0].networks['public'],
-                s.interfaces[1].networks_box).perform()
-            ActionChains(browser.driver).drag_and_drop(
-                s.interfaces[0].networks['storage'],
-                s.interfaces[2].networks_box).perform()
-
-            s.cancel_changes.click()
             time.sleep(1)
             self.assertIn(
                 'storage', s.interfaces[0].networks,
