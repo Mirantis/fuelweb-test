@@ -114,7 +114,7 @@ class TestNodesAddPage(BaseTestCase):
             n.nodes_discovered[0].name.click()
             n.nodes_discovered[0].name_input.send_keys(name)
             n.nodes_discovered[0].name_input.send_keys(Keys.ENTER)
-            time.sleep(1)
+            time.sleep(2)
         self.assertEqual(
             name, Nodes().nodes_discovered[0].name.text,
             'New node name')
@@ -139,6 +139,7 @@ class TestAddingNodes(BaseTestCase):
         Nodes().nodes_discovered[0].checkbox.click()
         RolesPanel().controller.click()
         Nodes().apply_changes.click()
+        time.sleep(1)
         with Nodes() as n:
             self.assertTrue(n.env_name.is_displayed())
             self.assertEqual(len(n.nodes), 1, 'Nodes amount')
@@ -152,6 +153,7 @@ class TestAddingNodes(BaseTestCase):
             r.cinder.click()
             r.ceph_osd.click()
         Nodes().apply_changes.click()
+        time.sleep(1)
         with Nodes() as n:
             self.assertTrue(n.env_name.is_displayed())
             self.assertIn(ROLE_CONTROLLER, n.nodes[0].roles.text,

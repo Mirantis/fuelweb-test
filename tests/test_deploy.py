@@ -23,8 +23,9 @@ class TestDeploy(BaseTestCase):
         Nodes().nodes_discovered[0].checkbox.click()
         RolesPanel().controller.click()
         Nodes().apply_changes.click()
-
+        time.sleep(1)
         Nodes().add_nodes.click()
+        time.sleep(1)
         Nodes().nodes_discovered[0].checkbox.click()
         RolesPanel().compute.click()
         Nodes().apply_changes.click()
