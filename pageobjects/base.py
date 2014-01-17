@@ -1,4 +1,4 @@
-from selenium.common.exceptions import StaleElementReferenceException
+from selenium.common.exceptions import StaleElementReferenceException, NoSuchElementException
 from selenium.webdriver.support.wait import WebDriverWait
 import time
 import browser
@@ -43,7 +43,7 @@ class PageObject:
         wait = WebDriverWait(browser.driver, timeout)
         try:
             wait.until(lambda driver: not element.is_displayed())
-        except StaleElementReferenceException as e:
+        except StaleElementReferenceException:
             pass
 
 
@@ -56,8 +56,11 @@ class Popup(PageObject):
         PageObject.wait_until_moving(self.parent)
 
     def wait_until_exists(self):
-        PageObject.wait_until_exists(
-            browser.driver.find_element_by_css_selector('div.modal-backdrop'))
+        try:
+            PageObject.wait_until_exists(
+                browser.driver.find_element_by_css_selector('div.modal-backdrop'))
+        except NoSuchElementException:
+            pass
 
     @property
     def close_cross(self):
