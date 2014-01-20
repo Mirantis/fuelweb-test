@@ -18,3 +18,7 @@ class Header(PageObject):
     @property
     def support(self):
         return self.parent.find_element_by_css_selector('.navigation-bar-ul a[href$=support]')
+
+    @property
+    def breadcrumb(self):
+        return self.parent.find_element_by_css_selector('.breadcrumb')
