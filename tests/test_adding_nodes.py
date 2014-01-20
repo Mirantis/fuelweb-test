@@ -3,7 +3,9 @@ from selenium.common.exceptions import NoSuchElementException
 from selenium.webdriver.common.keys import Keys
 from pageobjects.base import PageObject
 from pageobjects.environments import Environments
+from pageobjects.header import Header
 from pageobjects.nodes import Nodes, NodeInfo, RolesPanel
+from pageobjects.tabs import Tabs
 from tests import preconditions
 from tests.base import BaseTestCase
 from tests.test_roles import ROLE_CONTROLLER, ROLE_CEPH, ROLE_CINDER
@@ -162,3 +164,19 @@ class TestAddingNodes(BaseTestCase):
                           'Node second role')
             self.assertIn(ROLE_CEPH, n.nodes[0].roles.text,
                           'Node third role')
+
+    def test_unallocated_nodes_counter(self):
+        initial = int(Header().unallocated_nodes.text)
+        discovered = len(Nodes().nodes_discovered)
+
+        Tabs().nodes.click()
+        for i in range(discovered):
+            Nodes().add_nodes.click()
+            Nodes().nodes_discovered[0].checkbox.click()
+            RolesPanel().compute.click()
+            Nodes().apply_changes.click()
+            time.sleep(1)
+
+            self.assertEqual(
+                str(initial - i - 1), Header().unallocated_nodes.text,
+                'Unallocated nodes amount')

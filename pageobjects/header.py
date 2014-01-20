@@ -22,3 +22,11 @@ class Header(PageObject):
     @property
     def breadcrumb(self):
         return self.parent.find_element_by_css_selector('.breadcrumb')
+
+    @property
+    def total_nodes(self):
+        return self.parent.find_element_by_css_selector('div.total-nodes-count')
+
+    @property
+    def unallocated_nodes(self):
+        return self.parent.find_element_by_css_selector('div.unallocated-nodes-count')
