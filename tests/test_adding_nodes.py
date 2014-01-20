@@ -180,3 +180,51 @@ class TestAddingNodes(BaseTestCase):
             self.assertEqual(
                 str(initial - i - 1), Header().unallocated_nodes.text,
                 'Unallocated nodes amount')
+
+
+class TestGroupBy(BaseTestCase):
+
+    @classmethod
+    def setUpClass(cls):
+        BaseTestCase.setUpClass()
+        BaseTestCase.get_home()
+        preconditions.Environment().simple_flat()
+        Environments().create_cluster_boxes[0].click()
+
+        # Add controller
+        Nodes().add_nodes.click()
+        time.sleep(1)
+        Nodes().nodes_discovered[0].checkbox.click()
+        RolesPanel().controller.click()
+        Nodes().apply_changes.click()
+
+        # Add other discovered nodes as compute
+        Nodes().add_nodes.click()
+        time.sleep(1)
+        for n in Nodes().nodes_discovered:
+            n.checkbox.click()
+        RolesPanel().compute.click()
+        Nodes().apply_changes.click()
+
+    def setUp(self):
+        BaseTestCase.setUp(self)
+        Environments().create_cluster_boxes[0].click()
+
+    def _test_group_by(self, group_by, nodes_in_groups):
+        with Nodes() as n:
+            n.group_by.select_by_visible_text(group_by)
+            time.sleep(1)
+            self.assertEqual(len(nodes_in_groups), len(n.node_groups), 'Groups amount')
+            for i, group in enumerate(n.node_groups):
+                self.assertEqual(
+                    nodes_in_groups[i], len(group.nodes),
+                    'Group #{0} has {1} nodes'.format(i, nodes_in_groups[i]))
+
+    def test_group_by_roles(self):
+        self._test_group_by('Roles', [1, 5])
+
+    def test_group_by_hardware_info(self):
+        self._test_group_by('Hardware Info', [1, 1, 2, 1, 1])
+
+    def test_group_by_roles_and_hardware_info(self):
+        self._test_group_by('Roles and hardware info', [1, 2, 1, 1, 1])
