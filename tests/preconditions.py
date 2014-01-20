@@ -59,6 +59,7 @@ class Environment:
                 return
 
             Nodes().add_nodes.click()
+            time.sleep(1)
             for i in range(amount):
                 Nodes().nodes_discovered[i].checkbox.click()
             getattr(RolesPanel(), role).click()
