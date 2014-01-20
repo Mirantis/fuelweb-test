@@ -160,3 +160,10 @@ class NodeInfo(Popup):
     @property
     def close(self):
         return self.parent.find_element_by_css_selector('.node-modal-close')
+
+
+class DeleteNodePopup(Popup):
+
+    @property
+    def delete(self):
+        return self.parent.find_element_by_css_selector('.btn-delete')

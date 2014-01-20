@@ -1,7 +1,7 @@
 import time
 from pageobjects.base import PageObject
 from pageobjects.environments import Environments, DeployChangesPopup
-from pageobjects.nodes import Nodes, RolesPanel
+from pageobjects.nodes import Nodes, RolesPanel, DeleteNodePopup
 from tests import preconditions
 from tests.base import BaseTestCase
 
@@ -45,4 +45,22 @@ class TestDeploy(BaseTestCase):
                 self.assertEqual('ready', node.status.text.lower(),
                                  'Node status is READY')
 
+    def test_delete_node(self):
+        self.test_add_nodes()
 
+        with Nodes() as n:
+            n.nodes[1].checkbox.click()
+            n.delete_nodes.click()
+        with DeleteNodePopup() as p:
+            p.delete.click()
+            p.wait_until_exists()
+            time.sleep(1)
+        Nodes().deploy_changes.click()
+        with DeployChangesPopup() as p:
+            p.deploy.click()
+            p.wait_until_exists()
+        with Nodes() as n:
+            self.assertEqual(1, len(n.nodes), 'Nodes amount')
+            for node in n.nodes:
+                self.assertEqual('ready', node.status.text.lower(),
+                                 'Node status is READY')
