@@ -1,6 +1,8 @@
 import time
 from pageobjects.base import PageObject
 from pageobjects.environments import Environments, Wizard
+from pageobjects.header import Header
+from pageobjects.releases import Releases
 from settings import *
 from tests.base import BaseTestCase
 
@@ -203,3 +205,51 @@ class TestEnvWizard(BaseTestCase):
             w.next.click()
             self.assertFalse(w.install_savanna.find_element_by_tag_name('input').is_selected())
             self.assertFalse(w.install_murano.find_element_by_tag_name('input').is_selected())
+
+
+class TestEnvWizardRedHat(BaseTestCase):
+
+    def setUp(self):
+        BaseTestCase.clear_nailgun_database()
+        BaseTestCase.setUp(self)
+        Environments().create_cluster_box.click()
+
+    def test_rhsm(self):
+        with Wizard() as w:
+            w.name.send_keys(OPENSTACK_RELEASE_REDHAT)
+            w.release.select_by_visible_text(OPENSTACK_RELEASE_REDHAT)
+            w.license_rhsm.click()
+            w.redhat_username.send_keys(REDHAT_USERNAME)
+            w.redhat_password.send_keys(REDHAT_PASSWORD)
+            for i in range(6):
+                w.next.click()
+            w.create.click()
+            w.wait_until_exists()
+        Header().releases.click()
+        with Releases() as r:
+            PageObject.wait_until_exists(
+                r.dict[OPENSTACK_REDHAT].download_progress, timeout=20)
+            self.assertEqual(
+                'Active', r.dict[OPENSTACK_REDHAT].status.text,
+                'RHOS status is active')
+
+    def test_rhn_satellite(self):
+        with Wizard() as w:
+            w.name.send_keys(OPENSTACK_RELEASE_REDHAT)
+            w.release.select_by_visible_text(OPENSTACK_RELEASE_REDHAT)
+            w.license_rhn.click()
+            w.redhat_username.send_keys(REDHAT_USERNAME)
+            w.redhat_password.send_keys(REDHAT_PASSWORD)
+            w.redhat_satellite.send_keys(REDHAT_SATELLITE)
+            w.redhat_activation_key.send_keys(REDHAT_ACTIVATION_KEY)
+            for i in range(6):
+                w.next.click()
+            w.create.click()
+            w.wait_until_exists()
+        Header().releases.click()
+        with Releases() as r:
+            PageObject.wait_until_exists(
+                r.dict[OPENSTACK_REDHAT].download_progress, timeout=20)
+            self.assertEqual(
+                'Active', r.dict[OPENSTACK_REDHAT].status.text,
+                'RHOS status is active')
