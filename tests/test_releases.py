@@ -2,7 +2,9 @@ from pageobjects.base import PageObject
 from pageobjects.environments import RedhatAccountPopup
 from pageobjects.header import Header
 from pageobjects.releases import Releases
-from settings import OPENSTACK_REDHAT, REDHAT_USERNAME, REDHAT_PASSWORD, REDHAT_SATELLITE, REDHAT_ACTIVATION_KEY
+from settings import OPENSTACK_REDHAT, REDHAT_USERNAME, REDHAT_PASSWORD, \
+    REDHAT_SATELLITE, REDHAT_ACTIVATION_KEY, OPENSTACK_CENTOS, \
+    OPENSTACK_UBUNTU
 from tests.base import BaseTestCase
 
 
@@ -16,6 +18,24 @@ class TestReleases(BaseTestCase):
         BaseTestCase.clear_nailgun_database()
         BaseTestCase.setUp(self)
         Header().releases.click()
+
+    def test_centos_is_active(self):
+        with Releases() as r:
+            self.assertEqual(
+                'Active', r.dict[OPENSTACK_CENTOS].status.text,
+                'CentOS status is active')
+
+    def test_ubuntu_is_active(self):
+        with Releases() as r:
+            self.assertEqual(
+                'Active', r.dict[OPENSTACK_UBUNTU].status.text,
+                'Ubuntu status is active')
+
+    def test_rhos_is_active(self):
+        with Releases() as r:
+            self.assertEqual(
+                'Not available', r.dict[OPENSTACK_REDHAT].status.text,
+                'RHOS status is Not available')
 
     def test_rhsm(self):
         Releases().rhel_setup.click()
