@@ -133,3 +133,10 @@ class DeployChangesPopup(Popup):
     @property
     def deploy(self):
         return self.parent.find_element_by_css_selector('.start-deployment-btn')
+
+
+class DiscardChangesPopup(Popup):
+
+    @property
+    def discard(self):
+        return self.parent.find_element_by_css_selector('.discard-btn')

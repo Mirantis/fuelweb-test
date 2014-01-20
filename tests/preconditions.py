@@ -1,4 +1,7 @@
-from pageobjects.environments import Environments, Wizard
+import time
+from pageobjects.base import PageObject
+from pageobjects.environments import Environments, Wizard, DeployChangesPopup
+from pageobjects.nodes import Nodes, RolesPanel
 from settings import *
 from tests.base import BaseTestCase
 
@@ -48,3 +51,29 @@ class Environment:
                 w.next.click()
             w.create.click()
             w.wait_until_exists()
+
+    @staticmethod
+    def deploy_nodes(controllers=0, computes=0, cinders=0, cephs=0):
+        def add(role, amount):
+            if amount < 1:
+                return
+
+            Nodes().add_nodes.click()
+            for i in range(amount):
+                Nodes().nodes_discovered[i].checkbox.click()
+            getattr(RolesPanel(), role).click()
+            Nodes().apply_changes.click()
+
+        add('controller', controllers)
+        add('compute', computes)
+        add('cinder', cinders)
+        add('ceph_osd', cephs)
+
+        time.sleep(1)
+        Nodes().deploy_changes.click()
+        with DeployChangesPopup() as p:
+            p.deploy.click()
+            p.wait_until_exists()
+
+        PageObject.wait_until_exists(
+            Nodes().progress_deployment, timeout=60)
