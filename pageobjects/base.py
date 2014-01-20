@@ -46,6 +46,23 @@ class PageObject:
         except StaleElementReferenceException:
             pass
 
+    @staticmethod
+    def wait_element(page_object, attribute, timeout=10):
+        class El:
+            def __init__(self, page_object, attribute):
+                self.page_object = page_object
+                self.attribute = attribute
+
+            def __call__(self, *args, **kwargs):
+                try:
+                    getattr(self.page_object, attribute)
+                    return True
+                except NoSuchElementException:
+                    return False
+
+        wait = WebDriverWait(browser.driver, timeout)
+        wait.until(El(page_object, attribute))
+
 
 class Popup(PageObject):
 
