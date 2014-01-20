@@ -21,6 +21,12 @@ OPENSTACK_RELEASE_REDHAT = os.environ.get(
 OPENSTACK_RELEASE_UBUNTU = os.environ.get(
     'OPENSTACK_RELEASE_UBUNTU', 'Havana on Ubuntu 12.04 (2013.2.1)')
 
+REDHAT_USERNAME = os.environ.get('REDHAT_USERNAME', 'rheltest')
+REDHAT_PASSWORD = os.environ.get('REDHAT_PASSWORD', 'password')
+REDHAT_SATELLITE = os.environ.get('REDHAT_SATELLITE', 'satellite.example.com')
+REDHAT_ACTIVATION_KEY = os.environ.get(
+    'REDHAT_ACTIVATION_KEY', '1234567890')
+
 openstack_name = lambda release: re.sub('\s\\(.*?\\)$', '', release)
 OPENSTACK_CENTOS = openstack_name(OPENSTACK_RELEASE_CENTOS)
 OPENSTACK_REDHAT = openstack_name(OPENSTACK_RELEASE_REDHAT)
