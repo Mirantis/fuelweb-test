@@ -5,6 +5,7 @@ from PIL import Image
 import operator
 import math
 from selenium.common.exceptions import NoSuchElementException
+import time
 import browser
 from pageobjects.base import PageObject
 from pageobjects.environments import Environments
@@ -41,6 +42,7 @@ class BaseTestCase(TestCase):
         for i in range(5):
             try:
                 browser.driver.refresh()
+                time.sleep(0.5)
                 Header().logo.is_displayed()
                 break
             except NoSuchElementException:
