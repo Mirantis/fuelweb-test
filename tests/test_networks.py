@@ -120,6 +120,7 @@ class SimpleFlatNetworks(BaseTestCase):
                 self.assertTrue(n.vlan_id.is_displayed(),
                                 'vlan id input is visible')
                 n.vlan_id.send_keys(vlan_id)
+            time.sleep(0.5)
             self._save_settings()
             assert_on()
             with getattr(Networks(), network) as n:
@@ -134,6 +135,7 @@ class SimpleFlatNetworks(BaseTestCase):
                 n.vlan_tagging.click()
                 self.assertFalse(n.vlan_id.is_displayed(),
                                  'vlan id input is not visible')
+            time.sleep(0.5)
             self._save_settings()
             assert_off()
 
