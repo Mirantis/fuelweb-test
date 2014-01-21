@@ -34,6 +34,16 @@ class BaseTestCase(TestCase):
                 browser.driver.get(URL_HOME)
                 Header().logo.is_displayed()
                 browser.driver.execute_script('jQuery.fx.off = true')
+                browser.driver.execute_script('''
+                    $('head').append(
+                        '<style type="text/css">
+                            * {
+                                -webkit-transition-duration: 0.00000001s !important;
+                                -moz-transition: 0.00000001s !important;
+                                transition-duration: 0.00000001s !important;
+                            }
+                        </style>')
+                '''.replace('\n', ''))
                 break
             except NoSuchElementException:
                 pass
