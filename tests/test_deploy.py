@@ -11,10 +11,11 @@ class TestDeploy(BaseTestCase):
     @classmethod
     def setUpClass(cls):
         BaseTestCase.setUpClass()
-        preconditions.Environment.simple_flat()
 
     def setUp(self):
+        BaseTestCase.clear_nailgun_database()
         BaseTestCase.setUp(self)
+        preconditions.Environment.simple_flat()
         Environments().create_cluster_boxes[0].click()
         time.sleep(1)
 
