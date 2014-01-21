@@ -60,7 +60,10 @@ class TestDeploy(BaseTestCase):
         with DeployChangesPopup() as p:
             p.deploy.click()
             p.wait_until_exists()
-            time.sleep(1)
+
+        PageObject.wait_until_exists(
+            Nodes().progress_deployment, timeout=20)
+
         with Nodes() as n:
             self.assertEqual(1, len(n.nodes), 'Nodes amount')
             for node in n.nodes:
