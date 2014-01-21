@@ -33,6 +33,7 @@ class BaseTestCase(TestCase):
             try:
                 browser.driver.get(URL_HOME)
                 Header().logo.is_displayed()
+                browser.driver.execute_script('jQuery.fx.off = true')
                 break
             except NoSuchElementException:
                 pass
