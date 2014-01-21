@@ -64,6 +64,7 @@ class Environment:
                 Nodes().nodes_discovered[i].checkbox.click()
             getattr(RolesPanel(), role).click()
             Nodes().apply_changes.click()
+            time.sleep(1)
 
         add('controller', controllers)
         add('compute', computes)
