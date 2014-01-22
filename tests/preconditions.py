@@ -1,6 +1,7 @@
 import time
 from pageobjects.base import PageObject
 from pageobjects.environments import Environments, Wizard, DeployChangesPopup
+from pageobjects.header import TaskResultAlert
 from pageobjects.nodes import Nodes, RolesPanel
 from settings import *
 from tests.base import BaseTestCase
@@ -73,9 +74,5 @@ class Environment:
 
         time.sleep(1)
         Nodes().deploy_changes.click()
-        with DeployChangesPopup() as p:
-            p.deploy.click()
-            p.wait_until_exists()
-
-        PageObject.wait_until_exists(
-            Nodes().progress_deployment, timeout=60)
+        DeployChangesPopup().deploy.click()
+        TaskResultAlert().close.click()
