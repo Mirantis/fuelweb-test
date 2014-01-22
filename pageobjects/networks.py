@@ -134,11 +134,11 @@ class NeutronParameters(PageObject):
 
     @property
     def floating_start(self):
-        return self.parent.find_element_by_css_selector('input[name=floating_start]')
+        return self.parent.find_element_by_css_selector('.floating-row input[name=range0]')
 
     @property
     def floating_end(self):
-        return self.parent.find_element_by_css_selector('input[name=floating_end]')
+        return self.parent.find_element_by_css_selector('.floating-row input[name=range1]')
 
     @property
     def cidr(self):
