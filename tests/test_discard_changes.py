@@ -25,6 +25,7 @@ class TestDiscardEnvironmentChanges(BaseTestCase):
             p.discard.click()
             p.wait_until_exists()
 
+        time.sleep(2)
         self.assertEqual(3, len(Nodes().nodes), 'Nodes amount')
         for node in Nodes().nodes:
             self.assertEqual('ready', node.status.text.lower(),
