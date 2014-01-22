@@ -44,11 +44,11 @@ class Networks(PageObject):
 
     @property
     def dns1(self):
-        return self.parent.find_element_by_css_selector('input[name=nameserver-0]')
+        return self.parent.find_element_by_css_selector('.nameservers-row input[name=range0]')
 
     @property
     def dns2(self):
-        return self.parent.find_element_by_css_selector('input[name=nameserver-1]')
+        return self.parent.find_element_by_css_selector('.nameservers-row input[name=range1]')
 
     @property
     def verify_networks(self):
@@ -64,10 +64,12 @@ class Networks(PageObject):
 
 
 class Network(PageObject):
-    XPATH_PARAMETER = './/div[@class="network-attribute" and ' \
+    XPATH_PARAMETER = './/div[contains(@class,"network-attribute") and ' \
                       'div[contains(@class,"parameter-name")]="{}"]'
 
-    XPATH_PARAMETER_RANGES = XPATH_PARAMETER + '/div[contains(@class,"ip-range-row")]'
+    XPATH_PARAMETER_RANGES = \
+        XPATH_PARAMETER + \
+        '/div[@class="ip-ranges-rows"]/div[contains(@class,"range-row")]'
 
     def __init__(self, name):
         el = browser.driver.find_element_by_xpath('//div[legend="{}"]'.format(name))
@@ -159,16 +161,16 @@ class IpRange(PageObject):
 
     @property
     def start(self):
-        return self.parent.find_element_by_xpath('.//label[1]/div/input')
+        return self.parent.find_element_by_css_selector('input[name=range0]')
 
     @property
     def end(self):
-        return self.parent.find_element_by_xpath('.//label[2]/div/input')
+        return self.parent.find_element_by_css_selector('input[name=range1]')
 
     @property
     def icon_plus(self):
-        return self.parent.find_element_by_css_selector('i.icon-plus-circle')
+        return self.parent.find_element_by_css_selector('button.ip-ranges-add')
 
     @property
     def icon_minus(self):
-        return self.parent.find_element_by_css_selector('i.icon-minus-circle')
+        return self.parent.find_element_by_css_selector('button.ip-ranges-delete')
