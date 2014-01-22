@@ -1,6 +1,7 @@
 import time
 from pageobjects.base import PageObject
 from pageobjects.environments import Environments, DeployChangesPopup
+from pageobjects.header import TaskResultAlert
 from pageobjects.nodes import Nodes, RolesPanel, DeleteNodePopup
 from tests import preconditions
 from tests.base import BaseTestCase
@@ -33,12 +34,8 @@ class TestDeploy(BaseTestCase):
         time.sleep(1)
 
         Nodes().deploy_changes.click()
-        with DeployChangesPopup() as p:
-            p.deploy.click()
-            p.wait_until_exists()
-
-        PageObject.wait_until_exists(
-            Nodes().progress_deployment, timeout=60)
+        DeployChangesPopup().deploy.click()
+        TaskResultAlert().close.click()
 
         with Nodes() as n:
             self.assertEqual(2, len(n.nodes), 'Nodes amount')
@@ -57,12 +54,8 @@ class TestDeploy(BaseTestCase):
             p.wait_until_exists()
             time.sleep(1)
         Nodes().deploy_changes.click()
-        with DeployChangesPopup() as p:
-            p.deploy.click()
-            p.wait_until_exists()
-
-        PageObject.wait_until_exists(
-            Nodes().progress_deployment, timeout=20)
+        DeployChangesPopup().deploy.click()
+        TaskResultAlert().close.click()
 
         with Nodes() as n:
             self.assertEqual(1, len(n.nodes), 'Nodes amount')
