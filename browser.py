@@ -29,7 +29,7 @@ def start_driver(browser=None):
 
     #driver.set_window_size(1024, 768)
     driver.maximize_window()
-    driver.implicitly_wait(10)
+    driver.implicitly_wait(SELENIUM_IMPLICIT_WAIT)
     return driver
 
 

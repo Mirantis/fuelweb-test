@@ -1,5 +1,4 @@
 from selenium.webdriver.support.select import Select
-import browser
 from pageobjects.base import PageObject, Popup
 
 
