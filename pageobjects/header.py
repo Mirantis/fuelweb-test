@@ -1,3 +1,5 @@
+import browser
+from decorators import implicit_wait
 from pageobjects.base import PageObject
 
 
@@ -30,3 +32,19 @@ class Header(PageObject):
     @property
     def unallocated_nodes(self):
         return self.parent.find_element_by_css_selector('div.unallocated-nodes-count')
+
+
+class TaskResultAlert(PageObject):
+
+    @implicit_wait(60)
+    def __init__(self):
+        element = browser.driver.find_element_by_css_selector('div.task-result')
+        PageObject.__init__(self, element)
+
+    @property
+    def close(self):
+        return self.parent.find_element_by_css_selector('button.close')
+
+    @property
+    def header(self):
+        return self.parent.find_element_by_css_selector('h4')
