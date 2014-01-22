@@ -122,11 +122,11 @@ class NeutronParameters(PageObject):
 
     @property
     def id_start(self):
-        return self.parent.find_element_by_css_selector('input[name=id_start]')
+        return self.parent.find_element_by_css_selector('input[name=id0]')
 
     @property
     def id_end(self):
-        return self.parent.find_element_by_css_selector('input[name=id_end]')
+        return self.parent.find_element_by_css_selector('input[name=id1]')
 
     @property
     def base_mac(self):
@@ -150,11 +150,11 @@ class NeutronParameters(PageObject):
 
     @property
     def nameserver0(self):
-        return self.parent.find_element_by_css_selector('input[name=nameserver-0]')
+        return self.parent.find_element_by_css_selector('.nameservers-row input[name=range0]')
 
     @property
     def nameserver1(self):
-        return self.parent.find_element_by_css_selector('input[name=nameserver-1]')
+        return self.parent.find_element_by_css_selector('.nameservers-row input[name=range1]')
 
 
 class IpRange(PageObject):
