@@ -1,5 +1,6 @@
 from selenium.webdriver.support.select import Select
 import browser
+from decorators import implicit_wait
 from pageobjects.base import PageObject
 
 
@@ -49,6 +50,11 @@ class Networks(PageObject):
     @property
     def dns2(self):
         return self.parent.find_element_by_css_selector('.nameservers-row input[name=range1]')
+
+    @property
+    @implicit_wait(20)
+    def verification_alert(self):
+        return self.parent.find_element_by_css_selector('.verification-control .alert')
 
     @property
     def verify_networks(self):

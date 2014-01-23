@@ -1,6 +1,7 @@
 import time
 from pageobjects.environments import Environments
 from pageobjects.networks import Networks
+from pageobjects.nodes import Nodes, RolesPanel
 from pageobjects.tabs import Tabs
 from tests.base import BaseTestCase
 import preconditions
@@ -24,6 +25,7 @@ class SimpleFlatNetworks(BaseTestCase):
         BaseTestCase.setUp(self)
         Environments().create_cluster_boxes[0].click()
         Tabs().networks.click()
+        time.sleep(1)
 
     def _assert_save_cancel_disabled(self):
         self.assertFalse(Networks().save_settings.is_enabled(),
@@ -374,3 +376,61 @@ class TestDnsServers(SimpleFlatNetworks):
                              'cancel changes dns1')
             self.assertEqual(n.dns1.get_attribute('value'), v1,
                              'cancel changes dns2')
+
+
+class TestFlatVerifyNetworks(BaseTestCase):
+
+    @classmethod
+    def setUpClass(cls):
+        BaseTestCase.setUpClass()
+
+    def setUp(self):
+        BaseTestCase.clear_nailgun_database()
+        BaseTestCase.setUp(self)
+        preconditions.Environment.simple_flat()
+        Environments().create_cluster_boxes[0].click()
+        Tabs().networks.click()
+        time.sleep(1)
+
+    def test_no_nodes(self):
+        with Networks() as n:
+            n.verify_networks.click()
+            self.assertIn(
+                'At least two nodes are required',
+                n.verification_alert.text,
+                'Alert text contains "At least two nodes are required"')
+
+    def test_one_node(self):
+        Tabs().nodes.click()
+        Nodes().add_nodes.click()
+        time.sleep(1)
+        Nodes().nodes_discovered[0].checkbox.click()
+        RolesPanel().controller.click()
+        Nodes().apply_changes.click()
+        time.sleep(1)
+        Tabs().networks.click()
+        time.sleep(1)
+        with Networks() as n:
+            n.verify_networks.click()
+            self.assertIn(
+                'At least two nodes are required',
+                n.verification_alert.text,
+                'Alert text contains "At least two nodes are required"')
+
+    def test_two_nodes(self):
+        Tabs().nodes.click()
+        Nodes().add_nodes.click()
+        time.sleep(1)
+        Nodes().nodes_discovered[0].checkbox.click()
+        Nodes().nodes_discovered[1].checkbox.click()
+        RolesPanel().compute.click()
+        Nodes().apply_changes.click()
+        time.sleep(1)
+        Tabs().networks.click()
+        time.sleep(1)
+        with Networks() as n:
+            n.verify_networks.click()
+            self.assertIn(
+                'Verification succeeded. Your network is configured correctly.',
+                n.verification_alert.text,
+                'Verification succeeded')
