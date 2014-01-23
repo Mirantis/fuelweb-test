@@ -33,6 +33,11 @@ class TestDeploy(BaseTestCase):
         Nodes().apply_changes.click()
         time.sleep(1)
 
+        for node in Nodes().nodes:
+            self.assertEqual(
+                'pending addition', node.status.text.lower(),
+                'Node status is Pending Addition')
+
         Nodes().deploy_changes.click()
         DeployChangesPopup().deploy.click()
         TaskResultAlert().close.click()
@@ -53,6 +58,11 @@ class TestDeploy(BaseTestCase):
             p.delete.click()
             p.wait_until_exists()
             time.sleep(1)
+
+        self.assertEqual(
+            'pending deletion', Nodes().nodes[1].status.text.lower(),
+            'Node status is Pending Deletion')
+
         Nodes().deploy_changes.click()
         DeployChangesPopup().deploy.click()
         TaskResultAlert().close.click()
