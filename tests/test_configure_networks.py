@@ -19,17 +19,16 @@ class TestConfigureNetworksPage(BaseTestCase):
         preconditions.Environment.simple_flat()
         Environments().create_cluster_boxes[0].click()
         Nodes().add_nodes.click()
-        time.sleep(1)
         Nodes().nodes_discovered[0].checkbox.click()
         RolesPanel().controller.click()
         Nodes().apply_changes.click()
+        time.sleep(1)
 
     def setUp(self):
         BaseTestCase.setUp(self)
         Environments().create_cluster_boxes[0].click()
         Nodes().nodes[0].details.click()
         NodeInfo().edit_networks.click()
-        time.sleep(1)
 
     def test_drag_and_drop(self):
         with Settings() as s:
@@ -192,14 +191,12 @@ class TestConfigureNetworks(BaseTestCase):
         preconditions.Environment.simple_flat()
         Environments().create_cluster_boxes[0].click()
         Nodes().add_nodes.click()
-        time.sleep(1)
         Nodes().nodes_discovered[0].checkbox.click()
         RolesPanel().controller.click()
         Nodes().apply_changes.click()
         time.sleep(1)
         Nodes().nodes[0].details.click()
         NodeInfo().edit_networks.click()
-        time.sleep(1)
 
     def test_save_load_defaults(self):
         with Settings() as s:
@@ -237,10 +234,8 @@ class TestConfigureNetworks(BaseTestCase):
     def test_configure_interfaces_of_several_nodes(self):
         # Go back to nodes page
         Tabs().nodes.click()
-        time.sleep(1)
         # Add second node
         Nodes().add_nodes.click()
-        time.sleep(1)
         Nodes().nodes_discovered[0].checkbox.click()
         RolesPanel().compute.click()
         Nodes().apply_changes.click()
@@ -249,7 +244,6 @@ class TestConfigureNetworks(BaseTestCase):
         with Nodes() as n:
             n.select_all.click()
             n.configure_interfaces.click()
-            time.sleep(1)
         with Settings() as s:
             ActionChains(browser.driver).drag_and_drop(
                 s.interfaces[0].networks['public'],
@@ -266,11 +260,9 @@ class TestConfigureNetworks(BaseTestCase):
         for i in range(2):
             # Go to nodes page
             Tabs().nodes.click()
-            time.sleep(1)
             # Verify interfaces settings of each node
             Nodes().nodes[i].details.click()
             NodeInfo().edit_networks.click()
-            time.sleep(1)
             self.assertIn(
                 'public', s.interfaces[1].networks,
                 'public at eht1. Node #{0}'.format(i))
