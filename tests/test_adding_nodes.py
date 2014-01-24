@@ -64,18 +64,24 @@ class TestNodesAddPage(BaseTestCase):
                     node.checkbox.find_element_by_tag_name('input').is_selected(),
                     'Error node is not selected')
 
-    def test_selecting_nodes_clicking_them(self):
+    def test_selecting_nodes_clicking_them_discovered(self):
         with Nodes()as n:
             for node in n.nodes_discovered:
                 node.parent.click()
                 self.assertTrue(
                     node.checkbox.find_element_by_tag_name('input').is_selected(),
                     'Discovered node is selected')
+
+    def test_selecting_nodes_clicking_them_offline(self):
+        with Nodes()as n:
             for node in n.nodes_offline:
                 node.parent.click()
                 self.assertFalse(
                     node.checkbox.find_element_by_tag_name('input').is_selected(),
                     'Offline node is not selected')
+
+    def test_selecting_nodes_clicking_them_error(self):
+        with Nodes()as n:
             for node in n.nodes_error:
                 node.parent.click()
                 self.assertFalse(
