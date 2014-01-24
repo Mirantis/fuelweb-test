@@ -2,7 +2,7 @@ from pageobjects.base import PageObject
 from pageobjects.settings import SettingsFooter
 
 
-class Settings(PageObject, SettingsFooter):
+class DisksSettings(PageObject, SettingsFooter):
 
     @property
     def disks(self):

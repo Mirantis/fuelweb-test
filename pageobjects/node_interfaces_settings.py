@@ -2,7 +2,7 @@ from pageobjects.base import PageObject
 from pageobjects.settings import SettingsFooter
 
 
-class Settings(PageObject, SettingsFooter):
+class InterfacesSettings(PageObject, SettingsFooter):
 
     @property
     def interfaces(self):

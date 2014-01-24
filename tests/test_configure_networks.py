@@ -4,7 +4,7 @@ from selenium.webdriver import ActionChains
 import browser
 from pageobjects.environments import Environments
 from pageobjects.networks import Networks
-from pageobjects.node_interfaces_settings import Settings
+from pageobjects.node_interfaces_settings import InterfacesSettings
 from pageobjects.nodes import Nodes, RolesPanel, NodeInfo
 from pageobjects.tabs import Tabs
 from tests import preconditions
@@ -31,7 +31,7 @@ class TestConfigureNetworksPage(BaseTestCase):
         NodeInfo().edit_networks.click()
 
     def test_drag_and_drop(self):
-        with Settings() as s:
+        with InterfacesSettings() as s:
             ActionChains(browser.driver).drag_and_drop(
                 s.interfaces[0].networks['storage'],
                 s.interfaces[1].networks_box).perform()
@@ -53,7 +53,7 @@ class TestConfigureNetworksPage(BaseTestCase):
                 'vm (fixed) at eht2')
 
     def test_public_floating_grouped(self):
-        with Settings() as s:
+        with InterfacesSettings() as s:
             ActionChains(browser.driver).drag_and_drop(
                 s.interfaces[0].networks['public'],
                 s.interfaces[1].networks_box).perform()
@@ -68,7 +68,7 @@ class TestConfigureNetworksPage(BaseTestCase):
                 'Public has been moved')
 
     def test_admin_pxe_is_not_dragable(self):
-        with Settings() as s:
+        with InterfacesSettings() as s:
             ActionChains(browser.driver).drag_and_drop(
                 s.interfaces[2].networks['admin (pxe)'],
                 s.interfaces[0].networks_box).perform()
@@ -78,7 +78,7 @@ class TestConfigureNetworksPage(BaseTestCase):
 
     def test_two_untagged_on_interface(self):
         error = 'Untagged networks can not be assigned to one interface'
-        with Settings() as s:
+        with InterfacesSettings() as s:
             ActionChains(browser.driver).drag_and_drop(
                 s.interfaces[0].networks['public'],
                 s.interfaces[2].networks_box).perform()
@@ -103,7 +103,7 @@ class TestConfigureNetworksPage(BaseTestCase):
             self.assertTrue(s.apply.is_enabled(), 'Apply enabled')
 
     def test_cancel_changes(self):
-        with Settings() as s:
+        with InterfacesSettings() as s:
             ActionChains(browser.driver).drag_and_drop(
                 s.interfaces[0].networks['public'],
                 s.interfaces[1].networks_box).perform()
@@ -135,7 +135,7 @@ class TestConfigureNetworksPage(BaseTestCase):
         Tabs().nodes.click()
         Nodes().nodes[0].details.click()
         NodeInfo().edit_networks.click()
-        with Settings() as s:
+        with InterfacesSettings() as s:
             self.assertNotIn(
                 label, s.interfaces[0].networks['storage'].text,
                 'vlan id is visible. Storage network')
@@ -166,7 +166,7 @@ class TestConfigureNetworksPage(BaseTestCase):
         Tabs().nodes.click()
         Nodes().nodes[0].details.click()
         NodeInfo().edit_networks.click()
-        with Settings() as s:
+        with InterfacesSettings() as s:
             self.assertIn(
                 label.format(vlans[0]), s.interfaces[0].networks['management'].text,
                 'vlan id is correct. Management network')
@@ -199,7 +199,7 @@ class TestConfigureNetworks(BaseTestCase):
         NodeInfo().edit_networks.click()
 
     def test_save_load_defaults(self):
-        with Settings() as s:
+        with InterfacesSettings() as s:
             ActionChains(browser.driver).drag_and_drop(
                 s.interfaces[0].networks['public'],
                 s.interfaces[1].networks_box).perform()
@@ -209,7 +209,7 @@ class TestConfigureNetworks(BaseTestCase):
             s.apply.click()
             time.sleep(1)
         self.refresh()
-        with Settings() as s:
+        with InterfacesSettings() as s:
             self.assertIn(
                 'storage', s.interfaces[2].networks,
                 'storage at eht2')
@@ -244,7 +244,7 @@ class TestConfigureNetworks(BaseTestCase):
         with Nodes() as n:
             n.select_all.click()
             n.configure_interfaces.click()
-        with Settings() as s:
+        with InterfacesSettings() as s:
             ActionChains(browser.driver).drag_and_drop(
                 s.interfaces[0].networks['public'],
                 s.interfaces[1].networks_box).perform()

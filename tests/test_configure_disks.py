@@ -2,7 +2,7 @@ import random
 import time
 from pageobjects.base import ConfirmPopup
 from pageobjects.environments import Environments
-from pageobjects.node_disks_settings import Settings
+from pageobjects.node_disks_settings import DisksSettings
 from pageobjects.nodes import Nodes, RolesPanel, NodeInfo
 from pageobjects.tabs import Tabs
 from tests import preconditions
@@ -30,7 +30,7 @@ class TestConfigureDisks(BaseTestCase):
         time.sleep(1)
 
     def test_volume_animation(self):
-        with Settings() as s:
+        with DisksSettings() as s:
             s.disks[0].volume_os.parent.click()
             time.sleep(1)
             self.assertTrue(
@@ -44,7 +44,7 @@ class TestConfigureDisks(BaseTestCase):
                 'details panel is expanded')
 
     def test_remove_volume_cross(self):
-        with Settings() as s:
+        with DisksSettings() as s:
             s.disks[0].volume_image.parent.click()
             time.sleep(1)
             s.disks[0].volume_image.close_cross.click()
@@ -57,7 +57,7 @@ class TestConfigureDisks(BaseTestCase):
                 'image volume size is 0')
 
     def test_use_all_allowed(self):
-        with Settings() as s:
+        with DisksSettings() as s:
             s.disks[1].volume_image.parent.click()
             time.sleep(1)
             s.disks[1].volume_image.close_cross.click()
@@ -78,7 +78,7 @@ class TestConfigureDisks(BaseTestCase):
 
     def test_type_volume_size(self):
         values = [random.randint(100000, 200000) for i in range(3)]
-        with Settings() as s:
+        with DisksSettings() as s:
             s.disks[0].volume_image.parent.click()
             time.sleep(1)
             for v in values:
@@ -94,7 +94,7 @@ class TestConfigureDisks(BaseTestCase):
     def test_save_load_defaults(self):
         default = None
         value = random.randint(60000, 80000)
-        with Settings() as s:
+        with DisksSettings() as s:
             s.disks[0].volume_image.parent.click()
             time.sleep(1)
             default = s.disks[0].volume_group_image.input.get_attribute('value')
@@ -105,7 +105,7 @@ class TestConfigureDisks(BaseTestCase):
             s.apply.click()
             time.sleep(1)
         self.refresh()
-        with Settings() as s:
+        with DisksSettings() as s:
             time.sleep(2)
             self.assertEqual(
                 "{:,}".format(value),
@@ -121,7 +121,7 @@ class TestConfigureDisks(BaseTestCase):
             )
 
     def test_cancel_changes(self):
-        with Settings() as s:
+        with DisksSettings() as s:
             s.disks[0].volume_image.parent.click()
             time.sleep(1)
             default = s.disks[0].volume_group_image.input.get_attribute('value')
@@ -138,7 +138,7 @@ class TestConfigureDisks(BaseTestCase):
             )
 
     def test_confirm_if_back_to_list(self):
-        with Settings() as s:
+        with DisksSettings() as s:
             s.disks[0].volume_image.parent.click()
             time.sleep(1)
             s.disks[0].volume_group_image.input.\
@@ -183,7 +183,7 @@ class TestConfigureDisks(BaseTestCase):
             n.configure_disks.click()
             time.sleep(1)
 
-        with Settings() as s:
+        with DisksSettings() as s:
             for i, v in enumerate(values):
                 s.disks[i].volume_storage.parent.click()
                 time.sleep(1)
