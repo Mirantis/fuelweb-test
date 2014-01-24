@@ -64,6 +64,28 @@ class TestNodesAddPage(BaseTestCase):
                     node.checkbox.find_element_by_tag_name('input').is_selected(),
                     'Error node is not selected')
 
+    def test_select_all_in_group(self):
+        with Nodes()as n:
+            for i, group in enumerate(n.node_groups):
+                group.select_all_in_group[0].click()
+                for node in group.nodes_discovered:
+                    self.assertTrue(
+                    node.checkbox.find_element_by_tag_name('input').is_selected(),
+                    'Discovered node is selected')
+            self.assertTrue(
+                n.select_all.is_selected(), '"Select all" is checked')
+
+    def test_select_all_selecting_nodes_one_by_one(self):
+        with Nodes()as n:
+            for i, group in enumerate(n.node_groups):
+                for node in group.nodes_discovered:
+                    node.checkbox.click()
+                self.assertTrue(
+                    group.select_all_in_group[0].is_selected(),
+                    '"Select all in group" is checked')
+            self.assertTrue(
+                n.select_all.is_selected(), '"Select all" is checked')
+
     def test_selecting_nodes_clicking_them_discovered(self):
         with Nodes()as n:
             for node in n.nodes_discovered:
