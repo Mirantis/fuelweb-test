@@ -9,7 +9,7 @@ class Support(PageObject):
 
     @property
     def contact_support(self):
-        return self.parent.find_element_by_link_text('Contact support')
+        return self.parent.find_element_by_link_text('Contact Support')
 
     @property
     def generate_snapshot(self):
