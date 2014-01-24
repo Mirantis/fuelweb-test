@@ -1,7 +1,9 @@
+import random
 import time
 from selenium.webdriver import ActionChains
 import browser
 from pageobjects.environments import Environments
+from pageobjects.networks import Networks
 from pageobjects.node_interfaces_settings import Settings
 from pageobjects.nodes import Nodes, RolesPanel, NodeInfo
 from pageobjects.tabs import Tabs
@@ -121,6 +123,60 @@ class TestConfigureNetworksPage(BaseTestCase):
             self.assertIn(
                 'floating', s.interfaces[0].networks,
                 'floating at eht0')
+
+    def test_vlan_id_labels_visibility(self):
+        label = 'VLAN ID'
+        Tabs().networks.click()
+        with Networks() as n:
+            n.management.vlan_tagging.click()
+            n.storage.vlan_tagging.click()
+            n.fixed.vlan_tagging.click()
+            n.save_settings.click()
+            time.sleep(1)
+        Tabs().nodes.click()
+        Nodes().nodes[0].details.click()
+        NodeInfo().edit_networks.click()
+        with Settings() as s:
+            self.assertNotIn(
+                label, s.interfaces[0].networks['storage'].text,
+                'vlan id is visible. Storage network')
+            self.assertNotIn(
+                label, s.interfaces[0].networks['management'].text,
+                'vlan id is visible. Management network')
+            self.assertNotIn(
+                label, s.interfaces[0].networks['vm (fixed)'].text,
+                'vlan id is visible. VM (Fixed) network')
+
+    def test_vlan_id_values(self):
+        label = 'VLAN ID: {0}'
+        vlans = [random.randint(100, 200) for i in range(3)]
+        Tabs().networks.click()
+        with Networks() as n:
+            n.management.vlan_id.clear()
+            n.management.vlan_id.send_keys(vlans[0])
+
+            n.storage.vlan_id.clear()
+            n.storage.vlan_id.send_keys(vlans[1])
+
+            n.fixed.vlan_id.clear()
+            n.fixed.vlan_id.send_keys(vlans[2])
+
+            n.save_settings.click()
+            time.sleep(1)
+
+        Tabs().nodes.click()
+        Nodes().nodes[0].details.click()
+        NodeInfo().edit_networks.click()
+        with Settings() as s:
+            self.assertIn(
+                label.format(vlans[0]), s.interfaces[0].networks['management'].text,
+                'vlan id is correct. Management network')
+            self.assertIn(
+                label.format(vlans[1]), s.interfaces[0].networks['storage'].text,
+                'vlan id is correct. Storage network')
+            self.assertIn(
+                label.format(vlans[2]), s.interfaces[0].networks['vm (fixed)'].text,
+                'vlan id is correct. VM (Fixed) network')
 
 
 class TestConfigureNetworks(BaseTestCase):
