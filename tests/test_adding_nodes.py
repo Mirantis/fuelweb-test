@@ -165,6 +165,49 @@ class TestAddingNodes(BaseTestCase):
             self.assertIn(ROLE_CEPH, n.nodes[0].roles.text,
                           'Node third role')
 
+    def test_edit_role_add_new_role(self):
+        # Add node with controller role
+        Nodes().nodes_discovered[0].checkbox.click()
+        RolesPanel().controller.click()
+        Nodes().apply_changes.click()
+        time.sleep(1)
+        # Add cinder role
+        with Nodes() as n:
+            n.nodes[0].checkbox.click()
+            n.edit_roles.click()
+        RolesPanel().cinder.click()
+        Nodes().apply_changes.click()
+        time.sleep(1)
+        with Nodes() as n:
+            self.assertIn(ROLE_CONTROLLER, n.nodes[0].roles.text,
+                          'Controller role')
+            self.assertIn(ROLE_CINDER, n.nodes[0].roles.text,
+                          'Cinder role')
+
+    def test_edit_role_change_role(self):
+        # Add node with controller role
+        Nodes().nodes_discovered[0].checkbox.click()
+        RolesPanel().controller.click()
+        Nodes().apply_changes.click()
+        time.sleep(1)
+        # Remove controller, Add cinder and ceph-osd roles
+        with Nodes() as n:
+            n.nodes[0].checkbox.click()
+            n.edit_roles.click()
+        with RolesPanel() as r:
+            r.controller.click()
+            r.cinder.click()
+            r.ceph_osd.click()
+        Nodes().apply_changes.click()
+        time.sleep(1)
+        with Nodes() as n:
+            self.assertNotIn(ROLE_CONTROLLER, n.nodes[0].roles.text,
+                             'Controller role has been removed')
+            self.assertIn(ROLE_CINDER, n.nodes[0].roles.text,
+                          'Cinder role')
+            self.assertIn(ROLE_CEPH, n.nodes[0].roles.text,
+                          'Ceph-osd role')
+
     def test_unallocated_nodes_counter(self):
         initial = int(Header().unallocated_nodes.text)
         discovered = len(Nodes().nodes_discovered)
