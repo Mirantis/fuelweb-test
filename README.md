@@ -20,5 +20,5 @@ Steps to set up a virtual machine for running fuelweb selenium tests:
   * install pip packages “pip install -r fuelweb-test/requirements.txt“
 * Try to run selenium tests (fake-ui should be launched).
   * workon fuel
-  * export PYTHONPATH=$PYTHONPATH:<path to /fuel-web/nailgun>
+  * export PYTHONPATH=$PYTHONPATH:[path to /fuel-web/nailgun]
   * nosetests fuelweb-test.tests
