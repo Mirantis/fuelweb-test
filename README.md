@@ -6,7 +6,7 @@ fuelweb-test
 Steps to set up a virtual machine for running fuelweb selenium tests:
 
 * Create virtual machine with Ubuntu desktop OS. VM should have internet connection. 
-  * install java runtime environment. turn the VM into jenkins node
+  * install java OpenJDK runtime environment. Turn the VM into jenkins node
   * turn the VM into jenkins node
 * Install “git”
 * “git clone https://github.com/stackforge/fuel-web.git” repository. It will be required in next step (command “cd nailgun” is about folder in this repository)
